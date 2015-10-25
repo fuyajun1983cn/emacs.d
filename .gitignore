@@ -40,3 +40,8 @@ site-lisp/package/
 /ido.last
 /recentf
 /viper
+auto-save-list/
+\#.*\#
+*.elc
+elpa/
+*.dat
