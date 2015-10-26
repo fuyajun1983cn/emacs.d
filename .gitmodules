@@ -13,12 +13,12 @@
 [submodule "site-lisp/powerline"]
 	path = site-lisp/powerline
 	url = https://github.com/milkypostman/powerline.git
-[submodule "airline-themes"]
-	path = airline-themes
-	url = https://github.com/AnthonyDiGirolamo/airline-themes.git
-[submodule "auto-java-complete"]
-	path = auto-java-complete
-	url = https://github.com/emacs-java/auto-java-complete.git
 [submodule "site-lisp/auto-complete"]
 	path = site-lisp/auto-complete
 	url = https://github.com/auto-complete/auto-complete.git
+[submodule "site-lisp/airline-themes"]
+	path = site-lisp/airline-themes
+	url = https://github.com/AnthonyDiGirolamo/airline-themes.git
+[submodule "site-lisp/auto-java-complete"]
+	path = site-lisp/auto-java-complete
+	url = https://github.com/emacs-java/auto-java-complete.git

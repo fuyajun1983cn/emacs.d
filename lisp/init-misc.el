@@ -1,19 +1,44 @@
 ;;----------------------------------------------------------------------------
-;; Misc config - yet to be placed in separate files
+;; Misc config - 与模式无关的一些通用配置
 ;;----------------------------------------------------------------------------
-(add-auto-mode 'tcl-mode "Portfile\\'")
 (fset 'yes-or-no-p 'y-or-n-p)
-
-(dolist (hook (if (fboundp 'prog-mode)
-                  '(prog-mode-hook ruby-mode-hook)
-                '(find-file-hooks)))
-  (add-hook hook 'goto-address-prog-mode))
-(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
-(setq goto-address-mail-face 'link)
 
 (setq-default regex-tool-backend 'perl)
 
-(add-auto-mode 'conf-mode "Procfile")
+;;设置打开文件的缺省路径
+(setq default-directory "~/")
 
+;;设定不产生备份文件
+(setq make-backup-files nil)
+(setq-default make-backup-files nil)
+
+;;鼠标中键可以粘贴
+(setq mouse-yank-at-point t)
+
+;;设置个人信息
+(setq user-full-name "Fu Yajun")
+(setq user-mail-address "fuyajun1983cn@163.com")
+
+;;自动在文件末增加一行
+(setq require-final-newline t)
+
+;;当光标在行尾上下移动的时候，始终保持在行尾
+(setq track-eol t) 
+
+;;新行自动缩进
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+;;
+;;放大字体: Ctrl-x Ctrl-+ 或 Ctrl-x Ctrl-=
+;;缩小字体: Ctrl-x Ctrl–
+;;重置字体: Ctrl-x Ctrl-0
+
+;; For Linux
+(global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
+(global-set-key (kbd "<C-mouse-6>") 'text-scale-decrease)
+
+;; For Windows
+;;(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+;;(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 
 (provide 'init-misc)

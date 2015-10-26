@@ -11,27 +11,19 @@
 (require 'package)
 
 
-
 ;;; Standard package repositories
 
-(when (< emacs-major-version 24)
-  ;; Mainly for ruby-mode
-  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/")))
+;; We include the org repository for completeness, but don't use it.
+;; Lock org-mode temporarily:
+;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
-;; We include the org repository for completeness, but don't normally
-;; use it.
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-
-(when (< emacs-major-version 24)
-  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-
-;;; Also use Melpa for most packages
-(add-to-list 'package-archives `("melpa" . ,(if (< emacs-major-version 24)
-                                                "http://melpa.org/packages/"
-                                              "https://melpa.org/packages/")))
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ;; uncomment below line if you need use GNU ELPA
+                         ;; ("gnu" . "http://elpa.gnu.org/packages/")
+                         ))
 
 
-
 ;; If gpg cannot be found, signature checking will fail, so we
 ;; conditionally enable it according to whether gpg is available. We
 ;; re-run this check once $PATH has been configured
@@ -43,7 +35,7 @@
   (sanityinc/package-maybe-enable-signatures))
 
 
-
+
 ;;; On-demand installation of packages
 
 (defun require-package (package &optional min-version no-refresh)
@@ -71,18 +63,20 @@ locate PACKAGE."
      (message "Couldn't install package `%s': %S" package err)
      nil)))
 
-
+
 ;;; Fire up package.el
 
 (setq package-enable-at-startup nil)
 (package-initialize)
 
+(require-package 'emacs-theme-gruvbox)
+(require-package 'auto-complete)
+(require-package 'yasnippet)
 
-
 (require-package 'fullframe)
 (fullframe list-packages quit-window)
 
-
+
 (require-package 'cl-lib)
 (require 'cl-lib)
 
@@ -100,6 +94,7 @@ locate PACKAGE."
       (sanityinc/set-tabulated-list-column-width "Archive" longest-archive-name))))
 
 (add-hook 'package-menu-mode-hook 'sanityinc/maybe-widen-package-menu-columns)
+
 
 
 (provide 'init-elpa)
