@@ -4,7 +4,8 @@
 ;;                                                                                          ;;
 ;;*********************************************;;
 ;;变量设定
-(setq evil-shift-width 7)
+(require-package 'evil)
+
 
 (require 'evil)
 (evil-mode 1)

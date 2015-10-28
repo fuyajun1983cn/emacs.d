@@ -4,8 +4,7 @@
 
 ;; my private snippets, should be placed before enabling yasnippet
 (setq my-yasnippets (expand-file-name "~/.emacs.d/misc/yasnippets"))
-(if (and  (file-exists-p my-yasnippets) (not (member my-yasnippets yas-snippet-dirs)))
-    (add-to-list 'yas-snippet-dirs my-yasnippets))
+(setq yas-snippet-dirs '(my-yasnippets yas-installed-snippets-dir))
 
 (yas-global-mode 1)
 (setq yas-prompt-functions '(yas-ido-prompt yas-x-prompt yas-dropdown-prompt yas-completing-prompt))
