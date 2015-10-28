@@ -45,3 +45,4 @@ auto-save-list/
 *.elc
 elpa/
 *.dat
+server/

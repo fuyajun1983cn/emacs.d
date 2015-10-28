@@ -4,17 +4,19 @@
 (require 'package)
 
 ;;; Standard package repositories
-;;Marmalade
-(add-to-list 'package-archives '("marmalade" . (if (version<= emacs-version "24.4")
-						   "https://marmalade-repo.org/packages/"
-				                "http://marmalade-repo.org/packages/")))
 
 ;; We include the org repository for completeness, but don't normally
 ;; use it.
 ;;(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
 ;;; Also use Melpa for most packages
-(add-to-list 'package-archives `("melpa" . "https://melpa.org/packages/"))
+
+(setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")
+			 ;;gnu
+			 ;;("gun" . "http://elpa.gnu.org/packages/")
+			 ))
 
 
 ;; If gpg cannot be found, signature checking will fail, so we
@@ -61,8 +63,6 @@ locate PACKAGE."
 (package-initialize)
 
 
-(require-package 'fullframe)
-(fullframe list-packages quit-window)
 
 (require-package 'cl-lib)
 (require 'cl-lib)

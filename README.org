@@ -1,4 +1,5 @@
-
-* version history
-** based on version which is forked from https://github.com/purcell/emacs.d.git @20151025
-
+* Emacs Configuration
+** version history
+*** based on version which is forked from https://github.com/purcell/emacs.d.git @20151025
+*** fetch code
+   - git clone https://github.com/fuyajun1983cn/emacs.d.git --recursive

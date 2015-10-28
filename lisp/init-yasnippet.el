@@ -1,5 +1,6 @@
 ;; loading yasnippet will slow the startup
 ;; but it's necessary cost
+(require-package 'yasnippet)
 (require 'yasnippet)
 
 ;; my private snippets, should be placed before enabling yasnippet
