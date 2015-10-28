@@ -33,12 +33,11 @@
 ;;缩小字体: Ctrl-x Ctrl–
 ;;重置字体: Ctrl-x Ctrl-0
 
+;; For Windows
+;(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+;(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 ;; For Linux
 (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
 (global-set-key (kbd "<C-mouse-6>") 'text-scale-decrease)
-
-;; For Windows
-;;(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
-;;(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
 
 (provide 'init-misc)

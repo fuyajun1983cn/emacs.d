@@ -1,27 +1,20 @@
-;;; Find and load the correct package.el
 
-;; When switching between Emacs 23 and 24, we always use the bundled package.el in Emacs 24
-(let ((package-el-site-lisp-dir
-       (expand-file-name "site-lisp/package" user-emacs-directory)))
-  (when (and (file-directory-p package-el-site-lisp-dir)
-             (> emacs-major-version 23))
-    (message "Removing local package.el from load-path to avoid shadowing bundled version")
-    (setq load-path (remove package-el-site-lisp-dir load-path))))
+;;; Find and load the correct package.el
 
 (require 'package)
 
-
 ;;; Standard package repositories
+;;Marmalade
+(add-to-list 'package-archives '("marmalade" . (if (version<= emacs-version "24.4")
+						   "https://marmalade-repo.org/packages/"
+				                "http://marmalade-repo.org/packages/")))
 
-;; We include the org repository for completeness, but don't use it.
-;; Lock org-mode temporarily:
-;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+;; We include the org repository for completeness, but don't normally
+;; use it.
+;;(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("melpa-stable" . "https://stable.melpa.org/packages/")
-                         ;; uncomment below line if you need use GNU ELPA
-                         ;; ("gnu" . "http://elpa.gnu.org/packages/")
-                         ))
+;;; Also use Melpa for most packages
+(add-to-list 'package-archives `("melpa" . "https://melpa.org/packages/"))
 
 
 ;; If gpg cannot be found, signature checking will fail, so we
@@ -33,7 +26,6 @@
 (sanityinc/package-maybe-enable-signatures)
 (after-load 'init-exec-path
   (sanityinc/package-maybe-enable-signatures))
-
 
 
 ;;; On-demand installation of packages
@@ -63,19 +55,14 @@ locate PACKAGE."
      (message "Couldn't install package `%s': %S" package err)
      nil)))
 
-
 ;;; Fire up package.el
 
 (setq package-enable-at-startup nil)
 (package-initialize)
 
-(require-package 'emacs-theme-gruvbox)
-(require-package 'auto-complete)
-(require-package 'yasnippet)
 
 (require-package 'fullframe)
 (fullframe list-packages quit-window)
-
 
 (require-package 'cl-lib)
 (require 'cl-lib)
@@ -94,7 +81,6 @@ locate PACKAGE."
       (sanityinc/set-tabulated-list-column-width "Archive" longest-archive-name))))
 
 (add-hook 'package-menu-mode-hook 'sanityinc/maybe-widen-package-menu-columns)
-
 
 
 (provide 'init-elpa)
