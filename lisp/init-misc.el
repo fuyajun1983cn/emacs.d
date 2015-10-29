@@ -32,12 +32,14 @@
 ;;放大字体: Ctrl-x Ctrl-+ 或 Ctrl-x Ctrl-=
 ;;缩小字体: Ctrl-x Ctrl–
 ;;重置字体: Ctrl-x Ctrl-0
-
-;; For Windows
-;(global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
-;(global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease)
-;; For Linux
-(global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
-(global-set-key (kbd "<C-mouse-6>") 'text-scale-decrease)
+(if *is-a-windows*
+    (progn
+        ;; For Windows
+       (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+       (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease))
+(progn
+  ;; For Linux
+  (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
+  (global-set-key (kbd "<C-mouse-6>") 'text-scale-decrease)))
 
 (provide 'init-misc)
