@@ -54,8 +54,8 @@
 ;;(require 'init-markdown)
 ;;(require 'init-javascript)
 (require 'init-org)
-;;(require 'init-html)
-;;(require 'init-css)
+(require 'init-html)
+(require 'init-css)
 ;;(require 'init-python-mode)
 
 ;;(require 'init-lisp)

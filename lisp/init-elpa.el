@@ -11,9 +11,9 @@
 
 ;;; Also use Melpa for most packages
 
-(setq package-archives '(("melpa" . "https://melpa.org/packages/")
-			 ("melpa-stable" . "https://stable.melpa.org/packages")
-                         ("marmalade" . "https://marmalade-repo.org/packages/")
+(setq package-archives '(("melpa" . "http://melpa.org/packages/")
+			 ("melpa-stable" . "http://stable.melpa.org/packages")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
 			 ;;gnu
 			 ;;("gun" . "http://elpa.gnu.org/packages/")
 			 ))
