@@ -40,6 +40,6 @@
 (progn
   ;; For Linux
   (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
-  (global-set-key (kbd "<C-mouse-6>") 'text-scale-decrease)))
+  (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)))
 
 (provide 'init-misc)
