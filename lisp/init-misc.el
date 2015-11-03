@@ -42,4 +42,18 @@
   (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
   (global-set-key (kbd "<C-mouse-6>") 'text-scale-decrease)))
 
+;;
+;; 自动插入文件头
+;;
+(auto-insert-mode)  ;;; Adds hook to find-files-hook
+(setq auto-insert-directory "~/.emacs.d/misc/templates/") ;;; Or use custom, *NOTE* Trailing slash important
+(setq auto-insert-query nil) ;;; If you don't want to be prompted before insertion
+
+(setq auto-insert-alist
+      (append '((org-mode . "Template.org")
+            (python-mode . "Template.py")
+            (c-mode . "Template.c")
+            )
+           auto-insert-alist))
+
 (provide 'init-misc)
