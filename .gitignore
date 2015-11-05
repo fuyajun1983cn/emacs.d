@@ -46,3 +46,4 @@ auto-save-list/
 elpa/
 *.dat
 server/
+bookmarks

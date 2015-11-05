@@ -67,6 +67,10 @@ locate PACKAGE."
 (require-package 'cl-lib)
 (require 'cl-lib)
 
+;; some common package
+(require-package 'scratch)
+(require-package 'diminish)
+
 (defun sanityinc/set-tabulated-list-column-width (col-name width)
   "Set any column with name COL-NAME to the given WIDTH."
   (cl-loop for column across tabulated-list-format

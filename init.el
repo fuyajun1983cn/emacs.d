@@ -37,7 +37,7 @@
 ;;----------------------------------------------------------------------------
 ;; Load configs for specific features and modes
 ;;----------------------------------------------------------------------------
-:
+
 (require 'init-themes)
 (require 'init-gui-frames)
 ;;(require 'init-isearch)
@@ -51,7 +51,7 @@
 ;;(require 'init-github)
 
 ;;(require 'init-compile)
-;;(require 'init-markdown)
+(require 'init-markdown)
 ;;(require 'init-javascript)
 (require 'init-org)
 (require 'init-html)

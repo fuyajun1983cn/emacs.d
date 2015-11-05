@@ -3,6 +3,7 @@
 ;;**************Org模式相关配置*****************;;
 ;;                                             ;;
 ;;*********************************************;;
+;; General Settings
 
 ;; Org-Agenda
 (global-set-key "\C-ca" 'org-agenda)
@@ -57,5 +58,6 @@
    (sh . t)
    (python . t)
    ))
+
 
 (provide 'init-org)
