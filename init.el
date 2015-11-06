@@ -47,6 +47,8 @@
 (require 'init-yasnippet)
 (require 'init-evil)
 
+(require 'init-dired)
+
 ;;(require 'init-git)
 ;;(require 'init-github)
 

@@ -5,11 +5,14 @@
 ;;*********************************************;;
 ;; General Settings
 
+;;(setq org-completion-use-ido t)
+;;(setq org-outline-path-complete-in-steps nil)
+;;(setq org-blank-before-new-entry t)
 ;; set maximum indention for decription lists
-(setq org-list-description-max-indent 5)
+;;(setq org-list-description-max-indent 5)
 
 ;; prevent demoting heading also shifting text inside sections
-(setq org-adapt-indentation nil)
+;;(setq org-adapt-indentation nil)
 
 ;; Org-Agenda
 (global-set-key "\C-ca" 'org-agenda)
@@ -22,8 +25,6 @@
 (global-set-key "\C-cc" 'org-capture)
 (setq org-capture-templates
       (quote (
-	      ("n" "note" entry (file+datetree "~/org/reference.org")
-	       "* %?\nEntered on %U\n %i")
 	      ("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks")
 	       "* TODO %?\n %i\n %a")
 	      ("j" "Journal" entry (file+datetree "~/org/journal.org")
@@ -31,10 +32,19 @@
 	      )))
 (setq org-default-notes-file (concat org-directory "~/org/notes.org"))
 
+;; Org-link
+(global-set-key "\C-cl" 'org-store-link)
+(add-hook 'org-load-hook
+  (lambda ()
+    (define-key org-mode-map "\C-n" 'org-next-link)
+    (define-key org-mode-map "\C-p" 'org-previous-link)))
+
+
 ;;TAGS
 (setq org-tag-alist (quote (("EMACS" . ?e)
 			    ("WIFI" . ?w)
 			    ("BUG" . ?b)
+			    ("ME" . ?m)
 			    ("STUDY" . ?s))))
 
 ;;图文混排模式
@@ -43,7 +53,7 @@
 
 ;;TODO keywords
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "|" "DONE(d)")
+      '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED")
 	(sequence "Submitted" "Assigned" "Working" "|" "Resolved")))
 (setq org-log-done 'time)
 (setq org-log-done 'note)

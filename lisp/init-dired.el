@@ -1,5 +1,8 @@
 (require-package 'dired+)
 (require-package 'dired-sort)
+(require-package 'sunrise-commander)
+(maybe-require-package 'sunrise-x-buttons)
+(maybe-require-package 'sunrise-x-modeline)
 
 (setq-default diredp-hide-details-initially-flag nil
               dired-dwim-target t)
