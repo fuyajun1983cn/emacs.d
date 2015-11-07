@@ -1,36 +1,96 @@
 ;;*********************************************;;
 ;;                                             ;;
-;;**************Org模式相关配置*****************;;
+;;**************Org�����ļ�*******************;;
 ;;                                             ;;
 ;;*********************************************;;
 ;; General Settings
 
-;;(setq org-completion-use-ido t)
-;;(setq org-outline-path-complete-in-steps nil)
-;;(setq org-blank-before-new-entry t)
-;; set maximum indention for decription lists
-;;(setq org-list-description-max-indent 5)
+(setq org-directory "~/org/")
+(setq org-default-notes-file (concat org-directory "someday.org"))
 
-;; prevent demoting heading also shifting text inside sections
-;;(setq org-adapt-indentation nil)
-
+;;(org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"mystyles.css\">")
+(setq org-fast-tag-selection-single-key nil)
+(setq org-refile-targets (quote (("~/org/todo.org":maxlevel . 1) ("~/org/someday.org":level . 2))))
+(setq org-reverse-note-order nil)
+(setq org-tags-column -78)
+(setq org-tags-match-list-sublevels nil)
+(setq org-time-stamp-rounding-minutes 5)
+(setq org-use-fast-todo-selection t)
+(setq org-use-tag-inheritance nil)
+(setq org-deadline-warning-days 7)
+(setq org-insert-mode-line-in-empty-file t)
 ;; Org-Agenda
 (global-set-key "\C-ca" 'org-agenda)
-(require 'org-agenda)
+(setq org-agenda-files (quote ("~/org/todo.org" "~/org/personal.org")))
+(setq org-agenda-ndays 7)
+(setq org-agenda-repeating-timestamp-show-all nil)
+(setq org-agenda-restore-windows-after-quit t)
+(setq org-agenda-show-all-dates t)
+(setq org-agenda-skip-deadline-if-done t)
+(setq org-agenda-sorting-strategy (quote ((agenda time-up priority-down tag-up) (todo tag-up))))
+(setq org-agenda-start-on-weekday nil)
+(setq org-agenda-todo-ignore-deadlines t)
+(setq org-agenda-todo-ignore-scheduled t)
+(setq org-agenda-todo-ignore-with-date t)
+(setq org-agenda-window-setup (quote other-window))
+(setq org-agenda-include-diary nil)
+(add-hook 'org-agenda-mode-hook 'hl-line-mode)
 
-(setq org-directory "~/org")
+;; org-remober mode
+;;(autoload 'remember ``remember'' nil t)
+;;(autoload 'remember-region ``remember'' nil t)
+
+(define-key global-map (kbd "<f9> r") 'remember)
+(define-key global-map (kbd "<f9> R") 'remember-region)
+(global-set-key "\C-cr" 'org-remember)
+
+(setq org-remember-templates
+     '(
+      ("Todo" ?t "* TODO %^{Brief Description} %^g\n%?\nAdded: %U" "~/org/todo.org" "Tasks")
+      ("Private" ?p "\n* %^{topic} %T \n%i%?\n" "~/org/personal.org" "Personal Affairs")
+     ; ("WordofDay" ?w "\n* %^{topic} \n%i%?\n" "C:/charles/gtd/wotd.org")
+      ))
+
+(setq org-agenda-custom-commands
+'(
+
+("P" "Projects"   
+((tags "PROJECT")))
+
+("H" "Office and Home Lists"
+     ((agenda)
+          (tags-todo "OFFICE")
+          (tags-todo "HOME")
+          (tags-todo "COMPUTER")
+          (tags-todo "DVD")
+          (tags-todo "READING")))
+
+("D" "Daily Action List"
+     (
+          (agenda "" ((org-agenda-ndays 1)
+                      (org-agenda-sorting-strategy
+                       (quote ((agenda time-up priority-down tag-up) )))
+                      (org-deadline-warning-days 0)
+                      ))))
+)
+)
+
+(defun gtd ()
+    (interactive)
+    (find-file  (concat org-directory "gtd.org"))
+)
+(global-set-key (kbd "C-c g") 'gtd)
 
 
 ;; Org-Capture
 (global-set-key "\C-cc" 'org-capture)
 (setq org-capture-templates
       (quote (
-	      ("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks")
-	       "* TODO %?\n %i\n %a")
-	      ("j" "Journal" entry (file+datetree "~/org/journal.org")
+	      ("t" "Todo" entry (file+headline "~/org/todo.org" "Tasks") ;;Things That I need to do. 
+	       "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
+	      ("j" "Journal" entry (file+datetree "~/org/journal.org")  ;; Things That I have done
 	       "* %?\nEntered on %U\n %i\n %a")
 	      )))
-(setq org-default-notes-file (concat org-directory "~/org/notes.org"))
 
 ;; Org-link
 (global-set-key "\C-cl" 'org-store-link)
@@ -47,7 +107,6 @@
 			    ("ME" . ?m)
 			    ("STUDY" . ?s))))
 
-;;图文混排模式
 ;;(iimage-mode 1)
 (add-hook 'org-mode-hook 'org-toggle-inline-images)
 

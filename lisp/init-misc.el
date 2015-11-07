@@ -2,6 +2,8 @@
 ;; Misc config - 与模式无关的一些通用配置
 ;;----------------------------------------------------------------------------
 (fset 'yes-or-no-p 'y-or-n-p)
+;; ask me when I quit emacs
+(set-variable 'confirm-kill-emacs 'yes-or-no-p)
 
 (setq-default regex-tool-backend 'perl)
 
@@ -40,7 +42,7 @@
 (progn
   ;; For Linux
   (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
-  (global-set-key (kbd "<C-mouse-6>") 'text-scale-decrease)))
+  (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)))
 
 ;;
 ;; 自动插入文件头
@@ -55,5 +57,11 @@
             (c-mode . "Template.c")
             )
            auto-insert-alist))
+
+(auto-fill-mode)
+
+(global-set-key "\C-x\C-r" 'prefix-region)
+(global-set-key "\C-x\C-l" 'goto-line)
+(global-set-key "\C-x\C-y" 'copy-region-as-kill)
 
 (provide 'init-misc)
