@@ -10,7 +10,7 @@
 
 ;;(org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"mystyles.css\">")
 (setq org-fast-tag-selection-single-key nil)
-(setq org-refile-targets (quote (("~/org/todo.org":maxlevel . 1) ("~/org/someday.org":level . 2))))
+(setq org-refile-targets (quote (("~/org/gtd.org":maxlevel . 1) ("~/org/someday.org":level . 2))))
 (setq org-reverse-note-order nil)
 (setq org-tags-column -78)
 (setq org-tags-match-list-sublevels nil)
@@ -21,7 +21,7 @@
 (setq org-insert-mode-line-in-empty-file t)
 ;; Org-Agenda
 (global-set-key "\C-ca" 'org-agenda)
-(setq org-agenda-files (quote ("~/org/todo.org" "~/org/personal.org")))
+(setq org-agenda-files (quote ("~/org/gtd.org" "~/org/personal.org")))
 (setq org-agenda-ndays 7)
 (setq org-agenda-repeating-timestamp-show-all nil)
 (setq org-agenda-restore-windows-after-quit t)
@@ -37,18 +37,16 @@
 (add-hook 'org-agenda-mode-hook 'hl-line-mode)
 
 ;; org-remober mode
-;;(autoload 'remember ``remember'' nil t)
-;;(autoload 'remember-region ``remember'' nil t)
-
-(define-key global-map (kbd "<f9> r") 'remember)
-(define-key global-map (kbd "<f9> R") 'remember-region)
-(global-set-key "\C-cr" 'org-remember)
+(setq remember-annotation-functions '(org-remember-annotation))
+(setq remember-handler-functions '(org-remember-handler))
+(add-hook 'remember-mode-hook 'org-remember-apply-template)
+(define-key global-map "\C-cr" 'org-remember)
 
 (setq org-remember-templates
      '(
-      ("Todo" ?t "* TODO %^{Brief Description} %^g\n%?\nAdded: %U" "~/org/todo.org" "Tasks")
-      ("Private" ?p "\n* %^{topic} %T \n%i%?\n" "~/org/personal.org" "Personal Affairs")
-     ; ("WordofDay" ?w "\n* %^{topic} \n%i%?\n" "C:/charles/gtd/wotd.org")
+      ("Todo" ?t "* TODO %^{Brief Description} %^g\n%?\nAdded: %U" "gtd.org" "Tasks")
+      ("Journal" ?j "\n* %^{topic} %T \n%i%?\n" "journal.org")
+      ("Contact" ?c "\n* %^{Name} :CONTACT:\n%[contemp.txt]\n" "personal.org")
       ))
 
 (setq org-agenda-custom-commands
@@ -109,6 +107,9 @@
 
 ;;(iimage-mode 1)
 (add-hook 'org-mode-hook 'org-toggle-inline-images)
+
+;;auto fill mode
+(add-hook 'org-mode-hook 'auto-fill-mode)
 
 ;;TODO keywords
 (setq org-todo-keywords

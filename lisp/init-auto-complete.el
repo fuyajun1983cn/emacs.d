@@ -3,6 +3,7 @@
 ;;**************auto-complete模式相关配置*******;;
 ;;                                             ;;
 ;;*********************************************;;
+(require-package 'auto-complete)
 (require 'auto-complete-config)
 (ac-config-default)
 ;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/mode/auto-complete/dict")

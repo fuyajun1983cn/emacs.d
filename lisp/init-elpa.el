@@ -71,6 +71,7 @@ locate PACKAGE."
 ;; some common package
 (require-package 'scratch)
 (require-package 'diminish)
+(require-package 'cmake-mode)
 
 (defun sanityinc/set-tabulated-list-column-width (col-name width)
   "Set any column with name COL-NAME to the given WIDTH."

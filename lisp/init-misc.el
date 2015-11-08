@@ -58,8 +58,6 @@
             )
            auto-insert-alist))
 
-(auto-fill-mode)
-
 (global-set-key "\C-x\C-r" 'prefix-region)
 (global-set-key "\C-x\C-l" 'goto-line)
 (global-set-key "\C-x\C-y" 'copy-region-as-kill)
