@@ -63,6 +63,7 @@
 ;;(require 'init-lisp)
 ;;(require 'init-slime)
 ;;(require 'init-common-lisp)
+(require 'init-editing-utils)
 
 (when *spell-check-support-enabled*
   (require 'init-spelling)
