@@ -42,6 +42,8 @@
 (require 'init-gui-frames)
 ;;(require 'init-isearch)
 
+(require 'init-editing-utils)
+
 (require 'init-ido)
 (require 'init-auto-complete)
 (require 'init-yasnippet)
@@ -63,7 +65,6 @@
 ;;(require 'init-lisp)
 ;;(require 'init-slime)
 ;;(require 'init-common-lisp)
-(require 'init-editing-utils)
 
 (when *spell-check-support-enabled*
   (require 'init-spelling)

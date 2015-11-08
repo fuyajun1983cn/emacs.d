@@ -18,7 +18,7 @@
 			 ;;("gun" . "http://elpa.gnu.org/packages/")
 			 ))
 ;; add it to the end of the list
-(add-to-list 'package-archives '("SC" . "http://joseito.republika.pl/sunrise-commander/") t)
+;;(add-to-list 'package-archives '("SC" . "http://joseito.republika.pl/sunrise-commander/") t)
 
 ;; If gpg cannot be found, signature checking will fail, so we
 ;; conditionally enable it according to whether gpg is available. We
