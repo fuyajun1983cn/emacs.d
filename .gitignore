@@ -47,3 +47,4 @@ elpa/
 *.dat
 server/
 bookmarks
+saveplace.el

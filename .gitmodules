@@ -1,9 +1,6 @@
 [submodule "site-lisp/emacs-theme-gruvbox"]
 	path = site-lisp/emacs-theme-gruvbox
 	url = https://github.com/greduan/emacs-theme-gruvbox.git
-[submodule "site-lisp/popup"]
-	path = site-lisp/popup
-	url = https://github.com/auto-complete/popup-el.git
 [submodule "site-lisp/powerline"]
 	path = site-lisp/powerline
 	url = https://github.com/milkypostman/powerline.git

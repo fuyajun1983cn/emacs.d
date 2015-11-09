@@ -62,4 +62,14 @@
 (global-set-key "\C-x\C-l" 'goto-line)
 (global-set-key "\C-x\C-y" 'copy-region-as-kill)
 
+;; restore opened files, save cursor position, save minibuffer history
+(desktop-save-mode 1)
+
+(require 'saveplace)
+(setq save-place-file (concat user-emacs-directory "saveplace.el") ) ; use standard emacs dir
+(setq-default save-place t)
+
+;; Save minibuffer history
+(savehist-mode 1)﻿
+
 (provide 'init-misc)

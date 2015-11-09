@@ -10,7 +10,7 @@
 
 ;;(org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"mystyles.css\">")
 (setq org-fast-tag-selection-single-key nil)
-(setq org-refile-targets (quote (("~/org/gtd.org":maxlevel . 1) ("~/org/someday.org":level . 2))))
+(setq org-refile-targets (quote (("gtd.org":maxlevel . 1) ("someday.org":level . 2) ("journal.org":level . 3))))
 (setq org-reverse-note-order nil)
 (setq org-tags-column -78)
 (setq org-tags-match-list-sublevels nil)
@@ -60,7 +60,6 @@
           (tags-todo "OFFICE")
           (tags-todo "HOME")
           (tags-todo "COMPUTER")
-          (tags-todo "DVD")
           (tags-todo "READING")))
 
 ("D" "Daily Action List"
@@ -84,7 +83,7 @@
 (global-set-key "\C-cc" 'org-capture)
 (setq org-capture-templates
       (quote (
-	      ("t" "Todo" entry (file+headline "~/org/todo.org" "Tasks") ;;Things That I need to do. 
+	      ("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks") ;;Things That I need to do. 
 	       "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
 	      ("j" "Journal" entry (file+datetree "~/org/journal.org")  ;; Things That I have done
 	       "* %?\nEntered on %U\n %i\n %a")
