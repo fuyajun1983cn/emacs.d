@@ -70,6 +70,8 @@
 (setq-default save-place t)
 
 ;; Save minibuffer history
-(savehist-mode 1)﻿
+;;(savehist-mode 1)
+
+(defalias 'list-buffers 'ibuffer) ; make ibuffer default
 
 (provide 'init-misc)

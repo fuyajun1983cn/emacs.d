@@ -36,19 +36,6 @@
 (setq org-agenda-include-diary nil)
 (add-hook 'org-agenda-mode-hook 'hl-line-mode)
 
-;; org-remober mode
-(setq remember-annotation-functions '(org-remember-annotation))
-(setq remember-handler-functions '(org-remember-handler))
-(add-hook 'remember-mode-hook 'org-remember-apply-template)
-(define-key global-map "\C-cr" 'org-remember)
-
-(setq org-remember-templates
-     '(
-      ("Todo" ?t "* TODO %^{Brief Description} %^g\n%?\nAdded: %U" "gtd.org" "Tasks")
-      ("Journal" ?j "\n* %^{topic} %T \n%i%?\n" "journal.org")
-      ("Contact" ?c "\n* %^{Name} :CONTACT:\n%[contemp.txt]\n" "personal.org")
-      ))
-
 (setq org-agenda-custom-commands
 '(
 
@@ -83,10 +70,14 @@
 (global-set-key "\C-cc" 'org-capture)
 (setq org-capture-templates
       (quote (
-	      ("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks") ;;Things That I need to do. 
+	      ("t" "Todo" entry (file+headline "gtd.org" "Tasks") ;;Things That I need to do. 
 	       "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
-	      ("j" "Journal" entry (file+datetree "~/org/journal.org")  ;; Things That I have done
+	      ("j" "Journal" entry (file+datetree "journal.org")  ;; Things That I have done
 	       "* %?\nEntered on %U\n %i\n %a")
+              ("c" "Contact" entry (file+headline "personal.org" "Contacts") ;; contacts info
+               "\n* %^{Name} :CONTACT:\n%[contemp.txt]\n")
+	      ("s" "Someday" entry (file+headline "someday.org" "Tasks") ;;Things That I may consider  to do. 
+	       "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
 	      )))
 
 ;; Org-link
@@ -95,7 +86,6 @@
   (lambda ()
     (define-key org-mode-map "\C-n" 'org-next-link)
     (define-key org-mode-map "\C-p" 'org-previous-link)))
-
 
 ;;TAGS
 (setq org-tag-alist (quote (("EMACS" . ?e)
