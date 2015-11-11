@@ -70,6 +70,6 @@
 (setq-default save-place t)
 
 ;; Save minibuffer history
-(savehist-mode 1)﻿
+;;(savehist-mode 1)
 
 (provide 'init-misc)
