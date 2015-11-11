@@ -72,4 +72,6 @@
 ;; Save minibuffer history
 ;;(savehist-mode 1)
 
+(defalias 'list-buffers 'ibuffer) ; make ibuffer default
+
 (provide 'init-misc)

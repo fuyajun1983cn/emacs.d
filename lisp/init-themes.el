@@ -3,6 +3,7 @@
 ;;============= 基本配色方案====================;;
 ;;                                                                                                         ;;
 ;;============================================;;
+(require-package 'color-theme)
 (require-package 'color-theme-sanityinc-solarized)
 (require-package 'color-theme-sanityinc-tomorrow)
 
@@ -27,7 +28,6 @@
       (load-theme theme t)))
   (custom-set-variables `(custom-enabled-themes (quote ,custom-enabled-themes))))
 
-(add-hook 'after-init-hook 'default-theme)
 
 
 
@@ -54,5 +54,7 @@
   (interactive)
   (setq custom-enabled-themes '(gruvbox airline-dark))
   (reapply-themes))
+
+(add-hook 'after-init-hook 'default-theme)
 
 (provide 'init-themes)
