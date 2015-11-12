@@ -48,3 +48,4 @@ elpa/
 server/
 bookmarks
 saveplace.el
+abbrev_defs
