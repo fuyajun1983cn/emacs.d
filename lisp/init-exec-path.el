@@ -8,6 +8,7 @@
            "E:/cygwin/usr/local/bin" 
            "E:/cygwin/usr/bin" 
            "E:/cygwin/bin" 
+           "E:/android4.4/adt-bundle-windows-x86-20131030/sdk/platform-tools"
            ) )
         )
 

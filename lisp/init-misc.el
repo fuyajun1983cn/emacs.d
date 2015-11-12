@@ -74,4 +74,13 @@
 
 (defalias 'list-buffers 'ibuffer) ; make ibuffer default
 
+;always show line numbers
+(global-linum-mode 1)
+
+;hilight current line globally
+(global-hl-line-mode 1)
+
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
+
 (provide 'init-misc)
