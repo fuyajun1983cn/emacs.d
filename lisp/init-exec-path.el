@@ -1,11 +1,19 @@
-(require-package 'exec-path-from-shell)
 
-(after-load 'exec-path-from-shell
-  (dolist (var '("SSH_AUTH_SOCK" "SSH_AGENT_PID" "GPG_AGENT_INFO" "LANG" "LC_CTYPE"))
-    (add-to-list 'exec-path-from-shell-variables var)))
+(when *is-a-windows* 
+  (let (
+        (mypaths
+         '(
+          "C:/Windows/system32/"
+          "C:/Windows/"
+           "E:/cygwin/usr/local/bin" 
+           "E:/cygwin/usr/bin" 
+           "E:/cygwin/bin" 
+           ) )
+        )
 
+    (setenv "PATH" (mapconcat 'identity mypaths ";") )
 
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+    (setq exec-path (append mypaths (list "." exec-directory)) )
+    ) )
 
 (provide 'init-exec-path)

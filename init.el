@@ -8,7 +8,7 @@
 (require 'init-benchmarking) ;; Measure startup time
 
 (defconst *spell-check-support-enabled* nil) ;; Enable with t if you prefer
-(defconst *is-a-windows* (eq system-type'windows-nt))
+(defconst *is-a-windows* (string-eq system-type "windows-nt"))
 
 ;;----------------------------------------------------------------------------
 ;; Temporarily reduce garbage collection during startup
@@ -27,7 +27,7 @@
 (require 'init-site-lisp) ;; Must come before elpa, as it may provide package.el
 ;; Calls (package-initialize)
 (require 'init-elpa)      ;; Machinery for installing required packages
-;;(require 'init-exec-path) ;; Set up $PATH
+(require 'init-exec-path) ;; Set up $PATH
 
 ;;----------------------------------------------------------------------------
 ;; Allow users to provide an optional "init-preload-local.el"
