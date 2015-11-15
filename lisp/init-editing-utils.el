@@ -17,7 +17,8 @@
  delete-selection-mode t
  ediff-split-window-function 'split-window-horizontally
  ediff-window-setup-function 'ediff-setup-windows-plain
- indent-tabs-mode nil
+ indent-tabs-mode nil  ;;make indent commands use space only (never tab character)
+ tab-width 8
  make-backup-files nil
  mouse-yank-at-point t
  save-interprogram-paste-before-kill t
