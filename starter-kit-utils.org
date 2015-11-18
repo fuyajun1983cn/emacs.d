@@ -1,0 +1,107 @@
+#+TITLE: 一些实用函数
+#+AUTHOR: Yajun Fu
+#+EMAIL: fuyajun1983cn AT 163 DOT com
+#+STARTUP:overview
+#+STARTUP: hidestars
+#+OPTIONS: toc:nil
+
+* some useful tiny funciton
+
+** 定义after-load函数
+#+BEGIN_SRC emacs-lisp
+  (if (fboundp 'with-eval-after-load)
+      (defalias 'after-load 'with-eval-after-load)
+    (defmacro after-load (feature &rest body)
+      "After FEATURE is loaded, evaluate BODY."
+      (declare (indent defun))
+      `(eval-after-load ,feature
+         '(progn ,@body))))
+
+#+END_SRC
+** 删除当前文件 
+#+BEGIN_SRC emacs-lisp
+  ;;----------------------------------------------------------------------------
+  ;; Delete the current file
+  ;;----------------------------------------------------------------------------
+  (defun delete-this-file ()
+    "Delete the current file, and kill the buffer."
+    (interactive)
+    (or (buffer-file-name) (error "No file is currently being edited"))
+    (when (yes-or-no-p (format "Really delete '%s'?"
+                               (file-name-nondirectory buffer-file-name)))
+      (delete-file (buffer-file-name))
+      (kill-this-buffer)))
+
+#+END_SRC
+   
+** 重命名当前文件 
+#+BEGIN_SRC emacs-lisp
+  ;;----------------------------------------------------------------------------
+  ;; Rename the current file
+  ;;----------------------------------------------------------------------------
+  (defun rename-this-file-and-buffer (new-name)
+    "Renames both current buffer and file it's visiting to NEW-NAME."
+    (interactive "sNew name: ")
+    (let ((name (buffer-name))
+          (filename (buffer-file-name)))
+      (unless filename
+        (error "Buffer '%s' is not visiting a file!" name))
+      (if (get-buffer new-name)
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (when (file-exists-p filename)
+           (rename-file filename new-name 1))
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)))))
+
+
+#+END_SRC
+   
+** 浏览当前的HTML文件  
+#+BEGIN_SRC emacs-lisp
+  ;;----------------------------------------------------------------------------
+  ;; Browse current HTML file
+  ;;----------------------------------------------------------------------------
+  (defun browse-current-file ()
+    "Open the current file as a URL using `browse-url'."
+    (interactive)
+    (let ((file-name (buffer-file-name)))
+      (if (tramp-tramp-file-p file-name)
+          (error "Cannot open tramp file")
+        (browse-url (concat "file://" file-name)))))
+
+
+#+END_SRC
+   
+** 通过外部程序打开文件  
+#+BEGIN_SRC emacs-lisp
+  ;;-------------------------------------------------------------
+  ;;Open file in External App
+  ;;-------------------------------------------------------------
+  (defun xah-open-in-external-app()
+    "Open the current file or dired marked files in texternal app.
+  this app is chosen from your OS's preference"
+    (interactive)
+    (let* (
+           (file-list
+            (if (string-equal major-mode "dired-mode")
+                (dired-get-marked-files)
+              (list (buffer-file-name))))
+           (do-it-p (if (<= (length file-list) 5)
+                        t
+                      (y-or-n-p "Open more than 5 files? ")))
+           )
+      (when do-it-p
+        (cond
+         ((string-equal system-type "windows-nt")
+          (mapc
+           (lambda (fPath)
+             (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" fPath t t))) file-list))
+         ((string-equal system-type "gnu/linux")
+          (mapc
+           (lambda (fPath) (let ((process-connection-type nil)) (start-process " " nil "xdg-open" fPath))) file-list)))))
+    )
+  ;;set a short key for it
+  (global-set-key (kbd "<C-f5>") 'xah-open-in-external-app)
+
+#+END_SRC

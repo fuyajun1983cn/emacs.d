@@ -1,0 +1,231 @@
+#+TITLE: Starter Kit Org
+#+OPTIONS: toc:nil num:nil ^:nil
+
+This is part of the [[file:starter-kit.org][Emacs Starter Kit]].
+
+* Starter Kit Org
+Configuration for the eminently useful [[http://orgmode.org/][Org Mode]].
+
+Org-mode is for keeping notes, maintaining ToDo lists, doing project
+planning, and authoring with a fast and effective plain-text system.
+Org Mode can be used as a very simple folding outliner or as a complex
+GTD system or tool for reproducible research and literate programming.
+
+For more information on org-mode check out [[http://orgmode.org/worg/][worg]], a large Org-mode wiki
+which is also *implemented using* Org-mode and [[http://git-scm.com/][git]].
+
+** General Settings 
+#+BEGIN_SRC emacs-lisp
+  ;; General Settings
+
+  (setq org-directory "~/org/")
+  (setq org-default-notes-file (concat org-directory "someday.org"))
+
+  ;;(org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"mystyles.css\">")
+  (setq org-fast-tag-selection-single-key nil)
+  (setq org-refile-targets (quote (("gtd.org":maxlevel . 1) ("someday.org":level . 2) ("journal.org":level . 3))))
+  (setq org-reverse-note-order nil)
+  (setq org-tags-column -78)
+  (setq org-tags-match-list-sublevels nil)
+  (setq org-time-stamp-rounding-minutes 5)
+  (setq org-use-fast-todo-selection t)
+  (setq org-use-tag-inheritance nil)
+  (setq org-deadline-warning-days 7)
+  (setq org-insert-mode-line-in-empty-file t)
+
+  ;;TAGS
+  (setq org-tag-alist (quote (("EMACS" . ?e)
+                              ("WIFI" . ?w)
+                              ("BUG" . ?b)
+                              ("ME" . ?m)
+                              ("STUDY" . ?s))))
+
+  ;;auto fill mode
+  (add-hook 'org-mode-hook 'auto-fill-mode)
+
+  ;;TODO keywords
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED")
+          (sequence "Submitted" "Assigned" "Working" "|" "Resolved")))
+  (setq org-log-done 'time)
+  (setq org-log-done 'note)
+
+
+#+END_SRC
+** Org-Mode Hook -- Keybindings
+   :PROPERTIES:
+   :CUSTOM_ID: keybindings
+   :END:
+#+begin_src emacs-lisp
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (local-set-key "\M-\C-n" 'outline-next-visible-heading)
+              (local-set-key "\M-\C-p" 'outline-previous-visible-heading)
+              (local-set-key "\M-\C-u" 'outline-up-heading)
+              ;; table
+              (local-set-key "\M-\C-w" 'org-table-copy-region)
+              (local-set-key "\M-\C-y" 'org-table-paste-rectangle)
+              (local-set-key "\M-\C-l" 'org-table-sort-lines)
+              ;; display images
+              (local-set-key "\M-I" 'org-toggle-iimage-in-org)))
+#+end_src
+
+** Speed keys
+   :PROPERTIES:
+   :CUSTOM_ID: speed-keys
+   :END:
+Speed commands enable single-letter commands in Org-mode files when
+the point is at the beginning of a headline, or at the beginning of a
+code block.
+
+See the `=org-speed-commands-default=' variable for a list of the keys
+and commands enabled at the beginning of headlines.  All code blocks
+are available at the beginning of a code block, the following key
+sequence =C-c C-v h= (bound to `=org-babel-describe-bindings=') will
+display a list of the code blocks commands and their related keys.
+
+#+begin_src emacs-lisp
+  (setq org-use-speed-commands t)
+#+end_src
+
+** Code blocks
+   :PROPERTIES:
+   :CUSTOM_ID: babel
+   :END:
+This activates a number of widely used languages, you are encouraged
+to activate more languages using the customize interface for the
+`=org-babel-load-languages=' variable, or with an elisp form like the
+one below.  The customize interface of `=org-babel-load-languages='
+contains an up to date list of the currently supported languages.
+#+begin_src emacs-lisp :tangle no
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (python . t)
+     (sh . t)))
+#+end_src
+
+You are encouraged to add the following to your personal configuration
+although it is not added by default as a security precaution.
+#+begin_src emacs-lisp :tangle no
+  (setq org-confirm-babel-evaluate nil)
+#+end_src
+
+** Code block fontification
+   :PROPERTIES:
+   :CUSTOM_ID: code-block-fontification
+   :END:
+The following displays the contents of code blocks in Org-mode files
+using the major-mode of the code.  It also changes the behavior of
+=TAB= to as if it were used in the appropriate major mode.  This means
+that reading and editing code form inside of your Org-mode files is
+much more like reading and editing of code using its major mode.
+#+begin_src emacs-lisp
+  (setq org-src-fontify-natively t)
+  (setq org-src-tab-acts-natively t)
+#+end_src
+
+** The Library of Babel
+   :PROPERTIES:
+   :CUSTOM_ID: library-of-babel
+   :END:
+The library of babel contains makes many useful functions available
+for use by code blocks in *any* emacs file.  See the actual
+=library-of-babel.org= (located in the Org-mode =contrib/babel=
+directory) file for information on the functions, and see
+[[http://orgmode.org/worg/org-contrib/babel/intro.php#library-of-babel][worg:library-of-babel]] for more usage information.
+
+Code blocks can be loaded into the library of babel from any Org-mode
+file using the `org-babel-lob-ingest' function.
+
+** Org Agenda
+#+BEGIN_SRC emacs-lisp
+  ;; Org-Agenda
+  (global-set-key "\C-ca" 'org-agenda)
+  (setq org-agenda-files (quote ("~/org/gtd.org" "~/org/personal.org")))
+  (setq org-agenda-ndays 7)
+  (setq org-agenda-repeating-timestamp-show-all nil)
+  (setq org-agenda-restore-windows-after-quit t)
+  (setq org-agenda-show-all-dates t)
+  (setq org-agenda-skip-deadline-if-done t)
+  (setq org-agenda-sorting-strategy (quote ((agenda time-up priority-down tag-up) (todo tag-up))))
+  (setq org-agenda-start-on-weekday nil)
+  (setq org-agenda-todo-ignore-deadlines t)
+  (setq org-agenda-todo-ignore-scheduled t)
+  (setq org-agenda-todo-ignore-with-date t)
+  (setq org-agenda-window-setup (quote other-window))
+  (setq org-agenda-include-diary nil)
+  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
+
+  (setq org-agenda-custom-commands
+  '(
+
+  ("P" "Projects"   
+  ((tags "PROJECT")))
+
+  ("H" "Office and Home Lists"
+       ((agenda)
+            (tags-todo "OFFICE")
+            (tags-todo "HOME")
+            (tags-todo "COMPUTER")
+            (tags-todo "READING")))
+
+  ("D" "Daily Action List"
+       (
+            (agenda "" ((org-agenda-ndays 1)
+                        (org-agenda-sorting-strategy
+                         (quote ((agenda time-up priority-down tag-up) )))
+                        (org-deadline-warning-days 0)
+                        ))))
+  )
+  )
+
+  (defun gtd ()
+      (interactive)
+      (find-file  (concat org-directory "gtd.org"))
+  )
+  (global-set-key (kbd "C-c g") 'gtd)
+
+
+#+END_SRC
+** Org Capture
+#+BEGIN_SRC emacs-lisp
+  (global-set-key "\C-cc" 'org-capture)
+  (setq org-capture-templates
+        (quote (
+                ("t" "Todo" entry (file+headline "gtd.org" "Tasks") ;;Things That I need to do. 
+                 "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
+                ("j" "Journal" entry (file+datetree "journal.org")  ;; Things That I have done
+                 "* %?\nEntered on %U\n %i\n %a")
+                ("c" "Contact" entry (file+headline "personal.org" "Contacts") ;; contacts info
+                 "\n* %^{Name} :CONTACT:\n%[contemp.txt]\n")
+                ("s" "Someday" entry (file+headline "someday.org" "Tasks") ;;Things That I may consider  to do. 
+                 "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
+                )))
+
+  ;; Org-link
+  (global-set-key "\C-cl" 'org-store-link)
+  (add-hook 'org-load-hook
+    (lambda ()
+      (define-key org-mode-map "\C-n" 'org-next-link)
+      (define-key org-mode-map "\C-p" 'org-previous-link)))
+
+  ;;TAGS
+  (setq org-tag-alist (quote (("EMACS" . ?e)
+                              ("WIFI" . ?w)
+                              ("BUG" . ?b)
+                              ("ME" . ?m)
+                              ("STUDY" . ?s))))
+
+#+END_SRC
+   
+** Org Links
+#+BEGIN_SRC emacs-lisp
+  ;; Org-link
+  (global-set-key "\C-cl" 'org-store-link)
+  (add-hook 'org-load-hook
+    (lambda ()
+      (define-key org-mode-map "\C-n" 'org-next-link)
+      (define-key org-mode-map "\C-p" 'org-previous-link)))
+
+#+END_SRC

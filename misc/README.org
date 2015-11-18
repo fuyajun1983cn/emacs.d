@@ -1,6 +1,0 @@
-#-*-mode:org-*-;encoding:utf-8
-#+STARTUP:showall
-#+STARTUP:hidestars
-
-* 本目录主要放置一些杂项
-** yasnippet: yas-snippet代码片断
