@@ -1,4 +1,4 @@
-#+TITLE: 一些短小有用的设置
+#+TITLE: 一些简短实用的设置
 #+OPTIONS: toc:nil num:nil ^:nil
 
 
@@ -220,3 +220,38 @@ let them live in the =backups/= directory inside of the starter kit.
   ;;(add-to-list 'ac-user-dictionary-files "~/.emacs.d/mydict")
 
 #+END_SRC
+** Scale Font size
+#+begin_src emacs-lisp 
+  ;;(define-key global-map (kbd "C-+") 'text-scale-increase)
+  ;;(define-key global-map (kbd "C--") 'text-scale-decrease)
+  ;;
+  ;;放大字体: Ctrl-x Ctrl-+ 或 Ctrl-x Ctrl-=
+  ;;缩小字体: Ctrl-x Ctrl–
+  ;;重置字体: Ctrl-x Ctrl-0
+  (if *is-a-windows*
+      (progn
+          ;; For Windows
+         (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
+         (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease))
+  (progn
+    ;; For Linux
+    (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
+    (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)))
+
+#+end_src
+   
+** Magit Mode
+   Magit模式是emacs下的一个非常好用的git操作界面。  
+*** 安装
+    #+BEGIN_SRC emacs-lisp
+          (starter-kit-install-if-needed 'magit)
+    #+END_SRC
+
+*** 基本操作指南
+
+    1. 查看项目状态  
+       #+BEGIN_SRC sh
+       magit-status
+       #+END_SRC
+
+       

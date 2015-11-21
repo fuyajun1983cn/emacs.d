@@ -60,3 +60,7 @@ agent/*
 !literate-starter-kit-pkg.el
 literate-starter-kit/
 literate-starter-kit.tar
+bookmarks
+*.jar
+frame-restore-parameters
+history

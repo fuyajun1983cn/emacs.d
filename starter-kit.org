@@ -297,10 +297,11 @@ interested in the actual code implementing the starter kit.
 - ELPA archive repositories and two packages to install by default.
   #+begin_src emacs-lisp
     (setq package-archives
-          '(("gnu"         . "http://elpa.gnu.org/packages/")
-            ("org"         . "http://orgmode.org/elpa/")
-            ("melpa"       . "http://melpa.org/packages/")
-            ("marmalade"   . "http://marmalade-repo.org/packages/")))
+          '(("gnu" . "http://elpa.gnu.org/packages/")   
+;            ("org" . "http://orgmode.org/elpa/")   
+;            ("melpa" . "http://melpa.org/packages/")    
+            ("marmalade" . "http://marmalade-repo.org/packages/")))
+
     (package-initialize)
 
     (defvar starter-kit-packages nil
@@ -425,7 +426,7 @@ everyone using the starter kit.
 
 - Key Bindings in [[file:starter-kit-bindings.org][starter-kit-bindings]]
   #+begin_src emacs-lisp
-  (starter-kit-load "starter-kit-bindings.org")
+  (starter-kit-load "bindings")
   #+end_src
 
 - Miscellaneous settings in [[file:starter-kit-misc.org][starter-kit-misc]]
@@ -437,7 +438,7 @@ everyone using the starter kit.
   #+begin_src emacs-lisp
   (starter-kit-load "starter-kit-registers.org")
   #+end_src
-
+  
 ** Load User/System Specific Files
 *** System/User specific customizations
 You can keep system- or user-specific customizations here in either
@@ -486,7 +487,7 @@ After we've loaded all the Starter Kit defaults, lets load the User's stuff.
 #+begin_src emacs-lisp
   (load custom-file 'noerror)
 #+end_src
-
+    
 *** My favoriate Packages
 
 #+BEGIN_SRC emacs-lisp

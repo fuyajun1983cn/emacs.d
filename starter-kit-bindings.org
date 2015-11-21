@@ -27,26 +27,6 @@ Key Bindings.
 (global-set-key [f1] 'menu-bar-mode)
 #+end_src
 
-** Font size
-#+begin_src emacs-lisp 
-  ;;(define-key global-map (kbd "C-+") 'text-scale-increase)
-  ;;(define-key global-map (kbd "C--") 'text-scale-decrease)
-  ;;
-  ;;放大字体: Ctrl-x Ctrl-+ 或 Ctrl-x Ctrl-=
-  ;;缩小字体: Ctrl-x Ctrl–
-  ;;重置字体: Ctrl-x Ctrl-0
-  (if *is-a-windows*
-      (progn
-          ;; For Windows
-         (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
-         (global-set-key (kbd "<C-wheel-down>") 'text-scale-decrease))
-  (progn
-    ;; For Linux
-    (global-set-key (kbd "<C-mouse-4>") 'text-scale-increase)
-    (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)))
-
-#+end_src
-
 ** Use regex searches by default.
 #+begin_src emacs-lisp 
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
@@ -98,21 +78,6 @@ Key Bindings.
                  (regexp-quote isearch-string))))))
 #+end_src
 
-** Org-mode
-Two global binding for Org-mode (see [[file:starter-kit-org.org][starter-kit-org]])
-
-The [[http://orgmode.org/manual/Agenda-Views.html#Agenda-Views][Org-mode agenda]] is good to have close at hand
-#+begin_src emacs-lisp
-  (define-key global-map "\C-ca" 'org-agenda)
-#+end_src
-
-Org-mode supports [[http://orgmode.org/manual/Hyperlinks.html#Hyperlinks][links]], this command allows you to store links
-globally for later insertion into an Org-mode buffer.  See
-[[http://orgmode.org/manual/Handling-links.html#Handling-links][Handling-links]] in the Org-mode manual.
-#+begin_src emacs-lisp
-  (define-key global-map "\C-cl" 'org-store-link)
-#+end_src
-
 ** Rgrep
 Rgrep is infinitely useful in multi-file projects.
 
@@ -121,3 +86,4 @@ Rgrep is infinitely useful in multi-file projects.
 #+begin_src emacs-lisp
   (define-key global-map "\C-x\C-r" 'rgrep)
 #+end_src
+
