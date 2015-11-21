@@ -389,6 +389,27 @@ interested in the actual code implementing the starter kit.
   (defconst *is-a-windows* (string= system-type "windows-nt"))
 #+END_SRC
 
+- Custome Path 
+#+BEGIN_SRC emacs-lisp
+  (when *is-a-windows* 
+    (let (
+          (mypaths
+           '(
+            "C:/Windows/system32/"
+            "C:/Windows/"
+             "E:/cygwin/usr/local/bin" 
+             "E:/cygwin/usr/bin" 
+             "E:/cygwin/bin" 
+             "E:/android4.4/adt-bundle-windows-x86-20131030/sdk/platform-tools"
+             ) )
+          )
+
+      (setenv "PATH" (mapconcat 'identity mypaths ";") )
+
+      (setq exec-path (append mypaths (list "." exec-directory)) )
+      ))
+#+END_SRC
+
 ** Starter kit core
    :PROPERTIES:
    :CUSTOM_ID: starter-kit-core
@@ -467,12 +488,12 @@ After we've loaded all the Starter Kit defaults, lets load the User's stuff.
 #+end_src
 
 *** My favoriate Packages
-#+name: load yasnippet
+
 #+BEGIN_SRC emacs-lisp
   (starter-kit-load "utils")
   (starter-kit-load "misc")
   (starter-kit-load "yasnippet")
-  (starter-kit-load "evil")
+  ;;(starter-kit-load "evil")
   (starter-kit-load "editing")
   (starter-kit-load "org")
 #+END_SRC

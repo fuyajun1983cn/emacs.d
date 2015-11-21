@@ -203,19 +203,6 @@ file using the `org-babel-lob-ingest' function.
                  "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
                 )))
 
-  ;; Org-link
-  (global-set-key "\C-cl" 'org-store-link)
-  (add-hook 'org-load-hook
-    (lambda ()
-      (define-key org-mode-map "\C-n" 'org-next-link)
-      (define-key org-mode-map "\C-p" 'org-previous-link)))
-
-  ;;TAGS
-  (setq org-tag-alist (quote (("EMACS" . ?e)
-                              ("WIFI" . ?w)
-                              ("BUG" . ?b)
-                              ("ME" . ?m)
-                              ("STUDY" . ?s))))
 
 #+END_SRC
    
@@ -227,5 +214,6 @@ file using the `org-babel-lob-ingest' function.
     (lambda ()
       (define-key org-mode-map "\C-n" 'org-next-link)
       (define-key org-mode-map "\C-p" 'org-previous-link)))
+
 
 #+END_SRC
