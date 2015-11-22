@@ -255,4 +255,34 @@ let them live in the =backups/= directory inside of the starter kit.
        magit-status
        #+END_SRC
 
+    2. 查看差异
+
+       使用Tab键可以调用diff查看差异（magit-section-toggle）
+
+    3. 常用的几个命令
+       - magit-stage  Press [s] to add file unser cursor to stage.
+
+       - magit-stage-modified  Press [S] to add all tracked files to stage.
+
+       - magit-unstage  Press [u] to unstage the file under cursor.
+
+       - magit-reset-index  press [U] to unstage all staged files.
+
+       - Press [c c ] to write a commit message, then [C - c C -c ] to
+         commit.
+
+    4. git push
+
+       press [P P] to push. (magit-push-pop)
+
+    5. git pull
+
+       press [F F] to pull. (magit-pull-popup)
+
+    6. git log
+
+       call magit-log to see your commit log. Press Enter on a a line
+       to see its diff. 
+
+
        
