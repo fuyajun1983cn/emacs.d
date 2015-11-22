@@ -67,10 +67,10 @@ evaluated a theme is activated using the =load-theme= function.
   (powerline-default-theme)
 
   (require 'airline-themes)
-  (load-theme 'airline-dark)
+  (load-theme 'airline-dark t)
 
   (add-to-list 'custom-theme-load-path (expand-file-name "src/emacs-theme-gruvbox" starter-kit-dir))
-  (load-theme 'gruvbox)
+  (load-theme 'gruvbox t)
 #+END_SRC
 
 ** Window systems
