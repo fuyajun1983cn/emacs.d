@@ -139,6 +139,9 @@ Code blocks can be loaded into the library of babel from any Org-mode
 file using the `org-babel-lob-ingest' function.
 
 ** Org Agenda
+   :PROPERTIES:
+   :CUSTOM_ID: org-agenda-settings
+   :END:
 #+BEGIN_SRC emacs-lisp
   ;; Org-Agenda
   (global-set-key "\C-ca" 'org-agenda)
@@ -189,6 +192,9 @@ file using the `org-babel-lob-ingest' function.
 
 #+END_SRC
 ** Org Capture
+   :PROPERTIES:
+   :CUSTOM_ID: org-capture-settings
+   :END:
 #+BEGIN_SRC emacs-lisp
   (global-set-key "\C-cc" 'org-capture)
   (setq org-capture-templates
@@ -207,6 +213,9 @@ file using the `org-babel-lob-ingest' function.
 #+END_SRC
    
 ** Org Links
+   :PROPERTIES:
+   :CUSTOM_ID: org-links-settings
+   :END:
 #+BEGIN_SRC emacs-lisp
   ;; Org-link
   (global-set-key "\C-cl" 'org-store-link)
@@ -217,3 +226,78 @@ file using the `org-babel-lob-ingest' function.
 
 
 #+END_SRC
+
+** Org publish
+   :PROPERTIES:
+   :CUSTOM_ID: org-publish-settings
+   :END:
+
+   - configuring org html export
+
+     Jekyll负责生成最终网页，这里会设置导出html网页时，只导出<body>标
+     签之间的内容。
+
+     #+BEGIN_SRC emacs-lisp
+       (require 'ox-publish)
+;       (setq post-dir "~/MyPlayground/my-program-wharehouse/blog/")
+;       (setq draft-dir "~/org/draft/")
+       (setq org-publish-project-alist
+             '(
+     #+END_SRC
+
+   - 配置项说明     
+
+     - base-directory - 你存放笔记的目录（想将哪里的org文件导出成HTML）
+     - base-extension - 导出的文件格式
+     - publishing-directory - 导出HTML的目标目录
+     - recursive - 设置为t会将子目录中的文件也导出
+     - publishing-function - 使用哪个函数来进行publish
+     - auto-sitemap - 自动生存sitemap
+     - sitemap-sort-files - 我这里采用的是按照从新到旧的排列方式
+     - sitemap-file-entry-format - 这里采用时间+标题的方式生成sitemap
+
+     #+BEGIN_SRC emacs-lisp
+       ("org-blog-posts"
+               ;; Path to your org files.
+               :base-directory "~/org/draft/"
+               :base-extension "org"
+
+               ;; Path to your Jekyll project.
+               :publishing-directory "~/MyPlayground/my-program-wharehouse/blog/_posts/" 
+               :recursive t
+               :publishing-function org-html-publish-to-html
+               :headline-levels 4 
+               :html-extension "html"
+               :time-stamp-file t
+               :body-only t ;; Only export section between <body> </body>
+       ;        :auto-sitemap t                ; Generate sitemap.org automagically...
+       ;        :sitemap-filename "sitemap.org"  ; ... call it sitemap.org (it's the default)...
+       ;        :sitemap-title "Sitemap"         ; ... with title 'Sitemap'.
+       ;        :sitemap-sort-files anti-chronologically
+       ;        :sitemap-file-entry-format "%d %t"
+         )
+
+
+     #+END_SRC
+
+   - 对于图片，PDF，CSS等,只需要原样拷贝即可。 
+
+     #+BEGIN_SRC emacs-lisp
+        ;;just copy files from :base-directory to :publishing-directory
+        ("org-blog-static"
+         :base-directory "~/org/draft/img"
+         :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
+         :publishing-directory "~/MyPlayground/my-program-wharehouse/blog/images" 
+         :recursive t
+         :publishing-function org-publish-attachment)
+
+     #+END_SRC
+
+   - 定义发布任务  
+
+     #+BEGIN_SRC emacs-lisp
+
+           ("blog" :components ("org-blog-posts" "org-blog-static"))
+
+       ))
+     #+END_SRC
