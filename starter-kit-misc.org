@@ -63,8 +63,14 @@ of the starter kit which ignored by git.  Once downloaded and
 evaluated a theme is activated using the =load-theme= function.
 
 #+BEGIN_SRC emacs-lisp
-  (set-background-color "black")
-  (set-foreground-color "green")
+  (require 'powerline)
+  (powerline-default-theme)
+
+  (require 'airline-themes)
+  (load-theme 'airline-dark)
+
+  (add-to-list 'custom-theme-load-path (expand-file-name "src/emacs-theme-gruvbox" starter-kit-dir))
+  (load-theme 'gruvbox)
 #+END_SRC
 
 ** Window systems
