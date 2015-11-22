@@ -242,9 +242,10 @@ let them live in the =backups/= directory inside of the starter kit.
    
 ** Magit Mode
    Magit模式是emacs下的一个非常好用的git操作界面。  
-*** 安装
+*** 安装 (注：只支持emacs 24.4之后的版本)
     #+BEGIN_SRC emacs-lisp
-          (starter-kit-install-if-needed 'magit)
+      (when (version<= "24.4" emacs-version)
+           (starter-kit-install-if-needed 'magit))
     #+END_SRC
 
 *** 基本操作指南
