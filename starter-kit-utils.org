@@ -105,3 +105,15 @@
   (global-set-key (kbd "<C-f5>") 'xah-open-in-external-app)
 
 #+END_SRC
+** 在shell中执行git clone命令
+
+   在emacs-lisp中执行git clone命令，下载第三方扩展库：
+
+   #+BEGIN_SRC emacs-lisp
+     (defun git-clone(source dest)
+       "download source code from source to dest"
+       (interactive)
+       (if (and (stringp source) (stringp dest))
+           (unless (file-exists-p dest)
+             (shell-command (format "git clone %s %ssrc/%s" source starter-kit-dir dest))))
+   #+END_SRC
