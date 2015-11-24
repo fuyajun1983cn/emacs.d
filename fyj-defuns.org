@@ -12,47 +12,47 @@ functions not go in hooks. Repeatedly evaling an add-to-list with a
 hook value will repeatedly add it since there's no way to ensure that
 a lambda doesn't already exist in the list.
 
-#+name: starter-kit-hook-functions
+#+name: fyj-hook-functions
 #+begin_src emacs-lisp
-  (defun starter-kit-local-column-number-mode ()
+  (defun fyj-local-column-number-mode ()
     (make-local-variable 'column-number-mode)
     (column-number-mode t))
 
-  (defun starter-kit-local-comment-auto-fill ()
+  (defun fyj-local-comment-auto-fill ()
     (set (make-local-variable 'comment-auto-fill-only-comments) t)
     (auto-fill-mode t))
 
-  (defun starter-kit-turn-on-save-place-mode ()
+  (defun fyj-turn-on-save-place-mode ()
     (setq save-place t))
 
-  (defun starter-kit-turn-on-whitespace ()
+  (defun fyj-turn-on-whitespace ()
     (whitespace-mode t))
 #+end_src
 
-#+name: starter-kit-add-local-column-number-mode
+#+name: fyj-add-local-column-number-mode
 #+begin_src emacs-lisp
-(add-hook 'starter-kit-coding-hook 'starter-kit-local-column-number-mode)
+(add-hook 'fyj-coding-hook 'fyj-local-column-number-mode)
 #+end_src
 
 #+name: start-kit-add-local-comment-auto-fill
 #+begin_src emacs-lisp
-(add-hook 'starter-kit-coding-hook 'starter-kit-local-comment-auto-fill)
+(add-hook 'fyj-coding-hook 'fyj-local-comment-auto-fill)
 #+end_src
 
-#+name: starter-kit-add-pretty-lambdas
+#+name: fyj-add-pretty-lambdas
 #+begin_src emacs-lisp
   (when (window-system)
-    (add-hook 'starter-kit-coding-hook 'starter-kit-pretty-lambdas))
+    (add-hook 'fyj-coding-hook 'fyj-pretty-lambdas))
 #+end_src
 
-#+name: starter-kit-run-starter-kit-coding-hook
+#+name: fyj-run-fyj-coding-hook
 #+begin_src emacs-lisp
-(defun run-starter-kit-coding-hook ()
+(defun run-fyj-coding-hook ()
   "Enable things that are convenient across all coding buffers."
-  (run-hooks 'starter-kit-coding-hook))
+  (run-hooks 'fyj-coding-hook))
 #+end_src
 
-#+srcname: starter-kit-recentf-ido-find-file
+#+srcname: fyj-recentf-ido-find-file
 #+begin_src emacs-lisp 
   (defun recentf-ido-find-file () 
     "Find a recent file using Ido." 

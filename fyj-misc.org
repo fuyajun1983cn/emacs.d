@@ -50,6 +50,7 @@ Things that don't fit anywhere else.
   (set-buffer-file-coding-system 'utf-8)
   (set-file-name-coding-system 'utf-8)
 
+  (require 'dash)
 #+END_SRC
 ** Color Themes
 Emacs24 has build in support for saving and loading themes.
@@ -69,12 +70,12 @@ evaluated a theme is activated using the =load-theme= function.
   (require 'airline-themes)
   (load-theme 'airline-dark t)
 
-  (add-to-list 'custom-theme-load-path (expand-file-name "src/emacs-theme-gruvbox" starter-kit-dir))
+  (add-to-list 'custom-theme-load-path (expand-file-name "src/emacs-theme-gruvbox" fyj-dir))
   (load-theme 'gruvbox t)
 #+END_SRC
 
 ** Window systems
-#+srcname: starter-kit-window-view-stuff
+#+srcname: fyj-window-view-stuff
 #+begin_src emacs-lisp 
   (when window-system
     (setq frame-title-format '(buffer-file-name "%f" ("%b")))
@@ -99,9 +100,9 @@ evaluated a theme is activated using the =load-theme= function.
                                     indentation space-after-tab)
         whitespace-line-column 100
         ediff-window-setup-function 'ediff-setup-windows-plain
-        oddmuse-directory (concat starter-kit-dir "oddmuse")
+        oddmuse-directory (concat fyj-dir "oddmuse")
         xterm-mouse-mode t
-        save-place-file (concat starter-kit-dir "places"))
+        save-place-file (concat fyj-dir "places"))
 #+end_src
    
 *** 关闭一些GUI特征
@@ -178,21 +179,21 @@ evaluated a theme is activated using the =load-theme= function.
 #+end_src emacs-lisp
 
 ** Highlight matching parentheses when the point is on them.
-#+srcname: starter-kit-match-parens
+#+srcname: fyj-match-parens
 #+begin_src emacs-lisp 
 (show-paren-mode 1)
 #+end_src
 
 ** ido mode
 ido-mode is like magic pixie dust!
-#+srcname: starter-kit-loves-ido-mode
+#+srcname: fyj-loves-ido-mode
 #+begin_src emacs-lisp 
 (when (> emacs-major-version 21)
   (ido-mode t)
   (setq ido-enable-prefix nil
         ido-enable-flex-matching t
         ido-create-new-buffer 'always
-        ido-use-filename-at-point t
+;        ido-use-filename-at-point t
         ido-max-prospects 10))
 #+end_src
 
@@ -201,7 +202,7 @@ Rather than saving backup files scattered all over the file system,
 let them live in the =backups/= directory inside of the starter kit.
 #+begin_src emacs-lisp
 (setq backup-directory-alist `(("." . ,(expand-file-name
-                                        (concat starter-kit-dir "backups")))))
+                                        (concat fyj-dir "backups")))))
 #+end_src
 
 ** auto complete mode
@@ -210,7 +211,7 @@ let them live in the =backups/= directory inside of the starter kit.
   ;;**************auto-complete模式相关配置*******;;
   ;;                                             ;;
   ;;*********************************************;;
-  (starter-kit-install-if-needed 'auto-complete)
+  (fyj-install-if-needed 'auto-complete)
   (require 'auto-complete-config)
   (ac-config-default)
   ;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/mode/auto-complete/dict")
@@ -251,7 +252,7 @@ let them live in the =backups/= directory inside of the starter kit.
 *** 安装 (注：只支持emacs 24.4之后的版本)
     #+BEGIN_SRC emacs-lisp
       (when (version<= "24.4" emacs-version)
-           (starter-kit-install-if-needed 'magit))
+           (fyj-install-if-needed 'magit))
     #+END_SRC
 
 *** 基本操作指南

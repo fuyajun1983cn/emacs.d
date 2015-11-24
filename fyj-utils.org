@@ -115,5 +115,5 @@
        (interactive)
        (if (and (stringp source) (stringp dest))
            (unless (file-exists-p dest)
-             (shell-command (format "git clone %s %ssrc/%s" source starter-kit-dir dest))))
+             (shell-command (format "git clone %s %ssrc/%s" source fyj-dir dest)))))
    #+END_SRC
