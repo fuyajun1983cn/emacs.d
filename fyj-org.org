@@ -27,7 +27,8 @@ which is also *implemented using* Org-mode and [[http://git-scm.com/][git]].
   (setq org-reverse-note-order nil)
   (setq org-tags-column -78)
   (setq org-tags-match-list-sublevels nil)
-  (setq org-time-stamp-rounding-minutes 5)
+ ;; org-time-stamp-rounding-minutes 必须是一个list对象
+  (setq org-time-stamp-rounding-minutes '(5 0))
   (setq org-use-fast-todo-selection t)
   (setq org-use-tag-inheritance nil)
   (setq org-deadline-warning-days 7)
@@ -196,19 +197,20 @@ file using the `org-babel-lob-ingest' function.
    :CUSTOM_ID: org-capture-settings
    :END:
 #+BEGIN_SRC emacs-lisp
-  (global-set-key "\C-cc" 'org-capture)
-  (setq org-capture-templates
-        (quote (
-                ("t" "Todo" entry (file+headline "gtd.org" "Tasks") ;;Things That I need to do. 
-                 "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
-                ("j" "Journal" entry (file+datetree "journal.org")  ;; Things That I have done
-                 "* %?\nEntered on %U\n %i\n %a")
-                ("c" "Contact" entry (file+headline "personal.org" "Contacts") ;; contacts info
-                 "\n* %^{Name} :CONTACT:\n%[contemp.txt]\n")
-                ("s" "Someday" entry (file+headline "someday.org" "Tasks") ;;Things That I may consider  to do. 
-                 "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
-                )))
-
+    (global-set-key "\C-cc" 'org-capture)
+  ;;
+  ;;
+    (setq org-capture-templates
+          (quote (
+                  ("t" "Todo" entry (file+headline "gtd.org" "Tasks")  
+                   "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
+                  ("j" "Journal" entry (file+datetree "journal.org")  ;; Things That I have done
+                   "* %?\nEntered on %U\n %i\n %a")
+                  ("c" "Contact" entry (file+headline "personal.org" "Contacts") ;; contacts info
+                   "\n* %^{Name} :CONTACT:\n%[contemp.txt]\n")
+                  ("s" "Someday" entry (file+headline "someday.org" "Tasks") ;;Things That I may consider  to do. 
+                   "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
+                  )))
 
 #+END_SRC
    
