@@ -297,7 +297,7 @@ interested in the actual code implementing the starter kit.
 - ELPA archive repositories and two packages to install by default.
   #+begin_src emacs-lisp
     (setq package-archives
-          '(("gnu" . "https://elpa.gnu.org/packages/")   
+          '(;("gnu" . "https://elpa.gnu.org/packages/")   
 ;            ("org" . "http://orgmode.org/elpa/")   
             ("melpa" . "https://melpa.org/packages/")    
             ("marmalade" . "https://marmalade-repo.org/packages/")))
