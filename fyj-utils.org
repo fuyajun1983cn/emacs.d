@@ -117,3 +117,33 @@
            (unless (file-exists-p dest)
              (shell-command (format "git clone %s %ssrc/%s" source fyj-dir dest)))))
    #+END_SRC
+** 选择一个word或当前行
+     - 选中光标所有的word
+       #+BEGIN_SRC emacs-lisp
+         (transient-mark-mode 1)
+
+         (defun select-current-word ()
+           "Select the word under cursor. "
+           (interactive)
+           (let (pt)
+             (skip-chars-backward "-_A-Za-z0-9")
+             (setq pt (point))
+             (skip-chars-forward "-_A-Za-z0-z")
+             (set-mark pt)))
+       #+END_SRC
+
+     - 选中当前光标所在的行
+       #+BEGIN_SRC emacs-lisp
+         (transient-mark-mode 1)
+         (defun select-current-line ()
+           "Select the current line under cursor."
+           (interactive)
+           (end-of-line)
+           (set-mark (line-qbeginning-position)))
+       #+END_SRC
+
+     - 快捷键设置
+       #+BEGIN_SRC emacs-lisp
+         (global-set-key (kbd "C-c fw") 'select-current-word)
+         (global-set-key (kbd "C-c fl") 'select-current-line)
+       #+END_SRC
