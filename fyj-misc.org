@@ -178,6 +178,21 @@ evaluated a theme is activated using the =load-theme= function.
 (recentf-mode 1)
 #+end_src emacs-lisp
 
+** bookmark
+   
+*** 设置书签文件
+
+    #+BEGIN_SRC emacs-lisp
+      (setq bookmark-default-file (concat fyj-dir "bookmarks"))
+    #+END_SRC
+*** Starting Emacs with Bookmark
+    启动Emacs时，显示当前书签的内容
+
+    #+BEGIN_SRC emacs-lisp
+      (require 'bookmark)
+      (bookmark-bmenu-list)
+      (switch-to-buffer "*Bookmark List*")
+    #+END_SRC
 ** Highlight matching parentheses when the point is on them.
 #+srcname: fyj-match-parens
 #+begin_src emacs-lisp 
