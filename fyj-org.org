@@ -21,9 +21,8 @@ which is also *implemented using* Org-mode and [[http://git-scm.com/][git]].
   (setq org-directory "~/org/")
   (setq org-default-notes-file (concat org-directory "someday.org"))
 
-  ;;(org-export-html-style "<link rel=\"stylesheet\" type=\"text/css\" href=\"mystyles.css\">")
   (setq org-fast-tag-selection-single-key nil)
-  (setq org-refile-targets (quote (("gtd.org":maxlevel . 1) ("someday.org":level . 2) ("journal.org":level . 3))))
+  (setq org-refile-targets (quote (("gtd.org":maxlevel . 2) ("someday.org":level . 2) ("journal.org":level . 3))))
   (setq org-reverse-note-order nil)
   (setq org-tags-column -78)
   (setq org-tags-match-list-sublevels nil)
@@ -103,6 +102,7 @@ contains an up to date list of the currently supported languages.
    'org-babel-load-languages
    '((emacs-lisp . t)
      (python . t)
+     (ditaa . t)
      (sh . t)))
 #+end_src
 
@@ -111,6 +111,27 @@ although it is not added by default as a security precaution.
 #+begin_src emacs-lisp :tangle no
   (setq org-confirm-babel-evaluate nil)
 #+end_src
+
+*** org-babel使用杂记
+
+    =org-babel= 是org-mode 的一部分,用来管理org文档中的源码,org-babel支
+    持多种语言。
+
+    =org-babel= 可以在org文档中插入代码,并且会帮你语法高亮插入的代码,而
+    且可以执行你插入的代码,捕获输出,插入到你代码的下面。
+
+    #+BEGIN_SRC sh :exports both :results output
+        echo ";;This is a Test"
+    #+END_SRC
+
+    #+RESULTS
+
+    导出时不执行代码：  
+
+    #+BEGIN_SRC sh  :exports both :results output :eval no-export
+       echo ";;This is a Test"
+    #+END_SRC
+
 
 ** Code block fontification
    :PROPERTIES:
@@ -125,19 +146,6 @@ much more like reading and editing of code using its major mode.
   (setq org-src-fontify-natively t)
   (setq org-src-tab-acts-natively t)
 #+end_src
-
-** The Library of Babel
-   :PROPERTIES:
-   :CUSTOM_ID: library-of-babel
-   :END:
-The library of babel contains makes many useful functions available
-for use by code blocks in *any* emacs file.  See the actual
-=library-of-babel.org= (located in the Org-mode =contrib/babel=
-directory) file for information on the functions, and see
-[[http://orgmode.org/worg/org-contrib/babel/intro.php#library-of-babel][worg:library-of-babel]] for more usage information.
-
-Code blocks can be loaded into the library of babel from any Org-mode
-file using the `org-babel-lob-ingest' function.
 
 ** Org Agenda
    :PROPERTIES:
@@ -261,11 +269,11 @@ file using the `org-babel-lob-ingest' function.
      #+BEGIN_SRC emacs-lisp
        ("org-blog-posts"
                ;; Path to your org files.
-               :base-directory "~/org/draft/"
+               :base-directory "e:/documents/wifi/code/notes/"
                :base-extension "org"
 
                ;; Path to your Jekyll project.
-               :publishing-directory "~/MyPlayground/my-program-wharehouse/blog/_posts/" 
+               :publishing-directory "e:/documents/blog/_posts/2015/" 
                :recursive t
                :publishing-function org-html-publish-to-html
                :headline-levels 4 
@@ -287,9 +295,9 @@ file using the `org-babel-lob-ingest' function.
      #+BEGIN_SRC emacs-lisp
         ;;just copy files from :base-directory to :publishing-directory
         ("org-blog-static"
-         :base-directory "~/org/draft/img"
+         :base-directory "e:/documents/wifi/code/notes/images/"
          :base-extension "css\\|js\\|png\\|jpg\\|gif\\|pdf\\|mp3\\|ogg\\|swf"
-         :publishing-directory "~/MyPlayground/my-program-wharehouse/blog/images" 
+         :publishing-directory "e:/documents/blog/images/2015/" 
          :recursive t
          :publishing-function org-publish-attachment)
 
@@ -303,3 +311,30 @@ file using the `org-babel-lob-ingest' function.
 
        ))
      #+END_SRC
+
+** Pomodoro(蕃茄工作法)
+
+   - Activate the org-timer module :
+     #+BEGIN_SRC emacs-lisp
+       (add-to-list 'org-modules 'org-timer)
+     #+END_SRC
+
+   - Set a default value for the timer
+     #+BEGIN_SRC emacs-lisp
+       (setq org-timer-default-timer 25)
+     #+END_SRC
+
+   - Modify the org-clock-in so that a timer is started with the
+     default value except if a timer is already started :
+     #+BEGIN_SRC emacs-lisp
+       (add-hook 'org-clock-in-hook (lambda ()
+             (if (not org-timer-default-timer) 
+             (org-timer-set-timer '(16)))))
+     #+END_SRC
+
+** Ditaa
+
+   Ditaa is a command-line utility that converts diagrams drawn using
+   ASCII art into bitmap graphics.
+
+   
