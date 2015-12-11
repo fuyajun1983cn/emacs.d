@@ -308,3 +308,8 @@ let them live in the =backups/= directory inside of the starter kit.
 
 
        
+** 将删除的文件移动到回收站
+
+   #+BEGIN_SRC emacs-lisp
+     (setq delete-by-moving-to-trash t)
+   #+END_SRC
