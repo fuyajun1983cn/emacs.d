@@ -24,5 +24,5 @@ if __name__ == "__main__":
     git_clone("https://github.com/greduan/emacs-theme-gruvbox.git", "emacs-theme-gruvbox")
     git_clone("https://github.com/milkypostman/powerline.git", "powerline")
     git_clone("https://github.com/AnthonyDiGirolamo/airline-themes.git", "airline-themes")
-    git_clone("git clone https://github.com/takaxp/org-tree-slide", "org-tree-slide")
-    git_clone("git clone https://github.com/howardabrams/demo-it", "demo-it")
+    git_clone("https://github.com/takaxp/org-tree-slide", "org-tree-slide")
+    git_clone("https://github.com/howardabrams/demo-it", "demo-it")
