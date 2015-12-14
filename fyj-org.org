@@ -337,4 +337,47 @@ much more like reading and editing of code using its major mode.
    Ditaa is a command-line utility that converts diagrams drawn using
    ASCII art into bitmap graphics.
 
-   
+** [[https://github.com/howardabrams/demo-it][demoit]]
+
+*** org-tree-slide-mode
+
+    #+BEGIN_SRC emacs-lisp
+      (fyj-install-if-needed 'org-tree-slide)
+    #+END_SRC
+
+    key binding:
+    #+BEGIN_SRC emacs-lisp
+      (define-key org-mode-map (kbd "<f8>") 'org-tree-slide-mode)
+      (define-key org-mode-map (kbd "S-<f8>") 'org-tree-slide-skip-done-toggle)
+    #+END_SRC
+
+*** org-bullets
+
+    #+BEGIN_SRC emacs-lisp
+      (fyj-install-if-needed 'org-bullets)
+    #+END_SRC
+
+    enable it:
+    #+BEGIN_SRC emacs-lisp
+      (require 'org-bullets)
+      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+    #+END_SRC
+    
+
+*** expand-region
+
+    #+BEGIN_SRC emacs-lisp
+      (fyj-install-if-needed 'expand-region)
+    #+END_SRC
+
+    key binding:
+    #+BEGIN_SRC emacs-lisp
+      (global-set-key (kbd "C-=") 'er/expand-region)
+    #+END_SRC
+
+*** fancy-narrow
+
+    #+BEGIN_SRC emacs-lisp
+      (fyj-install-if-needed 'fancy-narrow)
+    #+END_SRC
+
