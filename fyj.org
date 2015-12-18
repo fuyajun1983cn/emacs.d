@@ -216,10 +216,17 @@
 
 
 * 加载各个子模块/扩展
+
+** 加载模式无关设置
+   
+   #+BEGIN_SRC emacs-lisp
+     (fyj/org-load "fyj-settings")
+   #+END_SRC
 ** 设置exec path
 
    #+BEGIN_SRC emacs-lisp
-     (fyj/org-load "exec-path" "Windows")
+     (if *is-a-windows*
+       (fyj/org-load "exec-path" "Windows"))
    #+END_SRC
 
 ** 加载常用函数

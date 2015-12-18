@@ -1,0 +1,121 @@
+#+TITLE:  与模式无关的基本设置
+#+AUTHOR: 付亚军
+#+EMAIL:  fuyajun1983cn@163.com
+
+* emacs全局行为设置
+#+BEGIN_SRC emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+  ;; ask me when I quit emacs
+  (set-variable 'confirm-kill-emacs 'yes-or-no-p)
+
+  (setq-default regex-tool-backend 'perl)
+
+  ;;设置打开文件的缺省路径
+  (setq default-directory "~/")
+
+  ;;设定不产生备份文件
+  (setq make-backup-files nil)
+  (setq-default make-backup-files nil)
+
+  ;;鼠标中键可以粘贴
+  (setq mouse-yank-at-point t)
+
+  ;;设置个人信息
+  (setq user-full-name "Fu Yajun")
+  (setq user-mail-address "fuyajun1983cn@163.com")
+
+  ;;自动在文件末增加一行
+  (setq require-final-newline t)
+
+  ;;当光标在行尾上下移动的时候，始终保持在行尾
+  (setq track-eol t) 
+
+  ;;新行自动缩进
+  (define-key global-map (kbd "RET") 'newline-and-indent)
+
+  (defalias 'list-buffers 'ibuffer) ; make ibuffer default
+
+  ;always show line numbers
+  (global-linum-mode 1)
+
+  ;hilight current line globally
+  (global-hl-line-mode 1)
+
+  (set-language-environment "UTF-8")
+  (set-default-coding-systems 'utf-8)
+  (set-buffer-file-coding-system 'utf-8)
+  (set-file-name-coding-system 'utf-8)
+
+#+END_SRC
+
+* 全局hook设置
+
+A single hook holding those functions which should be run in *every*
+code buffer.
+
+We have a number of turn-on-* functions since it's advised that lambda
+functions not go in hooks. Repeatedly evaling an add-to-list with a
+hook value will repeatedly add it since there's no way to ensure that
+a lambda doesn't already exist in the list.
+
+#+name: fyj-hook-functions
+#+begin_src emacs-lisp
+  (defun fyj-local-column-number-mode ()
+    (make-local-variable 'column-number-mode)
+    (column-number-mode t))
+
+  (defun fyj-local-comment-auto-fill ()
+    (set (make-local-variable 'comment-auto-fill-only-comments) t)
+    (auto-fill-mode t))
+
+  (defun fyj-turn-on-save-place-mode ()
+    (setq save-place t))
+
+  (defun fyj-turn-on-whitespace ()
+    (whitespace-mode t))
+#+end_src
+
+#+name: fyj-add-local-column-number-mode
+#+begin_src emacs-lisp
+(add-hook 'fyj-coding-hook 'fyj-local-column-number-mode)
+#+end_src
+
+#+name: start-kit-add-local-comment-auto-fill
+#+begin_src emacs-lisp
+(add-hook 'fyj-coding-hook 'fyj-local-comment-auto-fill)
+#+end_src
+
+#+name: fyj-add-pretty-lambdas
+#+begin_src emacs-lisp
+  (when (window-system)
+    (add-hook 'fyj-coding-hook 'fyj-pretty-lambdas))
+#+end_src
+
+#+name: fyj-run-fyj-coding-hook
+#+begin_src emacs-lisp
+(defun run-fyj-coding-hook ()
+  "Enable things that are convenient across all coding buffers."
+  (run-hooks 'fyj-coding-hook))
+#+end_src
+
+#+srcname: fyj-recentf-ido-find-file
+#+begin_src emacs-lisp 
+  (defun recentf-ido-find-file () 
+    "Find a recent file using Ido." 
+    (interactive) 
+    (let* ((file-assoc-list 
+            (mapcar (lambda (x) 
+                      (cons (file-name-nondirectory x) 
+                            x)) 
+                    recentf-list)) 
+           (filename-list 
+            (remove-duplicates (mapcar #'car file-assoc-list) 
+                               :test #'string=)) 
+           (filename (ido-completing-read "Choose recent file: " 
+                                          filename-list 
+                                          nil 
+                                          t))) 
+      (when filename 
+        (find-file (cdr (assoc filename 
+                               file-assoc-list)))))) 
+ #+end_src 
