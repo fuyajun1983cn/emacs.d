@@ -19,7 +19,7 @@
   | under     | the   | terms        | of     | the        | GNU         | General   | Public | License. |       |          |
   | For       | more  | information  | about  | these      | matters,    | see       | the    | file     | named | COPYING. |
 
-* 启用阶段禁用垃圾收集
+* 启动阶段禁用垃圾收集
 #+BEGIN_SRC emacs-lisp
   ;;----------------------------------------------------------------------------
   ;; Temporarily reduce garbage collection during startup
