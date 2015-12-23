@@ -182,8 +182,8 @@ evaluated a theme is activated using the =load-theme= function.
    
 *** 设置书签文件
 
-    #+BEGIN_SRC emacs-lisp
-      (setq bookmark-default-file (concat fyj-dir "bookmarks"))
+    #+BEGIN_SRC emacs-lisp :tangle no
+      (setq bookmark-default-file (concat fyj/emacs-directory "bookmarks"))
     #+END_SRC
 *** Starting Emacs with Bookmark
     启动Emacs时，显示当前书签的内容
@@ -226,7 +226,7 @@ let them live in the =backups/= directory inside of the starter kit.
   ;;**************auto-complete模式相关配置*******;;
   ;;                                             ;;
   ;;*********************************************;;
-  (fyj-install-if-needed 'auto-complete)
+  (fyj/package-install-if-needed 'auto-complete)
   (require 'auto-complete-config)
   (ac-config-default)
   ;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/mode/auto-complete/dict")
@@ -267,7 +267,7 @@ let them live in the =backups/= directory inside of the starter kit.
 *** 安装 (注：只支持emacs 24.4之后的版本)
     #+BEGIN_SRC emacs-lisp
       (when (version<= "24.4" emacs-version)
-           (fyj-install-if-needed 'magit))
+           (fyj/package-install-if-needed 'magit))
     #+END_SRC
 
 *** 基本操作指南

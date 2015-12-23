@@ -25,14 +25,14 @@
 (add-hook 'after-init-hook
  `(lambda ()
     ;; remember this directory
-    (setq fyj/emacs-dir
-          (file-name-directory (or load-file-name (buffer-file-name))))
+    (setq fyj-dir
+          ,(file-name-directory (or load-file-name (buffer-file-name))))
     ;; only load org-mode later if we didn't load it just now
-    (unless (and (getenv "ORG_HOME")
+    ,(unless (and (getenv "ORG_HOME")
                   (file-directory-p (expand-file-name "lisp"
                                                       (getenv "ORG_HOME"))))
        '(require 'org))
     ;; load up the starter kit
-    (org-babel-load-file (expand-file-name "fyj.org" fyj/emacs-dir))))
+    (org-babel-load-file (expand-file-name "fyj.org" fyj-dir))))
 
 ;;; init.el ends here

@@ -1,4 +1,4 @@
-#+TITLE: Starter Kit Org
+\#+TITLE: Starter Kit Org
 #+OPTIONS: toc:nil num:nil ^:nil
 
 This is part of the [[file:starter-kit.org][Emacs Starter Kit]].
@@ -342,7 +342,7 @@ much more like reading and editing of code using its major mode.
 *** org-tree-slide-mode
 
     #+BEGIN_SRC emacs-lisp
-      (fyj-install-if-needed 'org-tree-slide)
+      (fyj/package-install-if-needed 'org-tree-slide)
     #+END_SRC
 
     key binding:
@@ -354,7 +354,7 @@ much more like reading and editing of code using its major mode.
 *** org-bullets
 
     #+BEGIN_SRC emacs-lisp
-      (fyj-install-if-needed 'org-bullets)
+      (fyj/package-install-if-needed 'org-bullets)
     #+END_SRC
 
     enable it:
@@ -367,7 +367,7 @@ much more like reading and editing of code using its major mode.
 *** expand-region
 
     #+BEGIN_SRC emacs-lisp
-      (fyj-install-if-needed 'expand-region)
+      (fyj/package-install-if-needed 'expand-region)
     #+END_SRC
 
     key binding:
@@ -378,6 +378,6 @@ much more like reading and editing of code using its major mode.
 *** fancy-narrow
 
     #+BEGIN_SRC emacs-lisp
-      (fyj-install-if-needed 'fancy-narrow)
+      (fyj/package-install-if-needed 'fancy-narrow)
     #+END_SRC
 

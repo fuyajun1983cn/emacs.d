@@ -70,7 +70,7 @@
 
    一些精短的工具，放到elisp目录下：
    #+BEGIN_SRC emacs-lisp
-     (add-to-list 'load-path (fyj/emacs-subdirectory "elisp")
+     (add-to-list 'load-path (fyj/emacs-subdirectory "elisp"))
    #+END_SRC
 
    一些无法从emacs package manager获取的包，放到src目录下：
@@ -167,19 +167,19 @@
       configuration from within that subtree will be loaded.  If it is
       not an id then it will be interpreted as a tag, and only subtrees
       marked with the given tag will be loaded.
-      
+
       For example, to load all of fyj-lisp.org simply
-      add (fyj-load \"lisp\") to your configuration.
-      
+      add (fyj/org-load \"lisp\") to your configuration.
+
       To load only the 'window-system' config from
       fyj-misc-recommended.org add
-       (fyj-load \"misc-recommended\" \"window-system\")
+       (fyj/org-load \"misc-recommended\" \"window-system\")
       to your configuration."
-  
+        
         (let ((file (expand-file-name (if (string-match "fyj-.+\.org" file)
                                           file
                                         (format "fyj-%s.org" file))
-                                      fyj-dir)))
+                                      fyj/emacs-directory)))
           (org-babel-load-file
            (if header-or-tag
                (let* ((base (file-name-nondirectory file))
@@ -219,12 +219,12 @@
 
 ** 加载模式无关设置
    
-   #+BEGIN_SRC emacs-lisp
-     (fyj/org-load "fyj-settings")
+   #+BEGIN_SRC emacs-lisp 
+     (fyj/org-load "settings")
    #+END_SRC
 ** 设置exec path
 
-   #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp 
      (if *is-a-windows*
        (fyj/org-load "exec-path" "Windows"))
    #+END_SRC
@@ -237,7 +237,7 @@
 
 ** 加载实用函数
 
-  #+BEGIN_SRC emacs-lisp
+  #+BEGIN_SRC emacs-lisp 
     (fyj/org-load "fyj-utils.org")
   #+END_SRC
 
@@ -249,10 +249,10 @@
 
 ** 杂项设置
 
-  #+begin_src emacs-lisp
-  (fyj-load "fyj-misc.org")
+  #+begin_src emacs-lisp 
+  (fyj/org-load "fyj-misc.org")
   #+end_src
-
+   
 ** register设置
 
   #+begin_src emacs-lisp
@@ -271,7 +271,7 @@
    #+BEGIN_SRC emacs-lisp
      (fyj/org-load "yasnippet")
    #+END_SRC
-
+   
 ** 文本编辑设置
 
    #+BEGIN_SRC emacs-lisp

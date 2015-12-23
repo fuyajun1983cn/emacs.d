@@ -11,7 +11,7 @@ open parenthesis automatically inserts the corresponding closing
 parenthesis. 
 
 #+BEGIN_SRC emacs-lisp
-  (fyj-install-if-needed 'unfill)
+  (fyj/package-install-if-needed 'unfill)
 
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode 1))
@@ -75,12 +75,12 @@ parenthesis.
     (global-prettify-symbols-mode))
 
 
-  (fyj-install-if-needed 'undo-tree)
+  (fyj/package-install-if-needed 'undo-tree)
   (global-undo-tree-mode)
   (diminish 'undo-tree-mode)
 
  
-  (fyj-install-if-needed 'highlight-symbol)
+  (fyj/package-install-if-needed 'highlight-symbol)
   (dolist (hook '(prog-mode-hook html-mode-hook css-mode-hook))
     (add-hook hook 'highlight-symbol-mode)
     (add-hook hook 'highlight-symbol-nav-mode))
@@ -101,7 +101,7 @@ parenthesis.
 
 
  
-  (fyj-install-if-needed 'browse-kill-ring)
+  (fyj/package-install-if-needed 'browse-kill-ring)
   (setq browse-kill-ring-separator "\f")
   (global-set-key (kbd "M-Y") 'browse-kill-ring)
   (after-load 'browse-kill-ring
@@ -126,7 +126,7 @@ parenthesis.
   ;;----------------------------------------------------------------------------
   ;; Expand region
   ;;----------------------------------------------------------------------------
-  (fyj-install-if-needed 'expand-region)
+  (fyj/package-install-if-needed 'expand-region)
   (global-set-key (kbd "C-=") 'er/expand-region)
 
 
@@ -155,11 +155,11 @@ parenthesis.
   (global-set-key (kbd "C-.") 'set-mark-command)
   (global-set-key (kbd "C-x C-.") 'pop-global-mark)
 
-  (when (fyj-install-if-needed 'avy)
+  (when (fyj/package-install-if-needed 'avy)
     (autoload 'avy-goto-word-or-subword-1 "avy")
     (global-set-key (kbd "C-;") 'avy-goto-word-or-subword-1))
 
-  (fyj-install-if-needed 'multiple-cursors)
+  (fyj/package-install-if-needed 'multiple-cursors)
   ;; multiple-cursors
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -195,7 +195,7 @@ parenthesis.
   ;;----------------------------------------------------------------------------
   ;; Page break lines
   ;;----------------------------------------------------------------------------
-  (fyj-install-if-needed 'page-break-lines)
+  (fyj/package-install-if-needed 'page-break-lines)
   (global-page-break-lines-mode)
   (diminish 'page-break-lines-mode)
 
@@ -204,7 +204,7 @@ parenthesis.
   ;; it will use those keybindings. For this reason, you might prefer to
   ;; use M-S-up and M-S-down, which will work even in lisp modes.
   ;;----------------------------------------------------------------------------
-  (fyj-install-if-needed 'move-dup)
+  (fyj/package-install-if-needed 'move-dup)
   (global-set-key [M-up] 'md/move-lines-up)
   (global-set-key [M-down] 'md/move-lines-down)
   (global-set-key [M-S-up] 'md/move-lines-up)
@@ -231,7 +231,7 @@ parenthesis.
   ;;----------------------------------------------------------------------------
   ;; Cut/copy the current line if no region is active
   ;;----------------------------------------------------------------------------
-  (fyj-install-if-needed 'whole-line-or-region)
+  (fyj/package-install-if-needed 'whole-line-or-region)
   (whole-line-or-region-mode t)
   (diminish 'whole-line-or-region-mode)
   (make-variable-buffer-local 'whole-line-or-region-mode)
@@ -305,11 +305,11 @@ parenthesis.
 
  
 
-  (fyj-install-if-needed 'highlight-escape-sequences)
+  (fyj/package-install-if-needed 'highlight-escape-sequences)
   (hes-mode)
 
  
-  (fyj-install-if-needed 'guide-key)
+  (fyj/package-install-if-needed 'guide-key)
   (setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-c ;" "C-c ; f" "C-c ' f" "C-x n" "C-x C-r" "C-x r"))
   (guide-key-mode 1)
   (diminish 'guide-key-mode)
