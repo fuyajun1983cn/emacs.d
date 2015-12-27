@@ -52,6 +52,13 @@ which is also *implemented using* Org-mode and [[http://git-scm.com/][git]].
 
 
 #+END_SRC
+** org-toc 
+    table of contents in a separate buffer
+    #+BEGIN_SRC emacs-lisp
+      (require 'org-toc)
+      (setq org-toc-default-depth 3)
+    #+END_SRC
+
 ** Org-Mode Hook -- Keybindings
    :PROPERTIES:
    :CUSTOM_ID: keybindings
@@ -131,7 +138,6 @@ although it is not added by default as a security precaution.
     #+BEGIN_SRC sh  :exports both :results output :eval no-export
        echo ";;This is a Test"
     #+END_SRC
-
 
 ** Code block fontification
    :PROPERTIES:

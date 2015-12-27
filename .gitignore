@@ -29,6 +29,7 @@ url/*
 ## exported and encrypted files
 *gpg
 *el
+!elisp/*
 *elc
 *html
 *tex
@@ -52,7 +53,7 @@ abbrev_defs
 scratch
 secret.org
 .emacs.desktop*
-.*~
+n.*~
 *~
 agent/*
 
@@ -64,3 +65,4 @@ bookmarks
 *.jar
 frame-restore-parameters
 history
+network-security.data
