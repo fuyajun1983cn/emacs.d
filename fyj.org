@@ -1,5 +1,5 @@
 
-\#+TITLE:  Emacs配置文件
+#+TITLE:  Emacs配置文件
 #+AUTHOR: 付亚军
 #+EMAIL:  fuyajun1983cn@163.com
 
@@ -96,7 +96,8 @@
 ** 公共常量定义
 
    #+BEGIN_SRC emacs-lisp
-    (defconst *is-a-windows* (string= system-type "windows-nt"))   
+     (defconst *is-a-windows* (string= system-type "windows-nt"))
+     (defconst *is-a-cygwin* (string= system-type "cygwin"))
    #+END_SRC
 
 * 包初始化及加载工具配置
@@ -235,13 +236,6 @@
      (if *is-a-windows*
        (fyj/org-load "exec-path")
    #+END_SRC
-** 加载custom.el文件
-
-#+name: m-x-customize-customizations
-#+begin_src emacs-lisp
-  (load custom-file 'noerror)
-#+end_src
-
 ** org设置
 
    #+BEGIN_SRC emacs-lisp
@@ -255,6 +249,9 @@
    #+END_SRC
    
 ** 文本编辑设置
+   :PROPERTIES:
+   :Effort:   
+   :END:
 
    #+BEGIN_SRC emacs-lisp
      (fyj/org-load "editing")
