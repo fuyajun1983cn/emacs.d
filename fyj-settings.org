@@ -9,6 +9,25 @@
        ;; ask me when I quit emacs
        (set-variable 'confirm-kill-emacs 'yes-or-no-p)
      #+END_SRC
+** exec_path设置
+*** Windows
+
+   #+BEGIN_SRC emacs-lisp
+     (if *is-in-windows*
+         (progn 
+           (setq mypaths '(
+                     "C:/Windows/system32/"
+                     "C:/Windows/"
+                     "E:/cygwin/usr/local/bin" 
+                     "E:/cygwin/usr/bin" 
+                     "E:/cygwin/bin" 
+                     "E:/android4.4/adt-bundle-windows-x86-20131030/sdk/platform-tools"
+                     ))
+            (setenv "PATH" (mapconcat 'identity mypaths ";") )
+            (setq exec-path (append mypaths (list "." exec-directory)) )))
+        
+   #+END_SRC
+
 ** 正则表达式后端默认值
      #+BEGIN_SRC emacs-lisp
        (setq-default regex-tool-backend 'perl)
@@ -17,23 +36,29 @@
      #+BEGIN_SRC emacs-lisp
        (setq default-directory "~/")
      #+END_SRC
-** 设定不产生备份文件
-     #+BEGIN_SRC emacs-lisp
-       (setq make-backup-files nil)
-       (setq-default make-backup-files nil)
-     #+END_SRC
+** 备份
+*** 设定不产生备份文件
+      #+BEGIN_SRC emacs-lisp
+        (setq make-backup-files nil)
+        (setq-default make-backup-files nil)
+      #+END_SRC
+*** 转储自动保存的文件
+    #+BEGIN_SRC emacs-lisp
+      (setq auto-save-dir (expand-file-name "auto-save-list/" fyj/emacs-directory))
+      (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)))
+    #+END_SRC
+*** Don't clutter up directories with files~
+    Rather than saving backup files scattered all over the file
+    system, let them live in the =backups/= directory inside of the starter kit.
+    #+begin_src emacs-lisp :tangle no
+       (setq backup-directory-alist `(("." . ,(expand-file-name
+                                          (concat fyj/emacs-directory "backups")))))
+    #+end_src
+
 ** 设置个人信息
      #+BEGIN_SRC emacs-lisp
        (setq user-full-name "Fu Yajun")
        (setq user-mail-address "fuyajun1983cn@163.com")
-     #+END_SRC
-** 不光标在行尾上下移动时，始终保持在行尾
-     #+BEGIN_SRC emacs-lisp
-       (setq require-final-newline t)
-     #+END_SRC
-** 新行自动缩进
-     #+BEGIN_SRC emacs-lisp
-       (define-key global-map (kbd "RET") 'newline-and-indent)
      #+END_SRC
 ** 默认使用ibuffer
       #+BEGIN_SRC emacs-lisp
@@ -112,10 +137,11 @@ evaluated a theme is activated using the =load-theme= function.
   ;;----------------------------------------------------------------------------
   ;; Suppress GUI features
   ;;----------------------------------------------------------------------------
-  (setq use-file-dialog nil)
-  (setq use-dialog-box nil)
-  (setq inhibit-startup-screen t)
-  (setq inhibit-startup-echo-area-message t)
+  (when window-system
+    (setq use-file-dialog nil)
+    (setq use-dialog-box nil)
+    (setq inhibit-startup-screen t)
+    (setq inhibit-startup-echo-area-message t))
 
 #+END_SRC
    
@@ -175,11 +201,6 @@ evaluated a theme is activated using the =load-theme= function.
 
 #+END_SRC
 
-** Save a list of recent files visited.
-#+begin_src emacs-lisp 
-(recentf-mode 1)
-#+end_src emacs-lisp
-
 ** bookmark
    
 *** 设置书签文件
@@ -190,7 +211,7 @@ evaluated a theme is activated using the =load-theme= function.
 *** Starting Emacs with Bookmark
     启动Emacs时，显示当前书签的内容
 
-    #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp :tangle no
       (require 'bookmark)
       (bookmark-bmenu-list)
       (switch-to-buffer "*Bookmark List*")
@@ -201,49 +222,6 @@ evaluated a theme is activated using the =load-theme= function.
 (show-paren-mode 1)
 #+end_src
 
-** ido mode
-ido-mode is like magic pixie dust!
-#+srcname: fyj-loves-ido-mode
-#+begin_src emacs-lisp 
-(when (> emacs-major-version 21)
-  (ido-mode t)
-  (setq ido-enable-prefix nil
-        ido-enable-flex-matching t
-        ido-create-new-buffer 'always
-;        ido-use-filename-at-point t
-        ido-max-prospects 10))
-#+end_src
-
-** Don't clutter up directories with files~
-Rather than saving backup files scattered all over the file system,
-let them live in the =backups/= directory inside of the starter kit.
-#+begin_src emacs-lisp
-(setq backup-directory-alist `(("." . ,(expand-file-name
-                                        (concat fyj-dir "backups")))))
-#+end_src
-
-** auto complete mode
-#+BEGIN_SRC emacs-lisp
-  ;;                                             ;;
-  ;;**************auto-complete模式相关配置*******;;
-  ;;                                             ;;
-  ;;*********************************************;;
-  (fyj/package-install-if-needed 'auto-complete)
-  (require 'auto-complete-config)
-  (ac-config-default)
-  ;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/mode/auto-complete/dict")
-  (define-key ac-mode-map (kbd "M-/") 'auto-complete);;auto-complete command
-  ;;trigger auto-complete
-  ;(ac-set-trigger-key "TAB")
-  (setq ac-auto-start 3);当播入3个字符的时候，开始自动补全
-  ;;complete menu color
-  (set-face-background 'ac-candidate-face "lightgray")
-  (set-face-underline 'ac-candidate-face "darkgray")
-  (set-face-background 'ac-selection-face "steelblue")
-  ;My Dictionary
-  ;;(add-to-list 'ac-user-dictionary-files "~/.emacs.d/mydict")
-
-#+END_SRC
 ** Scale Font size
 #+begin_src emacs-lisp 
   ;;(define-key global-map (kbd "C-+") 'text-scale-increase)
@@ -252,7 +230,7 @@ let them live in the =backups/= directory inside of the starter kit.
   ;;放大字体: Ctrl-x Ctrl-+ 或 Ctrl-x Ctrl-=
   ;;缩小字体: Ctrl-x Ctrl–
   ;;重置字体: Ctrl-x Ctrl-0
-  (if *is-a-windows*
+  (if (or *is-in-windows* *is-in-cygwin*)
       (progn
           ;; For Windows
          (global-set-key (kbd "<C-wheel-up>") 'text-scale-increase)
@@ -263,52 +241,6 @@ let them live in the =backups/= directory inside of the starter kit.
     (global-set-key (kbd "<C-mouse-5>") 'text-scale-decrease)))
 
 #+end_src
-   
-** Magit Mode
-   Magit模式是emacs下的一个非常好用的git操作界面。  
-*** 安装 (注：只支持emacs 24.4之后的版本)
-    #+BEGIN_SRC emacs-lisp
-      (when (version<= "24.4" emacs-version)
-           (fyj/package-install-if-needed 'magit))
-    #+END_SRC
-
-*** 基本操作指南
-
-    1. 查看项目状态  
-       #+BEGIN_SRC sh
-       magit-status
-       #+END_SRC
-
-    2. 查看差异
-
-       使用Tab键可以调用diff查看差异（magit-section-toggle）
-
-    3. 常用的几个命令
-       - magit-stage  Press [s] to add file unser cursor to stage.
-
-       - magit-stage-modified  Press [S] to add all tracked files to stage.
-
-       - magit-unstage  Press [u] to unstage the file under cursor.
-
-       - magit-reset-index  press [U] to unstage all staged files.
-
-       - Press [c c ] to write a commit message, then [C - c C -c ] to
-         commit.
-
-    4. git push
-
-       press [P P] to push. (magit-push-pop)
-
-    5. git pull
-
-       press [F F] to pull. (magit-pull-popup)
-
-    6. git log
-
-       call magit-log to see your commit log. Press Enter on a a line
-       to see its diff. 
-
-
 ** 将删除的文件移动到回收站
 
    #+BEGIN_SRC emacs-lisp
@@ -353,13 +285,6 @@ let them live in the =backups/= directory inside of the starter kit.
   (global-set-key (kbd "M-`") 'file-cache-minibuffer-complete)
   (global-set-key (kbd "C-x C-b") 'ibuffer)
   (global-set-key (kbd "C-x f") 'recentf-ido-find-file)  
-#+end_src
-
-** Window switching. (C-x o goes to the next window)
-#+begin_src emacs-lisp 
-(windmove-default-keybindings) ;; Shift+direction
-(global-set-key (kbd "C-x O") (lambda () (interactive) (other-window -1))) ;; back one
-(global-set-key (kbd "C-x C-o") (lambda () (interactive) (other-window 2))) ;; forward two
 #+end_src
 
 ** Indentation help

@@ -96,8 +96,8 @@
 ** 公共常量定义
 
    #+BEGIN_SRC emacs-lisp
-     (defconst *is-a-windows* (string= system-type "windows-nt"))
-     (defconst *is-a-cygwin* (string= system-type "cygwin"))
+     (defconst *is-in-windows* (string= system-type "windows-nt"))
+     (defconst *is-in-cygwin* (string= system-type "cygwin"))
    #+END_SRC
 
 * 包初始化及加载工具配置
@@ -164,7 +164,33 @@
    #+BEGIN_SRC emacs-lisp
      (fyj/package-install-if-needed 'diminish)
      (fyj/package-install-if-needed 'scratch)
+     (fyj/package-install-if-needed 'bind-key)
    #+END_SRC
+
+*** use-package
+
+      The =use-package= macro allows you to isolate package
+      configuration in your .emacs file in a way that is both
+      performance-oriented and, well, tidy.
+
+      github url: [[https://github.com/jwiegley/use-package]]
+
+      - install 
+        #+BEGIN_SRC emacs-lisp
+          (fyj/package-install-if-needed 'use-package)
+        #+END_SRC
+      - basic configuration
+        #+BEGIN_SRC emacs-lisp
+          (eval-when-compile
+            (require 'use-package))
+          (require 'diminish)                ;; if you use :diminish
+          (require 'bind-key)                ;; if you use any :bind variant
+          (setq use-package-verbose t)
+          (use-package auto-compile
+            :ensure t
+            :config (auto-compile-on-load-mode))
+          (setq load-prefer-newer t)
+        #+END_SRC
 
 ** 加载其他的org文件
 
@@ -220,9 +246,6 @@
              file))))
     #+end_src
      
-
-
-
 * 加载各个子模块/扩展
 
 ** 全局设置加载
@@ -230,24 +253,12 @@
    #+BEGIN_SRC emacs-lisp 
      (fyj/org-load "settings")
    #+END_SRC
-** 设置exec path
-
-   #+BEGIN_SRC emacs-lisp :tangle no
-     (if *is-a-windows*
-       (fyj/org-load "exec-path")
-   #+END_SRC
 ** org设置
 
    #+BEGIN_SRC emacs-lisp
      (fyj/org-load "org")
    #+END_SRC
 
-** 配置yasnippet
-
-   #+BEGIN_SRC emacs-lisp
-     (fyj/org-load "yasnippet")
-   #+END_SRC
-   
 ** 文本编辑设置
    :PROPERTIES:
    :Effort:   
@@ -256,7 +267,8 @@
    #+BEGIN_SRC emacs-lisp
      (fyj/org-load "editing")
    #+END_SRC
-   
 
-
-
+** 加载模式
+     #+BEGIN_SRC emacs-lisp
+       (fyj/org-load "modes")
+     #+END_SRC
