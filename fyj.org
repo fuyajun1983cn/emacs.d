@@ -1,4 +1,3 @@
-
 #+TITLE:  Emacs配置文件
 #+AUTHOR: 付亚军
 #+EMAIL:  fuyajun1983cn@163.com
@@ -116,7 +115,7 @@
 
    #+BEGIN_SRC emacs-lisp
      (package-initialize)
-     (package-refresh-contents)
+   ;  (package-refresh-contents)
    #+END_SRC
 
 ** 定义管理包的一些函数

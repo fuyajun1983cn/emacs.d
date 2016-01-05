@@ -41,7 +41,7 @@
           :ensure t
           :bind (("C-x o" . switch-window)))
       #+END_SRC
-**  Save a list of recent files visited.
+** Save a list of recent files visited.
 #+begin_src emacs-lisp 
 (recentf-mode 1)
 #+end_src emacs-lisp
