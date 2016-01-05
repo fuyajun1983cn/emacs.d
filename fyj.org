@@ -19,7 +19,7 @@
   | under     | the   | terms        | of     | the        | GNU         | General   | Public | License. |       |          |
   | For       | more  | information  | about  | these      | matters,    | see       | the    | file     | named | COPYING. |
 
-  #+BEGIN_SRC emacs-lisp :tangle no
+  #+BEGIN_SRC emacs-lisp 
     (require 'server)
     (unless (server-running-p)
       (server-start))
