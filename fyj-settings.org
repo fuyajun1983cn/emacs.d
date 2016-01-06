@@ -97,7 +97,7 @@ evaluated a theme is activated using the =load-theme= function.
   (require 'airline-themes)
   (load-theme 'airline-dark t)
 
-  (add-to-list 'custom-theme-load-path (expand-file-name "src/emacs-theme-gruvbox" fyj-dir))
+  (add-to-list 'custom-theme-load-path (expand-file-name "src/emacs-theme-gruvbox" fyj/emacs-directory))
   (load-theme 'gruvbox t)
 #+END_SRC
 
@@ -201,6 +201,21 @@ evaluated a theme is activated using the =load-theme= function.
 
 #+END_SRC
 
+** 终端设置
+    #+BEGIN_SRC emacs-lisp
+      (when (not (window-system))
+        (menu-bar-mode -1))
+    #+END_SRC
+    - Make mouse clicks work in xterm (and iTerm).
+      #+BEGIN_SRC emacs-lisp
+        (when (not (window-system))
+          (xterm-mouse-mode +1))
+      #+END_SRC
+** 在modeline显示当前时间
+    #+BEGIN_SRC emacs-lisp
+      (setq display-time-24hr-format t)
+      (display-time-mode +1)
+    #+END_SRC
 ** bookmark
    
 *** 设置书签文件

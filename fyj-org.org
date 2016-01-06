@@ -16,39 +16,39 @@ which is also *implemented using* Org-mode and [[http://git-scm.com/][git]].
 
 ** General Settings 
 #+BEGIN_SRC emacs-lisp
-  ;; General Settings
+    ;; General Settings
+    (setq initial-major-mode 'org-mode)
+    (setq org-directory "~/org/")
+    (setq org-default-notes-file (concat org-directory "someday.org"))
 
-  (setq org-directory "~/org/")
-  (setq org-default-notes-file (concat org-directory "someday.org"))
+    (setq org-fast-tag-selection-single-key nil)
+    (setq org-refile-targets (quote (("gtd.org":maxlevel . 2) ("someday.org":level . 2) ("journal.org":level . 3))))
+    (setq org-reverse-note-order nil)
+    (setq org-tags-column -78)
+    (setq org-tags-match-list-sublevels nil)
+   ;; org-time-stamp-rounding-minutes 必须是一个list对象
+    (setq org-time-stamp-rounding-minutes '(5 0))
+    (setq org-use-fast-todo-selection t)
+    (setq org-use-tag-inheritance nil)
+    (setq org-deadline-warning-days 7)
+    (setq org-insert-mode-line-in-empty-file t)
 
-  (setq org-fast-tag-selection-single-key nil)
-  (setq org-refile-targets (quote (("gtd.org":maxlevel . 2) ("someday.org":level . 2) ("journal.org":level . 3))))
-  (setq org-reverse-note-order nil)
-  (setq org-tags-column -78)
-  (setq org-tags-match-list-sublevels nil)
- ;; org-time-stamp-rounding-minutes 必须是一个list对象
-  (setq org-time-stamp-rounding-minutes '(5 0))
-  (setq org-use-fast-todo-selection t)
-  (setq org-use-tag-inheritance nil)
-  (setq org-deadline-warning-days 7)
-  (setq org-insert-mode-line-in-empty-file t)
+    ;;TAGS
+    (setq org-tag-alist (quote (("EMACS" . ?e)
+                                ("WIFI" . ?w)
+                                ("BUG" . ?b)
+                                ("ME" . ?m)
+                                ("STUDY" . ?s))))
 
-  ;;TAGS
-  (setq org-tag-alist (quote (("EMACS" . ?e)
-                              ("WIFI" . ?w)
-                              ("BUG" . ?b)
-                              ("ME" . ?m)
-                              ("STUDY" . ?s))))
+    ;;auto fill mode
+    (add-hook 'org-mode-hook 'auto-fill-mode)
 
-  ;;auto fill mode
-  (add-hook 'org-mode-hook 'auto-fill-mode)
-
-  ;;TODO keywords
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED")
-          (sequence "Submitted" "Assigned" "Working" "|" "Resolved")))
-  (setq org-log-done 'time)
-;  (setq org-log-done 'note)
+    ;;TODO keywords
+    (setq org-todo-keywords
+          '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED")
+            (sequence "Submitted" "Assigned" "Working" "|" "Resolved")))
+    (setq org-log-done 'time)
+  ;  (setq org-log-done 'note)
 
 
 #+END_SRC

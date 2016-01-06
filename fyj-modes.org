@@ -115,14 +115,14 @@ ido-mode is like magic pixie dust!
                                                     fyj-dir)))
 #+end_src
 
-** Load Yasnippet
-   :PROPERTIES:
-   :CUSTOM_ID: load
-   :END:
-   #+begin_src emacs-lisp
-    (require 'yasnippet)
-    (yas-global-mode 1)
-   #+end_src
+*** Load Yasnippet
+    :PROPERTIES:
+    :CUSTOM_ID: load
+    :END:
+    #+begin_src emacs-lisp
+     (require 'yasnippet)
+     (yas-global-mode 1)
+    #+end_src
 
 *** Load Snippets Distributed with the Starter Kit
    :PROPERTIES:
@@ -157,6 +157,75 @@ ido-mode is like magic pixie dust!
 
       (add-hook 'org-mode-hook #'yas/org-setup)
     #+end_src
+
+** cmake mode
+     - 安装CMake Mode包：
+     #+BEGIN_SRC emacs-lisp
+       (use-package cmake-mode
+         :ensure t
+         :defer t
+         )
+     #+END_SRC
+
+     - 基本配置
+       #+BEGIN_SRC emacs-lisp
+         (require 'cmake-mode)
+           (setq auto-mode-alist
+                 (append '(("CMakeLists\\.txt\\'" . cmake-mode)
+                           ("\\.cmake\\'" . cmake-mode))
+                         auto-mode-alist))
+       #+END_SRC
+
+     - [[https://github.com/alamaison/emacs-cmake-project][CMake Project]] 
+       A minor-mode integrating the CMake build process with the Emacs
+       ecosystem.
+       1. 基本配置
+          #+BEGIN_SRC emacs-lisp
+            (use-package cmake-project
+              :ensure t
+              :defer t)
+            (require 'cmake-project)
+            (defun maybe-cmake-project-hook ()
+              (if (file-exists-p "CMakeLists.txt") (cmake-project-mode)))
+            (add-hook 'c-mode-hook 'maybe-cmake-project-hook)
+            (add-hook 'c++-mode-hook 'maybe-cmake-project-hook)
+          #+END_SRC
+
+       2. 基本用法
+          - Use =M-x cmake-project-configure-project= to configure or
+            reconfigure a CMake build tree.
+
+          - This mode makes the compile command, =M-x compile=, build
+            the project by default via CMake in a =bin= subdirectory of
+            the project source root directory.
+
+** Web
+
+*** Javascript
+    #+BEGIN_SRC emacs-lisp
+      (use-package js2-mode
+        :ensure t
+        :defer t)
+      (require 'js2-mode)
+      (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . js2-mode))
+    #+END_SRC
+
+*** JSON
+    #+BEGIN_SRC emacs-lisp
+    
+      (add-to-list 'auto-mode-alist '("\\.json\\'\\|\\.jshintrc\\'" . js-mode))
+
+      (setq js-indent-level 2)
+    #+END_SRC
+
+*** CSS
+    #+BEGIN_SRC emacs-lisp
+      (use-package rainbow-mode
+        :ensure t
+        :defer t)
+      (add-hook 'css-mode-hook
+                'rainbow-mode)
+    #+END_SRC
 
 * editor
 ** Undo tree mode - visualize your undos and branches
