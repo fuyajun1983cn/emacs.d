@@ -469,7 +469,7 @@ Rgrep is infinitely useful in multi-file projects.
            "Select the current line under cursor."
            (interactive)
            (end-of-line)
-           (set-mark (line-qbeginning-position)))
+           (set-mark (line-beginning-position)))
        #+END_SRC
 
      - 快捷键设置
@@ -477,7 +477,35 @@ Rgrep is infinitely useful in multi-file projects.
          (global-set-key (kbd "C-c fw") 'select-current-word)
          (global-set-key (kbd "C-c fl") 'select-current-line)
        #+END_SRC
+** 转换Window路径为URI
+   #+BEGIN_SRC emacs-lisp
+     (defun winpath2uri (path &optional from to)
+       "
+          将一个Windows文件路径转换为一个
+          通用的URI路径，
+         如： 转换前的路径为：e:\test.org
+         转换后，路径为： file:///e:/test.org
+       "
+       (interactive
+        (if (use-region-p)
+            (list nil (region-beginning) (region-end))
+          (let ((bds (bounds-of-thing-at-point 'line)))
+            (list nil (car bds) (cdr bds)))
+          ))
+       (let (workOnStringP inputStr outputStr)
+         (setq workOnStringP (if path t nil))
+         (setq inputStr (if workOnStringP path (buffer-substring-no-properties from to)))
+         (setq outputStr
+               (replace-regexp-in-string "\\\\" "/" inputStr))
+         (if workOnStringP
+             outputStr
+           (save-excursion
+             (delete-region from to)
+             (goto-char from)
+             (insert "file:///")
+             (insert outputStr)))))
 
+   #+END_SRC
 * 全局钩子设置
 * 全局Registers设置
 Registers allow you to jump to a file or other location quickly. Use
@@ -502,6 +530,13 @@ You should add registers here for the files you edit most often.
            (?s (file . ,(concat fyj-dir "fyj-settings.org")))))
     (set-register (car r) (cadr r)))
 #+end_src
+** Store Text in Register
+   寄存器的名称可以是单个数字0~9或单个字母。
+   - 保存字符串到一个寄存器中
+     =copy-to-register=  快捷键： =C+x r s= , 然后选择数据 =3= ，这样字
+     符串就会保存在寄存器3中。
+   - 粘贴字符串
+     =insert-register= 快捷键:  =C+x r i= , 然后输入寄存器的名称。
 
 
 
