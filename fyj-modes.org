@@ -200,7 +200,6 @@ ido-mode is like magic pixie dust!
             the project source root directory.
 
 ** Web
-
 *** Javascript
     #+BEGIN_SRC emacs-lisp
       (use-package js2-mode
@@ -220,9 +219,9 @@ ido-mode is like magic pixie dust!
 
 *** CSS
     #+BEGIN_SRC emacs-lisp
-      (use-package rainbow-mode
-        :ensure t
-        :defer t)
+      ;(use-package rainbow-mode
+       ; :ensure t
+        ;:defer t)
       (add-hook 'css-mode-hook
                 'rainbow-mode)
     #+END_SRC
@@ -268,7 +267,15 @@ parenthesis.
              recentf-max-menu-items 15)
        (recentf-mode)
      #+END_SRC
+** Markdown Mode
+   #+BEGIN_SRC emacs-lisp
+     (use-package markdown-mode
+       :ensure t
+       :defer t)
+     (after-load 'whitespace-cleanup-mode
+       (push 'markdown-mode whitespace-cleanup-mode-ignore-modes))
 
+   #+END_SRC
 * Version Control
 
 
