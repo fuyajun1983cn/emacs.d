@@ -103,10 +103,19 @@ evaluated a theme is activated using the =load-theme= function.
 #+END_SRC
 
   终端模式下使用另外的主题
-  #+BEGIN_SRC emacs-lisp :tangle no
+  #+BEGIN_SRC emacs-lisp 
     (when (not (window-system))
      (load-theme 'wombat)
-    )
+     
+     (add-to-list 'custom-theme-load-path (expand-file-name "src/emacs-color-theme-solarized" fyj/emacs-directory))
+     (load-theme 'solarized t)
+
+     (add-hook 'after-make-frame-functions
+               (lambda (frame)
+                 (let ((mode 'dark))
+                   (set-frame-parameter frame 'background-mode mode)
+                   (set-terminal-parameter frame 'background-mode mode))
+                 (enable-theme 'solarized))))
   #+END_SRC
 
 ** Window systems
@@ -254,11 +263,20 @@ evaluated a theme is activated using the =load-theme= function.
          (setq interprogram-paste-function 'xsel-paste-function))) 
 
     #+END_SRC
-** 在modeline显示当前时间
-    #+BEGIN_SRC emacs-lisp
-      (setq display-time-24hr-format t)
-      (display-time-mode +1)
-    #+END_SRC
+    
+** modeline设置
+*** 在modeline显示当前时间
+     #+BEGIN_SRC emacs-lisp
+       (setq display-time-24hr-format t)
+       (display-time-mode +1)
+     #+END_SRC
+*** Mode line format
+     紧凑的形式
+     #+BEGIN_SRC emacs-lisp
+       (use-package smart-mode-line
+         :ensure t
+         :defer t)
+     #+END_SRC
 ** bookmark
    
 *** 设置书签文件

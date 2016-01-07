@@ -4,8 +4,6 @@
 These are the common settings for editing text.
 
 * Common Editor Settings
-
-
 ** Some basic preferences 
    
 #+BEGIN_SRC emacs-lisp
