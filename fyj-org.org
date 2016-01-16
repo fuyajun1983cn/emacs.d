@@ -1,19 +1,7 @@
-\#+TITLE: Starter Kit Org
+#+TITLE: Org Settings
 #+OPTIONS: toc:nil num:nil ^:nil
 
-This is part of the [[file:starter-kit.org][Emacs Starter Kit]].
-
-* Starter Kit Org
-Configuration for the eminently useful [[http://orgmode.org/][Org Mode]].
-
-Org-mode is for keeping notes, maintaining ToDo lists, doing project
-planning, and authoring with a fast and effective plain-text system.
-Org Mode can be used as a very simple folding outliner or as a complex
-GTD system or tool for reproducible research and literate programming.
-
-For more information on org-mode check out [[http://orgmode.org/worg/][worg]], a large Org-mode wiki
-which is also *implemented using* Org-mode and [[http://git-scm.com/][git]].
-
+* Org Mode
 ** General Settings 
 #+BEGIN_SRC emacs-lisp
     ;; General Settings
@@ -52,6 +40,10 @@ which is also *implemented using* Org-mode and [[http://git-scm.com/][git]].
 
 
 #+END_SRC
+** Editing source code in current window
+   #+BEGIN_SRC emacs-lisp
+     (setq org-src-window-setup 'current-window)   
+   #+END_SRC
 ** make headlines has checkbox features
      #+BEGIN_SRC emacs-lisp  :tangel no
        (defun wicked/org-update-checkbox-count (&optional all)
