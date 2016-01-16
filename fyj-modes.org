@@ -52,18 +52,32 @@
 (recentf-mode 1)
 #+end_src emacs-lisp
 ** ido mode
-ido-mode is like magic pixie dust!
-#+srcname: fyj-loves-ido-mode
-#+begin_src emacs-lisp 
-(when (> emacs-major-version 21)
-  (ido-mode t)
-  (setq ido-enable-prefix nil
-        ido-enable-flex-matching t
-        ido-create-new-buffer 'always
-;        ido-use-filename-at-point t
-        ido-max-prospects 10))
-#+end_src
-
+  ido-mode is like magic pixie dust!
+  #+srcname: fyj-loves-ido-mode
+  #+begin_src emacs-lisp 
+  (when (> emacs-major-version 21)
+    (ido-mode t)
+    (setq ido-enable-prefix nil
+          ido-enable-flex-matching t
+          ido-create-new-buffer 'always
+  ;        ido-use-filename-at-point t
+          ido-max-prospects 10))
+  #+end_src
+** smex
+   快速输入命令
+   from https://github.com/nonsequitur/smex.git
+   #+BEGIN_SRC emacs-lisp
+     (use-package smex
+       :ensure t
+       )
+     (require 'smex) ; Not needed if you use package.el
+     (smex-initialize) ; Can be omitted. This might cause a (minimal) delay
+                                             ; when Smex is auto-initialized on its first run.
+     (global-set-key (kbd "M-x") 'smex)
+     (global-set-key (kbd "M-X") 'smex-major-mode-commands)
+     ;; This is your old M-x.
+     (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+   #+END_SRC
 ** Helm  - interactive completion
 
 ** Helm-swoop - quickly finding lines

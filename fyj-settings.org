@@ -64,12 +64,24 @@
       #+BEGIN_SRC emacs-lisp
         (defalias 'list-buffers 'ibuffer) ; make ibuffer default
       #+END_SRC
-** 总是显示行号
-     #+BEGIN_SRC emacs-lisp
-       (global-linum-mode 1)
-       ;;设置显示等号的宽度
-       (setq linum-format "%6d ")
-     #+END_SRC
+** 行号
+*** 设置行号显示格式
+      #+BEGIN_SRC emacs-lisp
+        (global-linum-mode 1)
+        ;;设置显示行号的宽度
+        (setq linum-format "%4d ")
+      #+END_SRC
+*** 相对行号显示
+      #+BEGIN_SRC emacs-lisp
+        (use-package linum-relative
+          :ensure t
+          :defer t)
+        (require 'linum-relative)
+      #+END_SRC
+*** 固定行号显示高度
+    #+BEGIN_SRC emacs-lisp
+      (set-face-attribute 'linum nil :height 100)
+    #+END_SRC
 ** 高亮显示当前行
      #+BEGIN_SRC emacs-lisp
    (global-hl-line-mode 1)    
