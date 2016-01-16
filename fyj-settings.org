@@ -67,6 +67,8 @@
 ** 总是显示行号
      #+BEGIN_SRC emacs-lisp
        (global-linum-mode 1)
+       ;;设置显示等号的宽度
+       (setq linum-format "%6d ")
      #+END_SRC
 ** 高亮显示当前行
      #+BEGIN_SRC emacs-lisp
