@@ -245,10 +245,9 @@
 *** Javascript
     #+BEGIN_SRC emacs-lisp
       (use-package js2-mode
-        :ensure t
-        :defer t)
-      (require 'js2-mode)
-      (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . js2-mode))
+       :config 
+         (require 'js2-mode)
+         (add-to-list 'auto-mode-alist '("\\.js[x]?\\'" . js2-mode)))
     #+END_SRC
 
 *** JSON
@@ -386,7 +385,7 @@ parenthesis.
 *** 安装 (注：只支持emacs 24.4之后的版本)
     #+BEGIN_SRC emacs-lisp
       (when (version<= "24.4" emacs-version)
-           (fyj/package-install-if-needed 'magit))
+        (use-package magit))
     #+END_SRC
 
 *** 基本操作指南
