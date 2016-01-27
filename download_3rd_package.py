@@ -28,3 +28,4 @@ if __name__ == "__main__":
     git_clone("https://github.com/howardabrams/demo-it", "demo-it")
     git_clone("https://github.com/emacsmirror/rainbow-mode.git", "rainbow-mode")
     git_clone("https://github.com/sellout/emacs-color-theme-solarized.git", "emacs-color-theme-solarized")
+    git_clone("https://github.com/coldnew/linum-relative.git", "linum-relative")
