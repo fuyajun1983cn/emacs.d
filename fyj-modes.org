@@ -53,14 +53,13 @@
 #+end_src emacs-lisp
 ** ido mode
   ido-mode is like magic pixie dust!
-  #+srcname: fyj-loves-ido-mode
   #+begin_src emacs-lisp 
   (when (> emacs-major-version 21)
     (ido-mode t)
     (setq ido-enable-prefix nil
           ido-enable-flex-matching t
+          ido-everything t
           ido-create-new-buffer 'always
-  ;        ido-use-filename-at-point t
           ido-max-prospects 10))
   #+end_src
 ** smex
@@ -79,6 +78,12 @@
      (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
    #+END_SRC
 ** Helm  - interactive completion
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package helm
+                    :config
+                    (require 'helm-config))
+     #+END_SRC
 
 ** Helm-swoop - quickly finding lines
    This promises to be a fast way to find things. Let’s bind it to
@@ -267,6 +272,13 @@
                 'rainbow-mode)
     #+END_SRC
 
+** Plant UML
+    An open source UML definition language
+    #+BEGIN_SRC emacs-lisp
+      (require 'plantuml-mode)
+      (setq org-plantuml-jar-path
+                  (expand-file-name "E:/mysoft/jquery_plantuml/plantuml-8033/plantuml.jar"))
+    #+END_SRC
 * editor
 ** Undo tree mode - visualize your undos and branches
      People often struggle with the Emacs undo model, where there’s

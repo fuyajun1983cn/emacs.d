@@ -104,6 +104,7 @@ contains an up to date list of the currently supported languages.
    'org-babel-load-languages
    '((emacs-lisp . t)
      (python . t)
+     (plantuml . t)
      (ditaa . t)
      (sh . t)))
 #+end_src
