@@ -31,14 +31,8 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package windmove
-         :ensure t
-         :defer t
-         :bind
-         (("<f2> <right>" . windmove-right)
-          ("<f2> <left>" . windmove-left)
-          ("<f2> <up>" . windmove-up)
-          ("<f2> <down>" . windmove-down)
-          ))
+         :config
+          (windmove-default-keybindings))
      #+END_SRC
 
 *** More window movement
@@ -377,7 +371,6 @@ parenthesis.
     - =diffview-current=:  View the current diff region side-by-side
     - =diffview-message=: View the current email message (which
       presumably contains a patch) side-by-side
-
 
 * Version Control
 ** Magit Mode

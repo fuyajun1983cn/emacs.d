@@ -301,7 +301,6 @@ evaluated a theme is activated using the =load-theme= function.
          :defer t)
      #+END_SRC
 ** bookmark
-   
 *** 设置书签文件
 
     #+BEGIN_SRC emacs-lisp :tangle no
@@ -345,7 +344,10 @@ evaluated a theme is activated using the =load-theme= function.
    #+BEGIN_SRC emacs-lisp
      (setq delete-by-moving-to-trash t)
    #+END_SRC
-   
+** Apropos sort results by relevancy
+   #+BEGIN_SRC emacs-lisp
+     (setq apropos-sort-by-scores t)
+   #+END_SRC
 * 全局按键设置
 ** You know, like Readline.
 #+begin_src emacs-lisp 
