@@ -18,9 +18,7 @@
      press =C-c <left>=.
 
      #+BEGIN_SRC emacs-lisp
-       (use-package winner
-         :ensure t
-         :defer t)
+       (use-package winner)
      #+END_SRC
 
 ** Windmove - switching between windows
@@ -38,8 +36,7 @@
 *** More window movement
       #+BEGIN_SRC emacs-lisp
         (use-package switch-window
-          :ensure t
-          :bind (("C-x o" . switch-window)))
+          :bind (("M-o" . switch-window)))
       #+END_SRC
 ** Save a list of recent files visited.
 #+begin_src emacs-lisp 
@@ -47,14 +44,13 @@
 #+end_src emacs-lisp
 ** ido mode
   ido-mode is like magic pixie dust!
-  #+srcname: fyj-loves-ido-mode
   #+begin_src emacs-lisp 
   (when (> emacs-major-version 21)
     (ido-mode t)
     (setq ido-enable-prefix nil
           ido-enable-flex-matching t
+          ido-everything t
           ido-create-new-buffer 'always
-  ;        ido-use-filename-at-point t
           ido-max-prospects 10))
   #+end_src
 ** smex
@@ -73,6 +69,12 @@
      (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
    #+END_SRC
 ** Helm  - interactive completion
+
+     #+BEGIN_SRC emacs-lisp
+       (use-package helm
+                    :config
+                    (require 'helm-config))
+     #+END_SRC
 
 ** Helm-swoop - quickly finding lines
    This promises to be a fast way to find things. Let’s bind it to
@@ -196,31 +198,27 @@
 
 ** cmake mode
      - 安装CMake Mode包：
-     #+BEGIN_SRC emacs-lisp
+     #+BEGIN_SRC emacs-lisp 
        (use-package cmake-mode
          :ensure t
-         :defer t
-         )
-     #+END_SRC
-
-     - 基本配置
-       #+BEGIN_SRC emacs-lisp
-         (require 'cmake-mode)
+         :config
+         (progn
+           (require 'cmake-mode)
            (setq auto-mode-alist
                  (append '(("CMakeLists\\.txt\\'" . cmake-mode)
                            ("\\.cmake\\'" . cmake-mode))
-                         auto-mode-alist))
+                         auto-mode-alist))))
        #+END_SRC
 
      - [[https://github.com/alamaison/emacs-cmake-project][CMake Project]] 
        A minor-mode integrating the CMake build process with the Emacs
        ecosystem.
        1. 基本配置
-          #+BEGIN_SRC emacs-lisp
+          #+BEGIN_SRC emacs-lisp 
             (use-package cmake-project
               :ensure t
-              :defer t)
-            (require 'cmake-project)
+              :config
+               (require 'cmake-project))
             (defun maybe-cmake-project-hook ()
               (if (file-exists-p "CMakeLists.txt") (cmake-project-mode)))
             (add-hook 'c-mode-hook 'maybe-cmake-project-hook)
@@ -254,13 +252,18 @@
 
 *** CSS
     #+BEGIN_SRC emacs-lisp
-      ;(use-package rainbow-mode
-       ; :ensure t
-        ;:defer t)
+      ;(use-package rainbow-mode)
       (add-hook 'css-mode-hook
                 'rainbow-mode)
     #+END_SRC
 
+** Plant UML
+    An open source UML definition language
+    #+BEGIN_SRC emacs-lisp
+      (require 'plantuml-mode)
+      (setq org-plantuml-jar-path
+                  (expand-file-name "E:/mysoft/jquery_plantuml/plantuml-8033/plantuml.jar"))
+    #+END_SRC
 * editor
 ** Undo tree mode - visualize your undos and branches
      People often struggle with the Emacs undo model, where there’s
@@ -271,8 +274,6 @@
 
      #+BEGIN_SRC emacs-lisp
        (use-package undo-tree
-         :defer t
-         :ensure t
          :diminish undo-tree-mode
          :config
          (progn
@@ -286,7 +287,7 @@ open parenthesis automatically inserts the corresponding closing
 parenthesis. 
 
 #+BEGIN_SRC emacs-lisp
-  (fyj/package-install-if-needed 'unfill)
+  (use-package unfill)
 
   (when (fboundp 'electric-pair-mode)
     (electric-pair-mode 1))
@@ -304,9 +305,7 @@ parenthesis.
      #+END_SRC
 ** Markdown Mode
    #+BEGIN_SRC emacs-lisp :tangle no
-     (use-package markdown-mode
-       :ensure t
-       :defer t)
+     (use-package markdown-mode)
      (after-load 'whitespace-cleanup-mode
        (push 'markdown-mode whitespace-cleanup-mode-ignore-modes))
 

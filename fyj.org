@@ -162,7 +162,6 @@
    #+BEGIN_SRC emacs-lisp
      (fyj/package-install-if-needed 'diminish)
      (fyj/package-install-if-needed 'scratch)
-     (fyj/package-install-if-needed 'bind-key)
    #+END_SRC
 
 *** use-package
@@ -182,7 +181,11 @@
           (eval-when-compile
             (require 'use-package))
           (require 'diminish)                ;; if you use :diminish
-          (require 'bind-key)                ;; if you use any :bind variant
+;          (require 'bind-key)     
+          (use-package bind-key
+              :ensure t
+              :config
+               (require 'bind-key))                ;; if you use any :bind variant
           (setq use-package-verbose t)
           (use-package auto-compile
             :ensure t
