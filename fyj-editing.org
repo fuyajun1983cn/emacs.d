@@ -27,7 +27,7 @@ These are the common settings for editing text.
    scroll-preserve-screen-position 'always
    set-mark-command-repeat-pop t
    tooltip-delay 1.5
-   truncate-lines nil
+   truncate-lines nil ;; toggle word wrapping
    truncate-partial-width-windows nil)
 
   (global-auto-revert-mode)
@@ -310,10 +310,27 @@ These are the common settings for editing text.
   (fyj/package-install-if-needed 'highlight-escape-sequences)
   (hes-mode)
 
- 
-  (fyj/package-install-if-needed 'guide-key)
-  (setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-c ;" "C-c ; f" "C-c ' f" "C-x n" "C-x C-r" "C-x r"))
-  (guide-key-mode 1)
-  (diminish 'guide-key-mode)
-
 #+END_SRC
+
+** enable guide-key 
+     显示按键提示
+     #+BEGIN_SRC emacs-lisp
+       (use-package guide-key
+         :ensure t
+         :config
+         (progn
+           (setq guide-key/guide-key-sequence '("C-x" "C-c" "C-x 4" "C-x 5" "C-c ;" "C-c ; f" "C-c ' f" "C-x n" "C-x C-r" "C-x r"))
+           (guide-key-mode 1)
+           (diminish 'guide-key-mode)))
+     #+END_SRC
+
+** next-screen-context-lines 
+   The page up/down buttons will scroll up or down a screenful of
+   text, retaining 2 lines of text for context.You can change the
+   amount of overlap whe nyou page through text by altering the variable
+   =next-screen-context-lines= directly in your init file. 
+   #+BEGIN_SRC emacs-lisp
+     (setq next-screen-context-lines  3)
+   #+END_SRC
+
+
