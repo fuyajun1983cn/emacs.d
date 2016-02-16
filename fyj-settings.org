@@ -592,6 +592,15 @@ Rgrep is infinitely useful in multi-file projects.
              (insert outputStr)))))
 
    #+END_SRC
+** Unix与DOS换行符相互转换
+   #+BEGIN_SRC emacs-lisp
+     (defun dos-unix () (interactive) 
+        (goto-char (point-min)) 
+        (while (search-forward "\r" nil t) (replace-match ""))) 
+     (defun unix-dos () (interactive) 
+        (goto-char (point-min)) 
+        (while (search-forward "\n" nil t) (replace-match "\r\n")))    
+   #+END_SRC
 * 全局钩子设置
 * 全局Registers设置
 Registers allow you to jump to a file or other location quickly. Use
