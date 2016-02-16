@@ -70,3 +70,4 @@ recentf
 .cask/
 smex-items
 server/
+session.*
