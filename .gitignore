@@ -31,7 +31,6 @@ url/*
 *el
 !elisp/*
 *elc
-*html
 *tex
 *pdf
 *txt
@@ -71,3 +70,10 @@ recentf
 smex-items
 server/
 session.*
+*.el
+ac_dict
+auto-save-list
+backups
+elpa
+snippets
+src

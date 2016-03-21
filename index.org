@@ -1,0 +1,15 @@
+#+STARTUP: overview
+#+STARTUP: hidestars
+#+OPTIONS:    H:3 num:nil toc:t \n:nil ::t |:t ^:t -:t f:t *:t tex:t d:(HIDE) tags:not-in-toc
+#+HTML_HEAD: <link rel="stylesheet" title="Standard" href="css/worg.css" type="text/css" />
+
+
+* Emacs Life
+
+** Emacs源码分析笔记
+
+** Org Mode
+
+** 工作流与生产力
+
+** 其他
