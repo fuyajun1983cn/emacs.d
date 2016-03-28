@@ -97,6 +97,7 @@
    #+BEGIN_SRC emacs-lisp
      (defconst *is-in-windows* (string= system-type "windows-nt"))
      (defconst *is-in-cygwin* (string= system-type "cygwin"))
+     (defconst *is-in-linux* (string= system-type "gnu/linux"))
    #+END_SRC
 
 * 包初始化及加载工具配置
