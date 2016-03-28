@@ -1,0 +1,67 @@
+
+
+* 待研究的内容
+
+** 了解defgroup defcustom defvar defconst等函数的说明文档 
+
+** declare-function的含义
+
+** 了解condition-case的用法
+
+** interacive各参数的含义
+
+** memq  dolist catch  cond push
+   catch - throw
+   push - pop
+
+** set-default
+
+* 变量定义
+
+** 通用关键字
+   - ':tag LABEL'
+     使用LABLE字符串，而不是该项的名字来标记这个项，即在客制化菜单中显
+     示的名称。对于一个项目来说，只能定义一个tag。
+   - ':group GROUP'
+     当用于 'defgroup'时，它代表创建一个group，其中情况下表示将该项加
+     入这个组中。
+   - ':link LINK-DATA'
+     在该项的文档字符串后包含一个外部链接。
+     LINK-DATA有如下一些情况：
+     1. ‘(custom-manual INFO-NODE)’
+     2. ‘(info-link INFO-NODE)’
+     3. ‘(url-link URL)
+     4. ‘(emacs-commentary-link LIBRARY)’
+     5. ‘(emacs-library-link LIBRARY)’
+     6. ‘(file-link FILE)’
+     7. ‘(function-link FUNCTION)’
+     8. ‘(variable-link VARIABLE)’
+     9. ‘(custom-group-link GROUP)
+     可以添加 `:tag NAME`来指定定制化的Buffer的标题。如
+     ‘(info-link :tag "foo" "(emacs)Top")’
+   - ':load FILE'
+     显示该客制化选项时，先加载该文件。
+   - ':require FEATURE'
+     在保存该选项时，执行'(require 'FEAUTURE)
+   - ':version VERSION'
+     指定该选项支持的最低版本。
+   - ':package-version '(PACKAGE . VERSION)'
+     指定该选项出现的最低的版本：PACKAGE VERSION
+** defgroup
+   函数原型：
+   #+BEGIN_SRC emacs-lisp
+   (defgroup SYMBOL MEMBERS DOC &rest ARGS)
+   #+END_SRC
+   第三个参数 =DOC= 为关于该组的描述性文档，以一个大写字母开头，以点号
+   为结束。
+   第二个参数 =MEMBERS= 应该以一种关联数组的形式存在：
+   ((NAME WIDGET) ...), 其中NAME是一个符号，而WIDGET是用于编辑该符号的
+   组件， 一些常用的组件有： `custom-variable` 编辑变量，
+   `custom-face`编辑字体，`custom-group`编辑组。
+   其他的参数形式为 [KEYWORD VAlUE]
+*** 额外关键字
+    1. ':prefix PREFIX'
+       如果该组中的某项以PREFIX开头且可定制化的变
+       量'custom-unlispify-remove-prefixed'不为空，则该项的标签会省略
+       PREFIX。一个组可以拥有多个prefix。
+** defcustom

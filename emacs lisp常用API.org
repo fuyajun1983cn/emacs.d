@@ -1,0 +1,15 @@
+
+* 日期与时间
+
+** 时间读取
+   1. =float-time= : 返回当前时间，也浮点数表示
+   2. =current-time= : 返回当前时间, 返回秒
+
+* 文件操作
+
+** 文件名与属性
+   1. =file-truename= :如果文件名不是绝对路径，会先展开为绝对路径，
+          如果是符号链接，也跟踪到实际的文件
+   2. =file-attributes= : 返回文件的属性
+   3. =file-name-sans-extension= : 返回base name  , 如 file.x.y.z
+      --> file.x.y

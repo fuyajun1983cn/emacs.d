@@ -7,7 +7,8 @@
 * Emacs Life
 
 ** Emacs源码分析笔记
-
+*** Emacs Lisp常用API
+*** Eamcs Lisp学习笔记
 ** Org Mode
 
 ** 工作流与生产力
