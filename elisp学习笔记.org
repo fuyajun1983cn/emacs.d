@@ -16,6 +16,10 @@
 
 ** set-default
 
+** string-equal  substring
+
+** search-forward-regexp  search-backward-regexp skip-chars-backward
+
 * 变量定义
 
 ** 通用关键字
