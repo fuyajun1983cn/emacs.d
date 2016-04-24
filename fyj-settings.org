@@ -351,11 +351,6 @@ evaluated a theme is activated using the =load-theme= function.
      (setq apropos-sort-by-scores t)
    #+END_SRC
 * 全局按键设置
-** You know, like Readline.
-#+begin_src emacs-lisp 
-(global-set-key (kbd "C-M-h") 'backward-kill-word)
-#+end_src
-
 ** Align your code in a pretty way.
 #+begin_src emacs-lisp 
 (global-set-key (kbd "C-x \\") 'align-regexp)
