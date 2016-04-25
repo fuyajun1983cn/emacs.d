@@ -120,6 +120,10 @@
   ;;(add-to-list 'ac-user-dictionary-files "~/.emacs.d/mydict")
 
 #+END_SRC
+** Org Mode
+   #+BEGIN_SRC emacs-lisp
+     (add-to-list 'ac-modes 'org-mode)   
+   #+END_SRC
 ** Yasnippet
       [[http://code.google.com/p/yasnippet/][yasnippet]] is yet another snippet expansion system for Emacs.  It
       is inspired by TextMate's templating syntax. 
