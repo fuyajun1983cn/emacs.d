@@ -273,4 +273,5 @@
 ** 加载模式
      #+BEGIN_SRC emacs-lisp
        (fyj/org-load "modes")
+       ;(fyj/org-load "java")
      #+END_SRC

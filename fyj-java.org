@@ -1,0 +1,38 @@
+#+TITLE: Java Development Environment
+#+OPTIONS: toc:nil num:nil ^:nil
+
+
+* JDEE
+
+** 基本介绍 
+   The Java Development Environment for Emacs (JDEE) is an add on
+   sotware package for Emacs that assists in the development of
+   software in the Java Programming Language. JDEE provides many Emacs
+   commands that help with the editing, compiling, running, debugging,
+   and browsing large Java programs.
+
+   official site:
+   http://jdee.sourceforge.net/?utm_medium=referral&utm_source=zeef.com&utm_campaign=ZEEF
+
+** 依赖
+   1. GNU Emacs version 23.4 or later.
+   2. A Java Development environment. JDEE is know to work with the Oracle JDK and the OpenJDK platforms.
+   3. Any Web browser supported by the Emacs browse-url interface for
+      viewing documentation (this includes Firefox, Safari, Internet
+      Explorer and many others).
+   4. Cygwin or other Unix-style shell highly recommended for Windows
+      environments. The JDEE software is know to work on GNU/Linux and
+      Mac OS X platorms without any additional software.
+
+** 安装
+   #+BEGIN_SRC emacs-lisp
+     (use-package jdee
+       :ensure t)   
+   #+END_SRC
+
+   需要定义如下三个变量：
+   - jde-jdk-registry
+   - jde-jdk
+   - jdee-server-dir
+
+    

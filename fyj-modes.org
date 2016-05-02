@@ -38,13 +38,9 @@
         (use-package switch-window
           :bind (("M-o" . switch-window)))
       #+END_SRC
-** Save a list of recent files visited.
-#+begin_src emacs-lisp 
-(recentf-mode 1)
-#+end_src emacs-lisp
 ** ido mode
   ido-mode is like magic pixie dust!
-  #+begin_src emacs-lisp 
+  #+begin_src emacs-lisp :tangle no
   (when (> emacs-major-version 21)
     (ido-mode t)
     (setq ido-enable-prefix nil
@@ -56,7 +52,7 @@
 ** smex
    快速输入命令
    from https://github.com/nonsequitur/smex.git
-   #+BEGIN_SRC emacs-lisp
+   #+BEGIN_SRC emacs-lisp :tangle no
      (use-package smex
        :ensure t
        )
@@ -70,11 +66,75 @@
    #+END_SRC
 ** Helm  - interactive completion
 
+    Tutorial: http://tuhdo.github.io/helm-intro.html
+
      #+BEGIN_SRC emacs-lisp
        (use-package helm
-                    :config
-                    (require 'helm-config))
+         :ensure t
+         :config
+         (progn
+           (require 'helm)
+           (require 'helm-config)))
+
+       ;; The default "C-x c" is quite close to "C-x C-c", which quits Emacs.
+       ;; Changed to "C-c h". Note: We must set "C-c h" globally, because we
+       ;; cannot change `helm-command-prefix-key' once `helm-config' is loaded.
+       (global-set-key (kbd "C-c h") 'helm-command-prefix)
+       (global-unset-key (kbd "C-x c"))
+
+       (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
+       (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+       (define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+
+       (when (executable-find "curl")
+         (setq helm-google-suggest-use-curl-p t))
+
+       (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+             helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+             helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+             helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+             helm-ff-file-name-history-use-recentf t)
+
+       (helm-mode 1)
+
      #+END_SRC
+*** Autoresize
+    Helm can resize its buffer automatically to fit with the number of
+    candidates by enabling =helm-autoresize-mode=:
+    #+BEGIN_SRC emacs-lisp
+      (helm-autoresize-mode t)    
+    #+END_SRC
+*** Command: =helm-M-x=
+    #+BEGIN_SRC emacs-lisp 
+      (global-set-key (kbd "M-x") 'helm-M-x)
+      (setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
+    #+END_SRC
+*** Command: =helm-show-kill-ring=
+    #+BEGIN_SRC emacs-lisp 
+      (global-set-key (kbd "M-y") 'helm-show-kill-ring)    
+    #+END_SRC
+*** Command: =helm-mini=
+    #+BEGIN_SRC emacs-lisp
+      (global-set-key (kbd "C-x b") 'helm-mini)
+
+      ;;To enable fuzzy matching, add the following settings:
+      (setq helm-buffers-fuzzy-matching t
+            helm-recentf-fuzzy-match    t)
+    #+END_SRC
+*** Command: =helm-find-files=
+    #+BEGIN_SRC emacs-lisp 
+      (global-set-key (kbd "C-x C-f") 'helm-find-files)    
+    #+END_SRC
+** =helm-projectile= 
+   #+BEGIN_SRC emacs-lisp
+     (use-package projectile
+       :ensure t)
+     (use-package helm-projectile
+       :ensure t)
+     (projectile-global-mode)
+     (setq projectile-completion-system 'helm)
+     (helm-projectile-on)   
+   #+END_SRC
 
 ** Helm-swoop - quickly finding lines
    This promises to be a fast way to find things. Let’s bind it to
@@ -419,5 +479,7 @@ parenthesis.
 
        call magit-log to see your commit log. Press Enter on a a line
        to see its diff.
+
+
 
 
