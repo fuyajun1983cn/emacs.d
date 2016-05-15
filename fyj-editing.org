@@ -142,7 +142,17 @@ These are the common settings for editing text.
        (bind-key "C-x p" 'pop-to-mark-command)
        (setq set-mark-command-repeat-pop t)
      #+END_SRC
-** Key Binding  
+*** Switch to Buffer
+    #+BEGIN_SRC emacs-lisp
+      (defadvice switch-to-buffer (before existing-buffer activate compile)
+        "When interactive, switch to existing buffers only,
+        unless given a prefix argument"
+        (interactive
+         (list (read-buffer "Switch to buffer: "
+                            (other-window)
+                            (null current-prefix-arg)))))    
+    #+END_SRC
+* Key Binding  
 #+BEGIN_SRC emacs-lisp
   ;;----------------------------------------------------------------------------
   ;; Handy key bindings
@@ -156,22 +166,6 @@ These are the common settings for editing text.
 
   (global-set-key (kbd "C-.") 'set-mark-command)
   (global-set-key (kbd "C-x C-.") 'pop-global-mark)
-
-  (when (fyj/package-install-if-needed 'avy)
-    (autoload 'avy-goto-word-or-subword-1 "avy")
-    (global-set-key (kbd "C-;") 'avy-goto-word-or-subword-1))
-
-  (fyj/package-install-if-needed 'multiple-cursors)
-  ;; multiple-cursors
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-+") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-  ;; From active region to multiple cursors:
-  ;(global-set-key (kbd "C-c c r") 'set-rectangular-region-anchor)
-  ;(global-set-key (kbd "C-c c c") 'mc/edit-lines)
-  ;(global-set-key (kbd "C-c c e") 'mc/edit-ends-of-lines)
-  ;(global-set-key (kbd "C-c c a") 'mc/edit-beginnings-of-lines)
 
 
   ;; Train myself to use M-f and M-b instead
@@ -193,7 +187,7 @@ These are the common settings for editing text.
    
 ** some more settings  
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   ;;----------------------------------------------------------------------------
   ;; Page break lines
   ;;----------------------------------------------------------------------------
@@ -334,3 +328,24 @@ These are the common settings for editing text.
    #+END_SRC
 
 
+** scroll Text
+   one line a time
+   #+BEGIN_SRC emacs-lisp
+     (defalias 'scroll-ahead 'scroll-up)
+     (defalias 'scroll-behind 'scroll-down)
+
+     (defun scroll-N-lines-ahead (&optional n)
+       "scroll up one line"
+       (interactive "P")
+       (scroll-ahead (prefix-numeric-value n)))
+
+     (defun scroll-N-lines-behind (&optional n)
+       (interactive "P")
+       (scroll-behind (prefix-numeric-value n)))
+
+     (global-set-key (kbd "C-q") 'scroll-N-lines-behind)
+     (global-set-key (kbd "C-z") 'scroll-N-lines-ahead)
+
+     ;;rebind quoted-insert
+     (global-set-key (kbd "C-x C-q") 'quoted-insert)
+   #+END_SRC

@@ -10,34 +10,24 @@
        (require 'find-dired)
        (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))     
      #+END_SRC
-** Winner Mode
-     =winner-mode= lets you use =C-c <left>= and =C-c <right>= to switch
-     between window configurations. This is handy when something has
-     popped up a buffer that you want to look at briefly before
-     returning to whatever you were working on. When you’re done,
-     press =C-c <left>=.
+** Window Movement
+    #+BEGIN_SRC emacs-lisp
+      (defun other-window-backward (&optional n)
+        "Select the Nth previous window."
+        (interactive "P")
+        (other-window (- (prefix-numeric-value n))))
 
-     #+BEGIN_SRC emacs-lisp
-       (use-package winner)
-     #+END_SRC
+      ;;The capital P means "when called interactively, leave the
+      ;;prefix argument in raw form and
+      ;;assign it to n."
 
-** Windmove - switching between windows
-     Windmove lets you move between windows with something more
-     natural than cycling through C-x o (other-window). Windmove
-     doesn’t behave well with Org, so we need to use different
-     keybindings.
+      ;;prefix-numeric-value
+      ;;return n unchanged if it's a number, and return 1 if it's nil.
 
-     #+BEGIN_SRC emacs-lisp
-       (use-package windmove
-         :config
-          (windmove-default-keybindings))
-     #+END_SRC
+      (global-set-key (kbd "C-x C-p") 'other-window-backward)
+      (global-set-key (kbd "C-x C-n") 'other-window)
+    #+END_SRC
 
-*** More window movement
-      #+BEGIN_SRC emacs-lisp
-        (use-package switch-window
-          :bind (("M-o" . switch-window)))
-      #+END_SRC
 ** ido mode
   ido-mode is like magic pixie dust!
   #+begin_src emacs-lisp :tangle no
