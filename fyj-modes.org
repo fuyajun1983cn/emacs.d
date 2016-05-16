@@ -148,6 +148,16 @@
         (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop))
      )
    #+END_SRC
+
+** avy
+   =avy= is a GNU Emacs package for jumping to visible text using a
+   char-based decision tree.
+   #+BEGIN_SRC emacs-lisp
+     (use-package avy-menu
+       :ensure t)
+
+     (global-set-key (kbd "C-:") 'avy-goto-char)
+   #+END_SRC
 * programming
 ** auto complete mode
 #+BEGIN_SRC emacs-lisp
