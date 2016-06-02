@@ -435,7 +435,13 @@ parenthesis.
     - =diffview-current=:  View the current diff region side-by-side
     - =diffview-message=: View the current email message (which
       presumably contains a patch) side-by-side
-
+** flycheck
+   语法检查器
+   #+BEGIN_SRC emacs-lisp
+     (use-package flycheck
+       :ensure t
+       :config (global-flycheck-mode))   
+   #+END_SRC
 * Version Control
 ** Magit Mode
    Magit模式是emacs下的一个非常好用的git操作界面。
