@@ -263,9 +263,8 @@
 
 ** cmake mode
      - 安装CMake Mode包：
-     #+BEGIN_SRC emacs-lisp 
+     #+BEGIN_SRC emacs-lisp :tangle no
        (use-package cmake-mode
-         :ensure t
          :config
          (progn
            (require 'cmake-mode)
@@ -279,7 +278,7 @@
        A minor-mode integrating the CMake build process with the Emacs
        ecosystem.
        1. 基本配置
-          #+BEGIN_SRC emacs-lisp 
+          #+BEGIN_SRC emacs-lisp :tangle no
             (use-package cmake-project
               :ensure t
               :config
@@ -327,7 +326,7 @@
     #+BEGIN_SRC emacs-lisp
       (require 'plantuml-mode)
       (setq org-plantuml-jar-path
-                  (expand-file-name "E:/mysoft/jquery_plantuml/plantuml-8033/plantuml.jar"))
+                  "/home/mtk71339/playground/plantuml.jar")
     #+END_SRC
 * editor
 ** Undo tree mode - visualize your undos and branches
@@ -399,9 +398,7 @@ parenthesis.
 ** multiple cursor editing
     from https://github.com/magnars/multiple-cursors.el
     #+BEGIN_SRC emacs-lisp
-      (use-package multiple-cursors
-        :ensure t
-        :defer t)
+      (use-package multiple-cursors)
       (require 'multiple-cursors)
     #+END_SRC
     When you have an active region that spans multiple lines, the
@@ -425,9 +422,7 @@ parenthesis.
 ** diffview-mode
     from https://github.com/mgalgs/diffview-mode.git
     #+BEGIN_SRC emacs-lisp
-      (use-package diffview
-        :ensure t
-        :defer t)
+      (use-package diffview)
     #+END_SRC
     The following functions are provided for launching a side-by-side
     diff:
@@ -439,7 +434,6 @@ parenthesis.
    语法检查器
    #+BEGIN_SRC emacs-lisp
      (use-package flycheck
-       :ensure t
        :config (global-flycheck-mode))   
    #+END_SRC
 * Version Control
