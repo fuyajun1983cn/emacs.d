@@ -326,7 +326,7 @@
     #+BEGIN_SRC emacs-lisp
       (require 'plantuml-mode)
       (setq org-plantuml-jar-path
-                  "/home/mtk71339/playground/plantuml.jar")
+                  "/home/fuyajun/.public/plantuml.jar")
     #+END_SRC
 * editor
 ** Undo tree mode - visualize your undos and branches
