@@ -4,7 +4,6 @@
 * Org Mode
 ** General Settings 
    #+BEGIN_SRC emacs-lisp
-
      ;; General Settings
      (if *is-in-windows*
          (setq org-directory "E:/mysoft/my-program-wharehouse/org/")
@@ -107,13 +106,14 @@
    one below.  The customize interface of `=org-babel-load-languages='
    contains an up to date list of the currently supported languages.
    #+begin_src emacs-lisp 
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (python . t)
-     (plantuml . t)
-     (ditaa . t)
-     (sh . t)))
+     (org-babel-do-load-languages
+      'org-babel-load-languages
+      '((emacs-lisp . t)
+        (python . t)
+        (plantuml . t)
+        (ditaa . t)
+        (lua . t)
+        (sh . t)))
    #+end_src
    
    You are encouraged to add the following to your personal configuration
@@ -167,8 +167,9 @@
    #+BEGIN_SRC emacs-lisp
      ;; Org-Agenda
      (global-set-key "\C-ca" 'org-agenda)
-     (setq org-agenda-files (quote ("gtd.org" "personal.org")))
-     (setq org-agenda-ndays 7)
+     (setq org-agenda-files (quote ("~/org/gtd.org" "~/org/personal.org")))
+     (setq org-agenda-span 'week)
+     (setq org-deadline-warning-days 7)
      (setq org-agenda-repeating-timestamp-show-all nil)
      (setq org-agenda-restore-windows-after-quit t)
      (setq org-agenda-show-all-dates t)
@@ -183,32 +184,33 @@
      (add-hook 'org-agenda-mode-hook 'hl-line-mode)
 
      (setq org-agenda-custom-commands
-     '(
+           '(
 
-     ("P" "Projects"   
-     ((tags "PROJECT")))
+             ("p" "projects"   
+              ((tags "project")))
 
-     ("H" "Office and Home Lists"
-          ((agenda)
-               (tags-todo "OFFICE")
-               (tags-todo "HOME")
-               (tags-todo "COMPUTER")
-               (tags-todo "READING")))
+             ("h" "office and home lists"
+              ((agenda)
+               (tags-todo "office")
+               (tags-todo "home")
+               (tags-todo "computer")
+               (tags-todo "reading")))
 
-     ("D" "Daily Action List"
-          (
+             ("d" "daily action list"
+              (
                (agenda "" ((org-agenda-ndays 1)
                            (org-agenda-sorting-strategy
                             (quote ((agenda time-up priority-down tag-up) )))
                            (org-deadline-warning-days 0)
                            ))))
-     )
-     )
+             )
+           )
 
      (defun gtd ()
-         (interactive)
-         (find-file  (concat org-directory "gtd.org"))
-     )
+       (interactive)
+       (find-file  (concat org-directory "gtd.org"))
+       )
+
      (global-set-key (kbd "C-c g") 'gtd)
 
 
