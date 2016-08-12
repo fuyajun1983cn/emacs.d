@@ -4,28 +4,35 @@
 * Org Mode
 ** General Settings 
    #+BEGIN_SRC emacs-lisp
-    ;; General Settings
-    (setq org-directory "~/org/")
-    (setq org-default-notes-file (concat org-directory "someday.org"))
 
-    (setq org-fast-tag-selection-single-key nil)
-    (setq org-refile-targets (quote (("gtd.org":maxlevel . 3) ("someday.org":level . 2) ("journal.org":level . 3))))
-    (setq org-reverse-note-order nil)
-    (setq org-tags-column -78)
-    (setq org-tags-match-list-sublevels nil)
-   ;; org-time-stamp-rounding-minutes 必须是一个list对象
-    (setq org-time-stamp-rounding-minutes '(5 0))
-    (setq org-use-fast-todo-selection t)
-    (setq org-use-tag-inheritance nil)
-    (setq org-deadline-warning-days 7)
-    (setq org-insert-mode-line-in-empty-file t)
+     ;; General Settings
+     (if *is-in-windows*
+         (setq org-directory "E:/mysoft/my-program-wharehouse/org/")
+       (setq org-directory "~/org/"))
+     (setq org-default-notes-file (concat org-directory "someday.org"))
 
-    ;;auto fill mode
-    (add-hook 'org-mode-hook 'auto-fill-mode)
+     (setq org-fast-tag-selection-single-key nil)
+     (setq org-refile-targets (quote (("gtd.org":level . 1) ("gtd_archive.org":maxlevel . 2) )))
+     (setq org-reverse-note-order nil)
+     (setq org-tags-column -78)
+     (setq org-tags-match-list-sublevels nil)
+     ;; org-time-stamp-rounding-minutes 必须是一个list对象
+     (setq org-time-stamp-rounding-minutes '(5 0))
+     (setq org-use-fast-todo-selection t)
+     (setq org-use-tag-inheritance nil)
+     (setq org-deadline-warning-days 7)
+     (setq org-insert-mode-line-in-empty-file t)
 
-    (setq org-log-done 'time)
-  ;  (setq org-log-done 'note)
+     ;;auto fill mode
+     (add-hook 'org-mode-hook 'auto-fill-mode)
 
+     (setq org-log-done 'time)
+                                             ;  (setq org-log-done 'note)
+
+      (setq org-list-demote-modify-bullet
+            '(("+" . "-") ("-" . "+") ("*" . "+")))
+
+     (setq org-list-allow-alphabetical t)
    #+END_SRC
 ** tags
    #+BEGIN_SRC emacs-lisp
@@ -40,7 +47,7 @@
    #+BEGIN_SRC emacs-lisp
          ;;TODO keywords
          (setq org-todo-keywords
-               '((sequence "TODO(t)" "WAITING(w)" "|" "DONE(d)" "CANCELED")
+               '((sequence "TODO(t)" "WAITING(w)" "STARTED(s)" "|" "DONE(d)" "CANCELED(c)")
                  (sequence "Submitted" "Assigned" "Working" "|" "Resolved")))   
    #+END_SRC
 ** Editing source code in current window
@@ -160,7 +167,7 @@
    #+BEGIN_SRC emacs-lisp
      ;; Org-Agenda
      (global-set-key "\C-ca" 'org-agenda)
-     (setq org-agenda-files (quote ("~/org/gtd.org" "~/org/personal.org")))
+     (setq org-agenda-files (quote ("gtd.org" "personal.org")))
      (setq org-agenda-ndays 7)
      (setq org-agenda-repeating-timestamp-show-all nil)
      (setq org-agenda-restore-windows-after-quit t)
@@ -217,13 +224,13 @@
        (setq org-capture-templates
              (quote (
                      ("t" "Todo" entry (file+headline "gtd.org" "Tasks")  
-                      "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
+                      "* ☛ TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
                      ("j" "Journal" entry (file+datetree "journal.org")  ;; Things That I have done
                       "* %?\nEntered on %U\n %i\n %a")
                      ("c" "Contact" entry (file+headline "personal.org" "Contacts") ;; contacts info
                       "\n* %^{Name} :CONTACT:\n%[contemp.txt]\n")
                      ("s" "Someday" entry (file+headline "someday.org" "Tasks") ;;Things That I may consider  to do. 
-                      "* TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
+                      "* ☛ TODO %^{Brief Description}  %^g\n%?\nAdded: %U")
                      )))
 
    #+END_SRC
@@ -358,6 +365,7 @@
    Ditaa is a command-line utility that converts diagrams drawn using
    ASCII art into bitmap graphics.
    
+
 ** [[https://github.com/howardabrams/demo-it][demoit]]
 
 *** org-tree-slide-mode
