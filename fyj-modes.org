@@ -326,7 +326,7 @@
     #+BEGIN_SRC emacs-lisp
       (require 'plantuml-mode)
       (setq org-plantuml-jar-path
-            "~/playground/plantuml.jar")
+            "~/MyPlayground/plantuml.jar")
     #+END_SRC
 * editor
 ** Undo tree mode - visualize your undos and branches
@@ -493,7 +493,7 @@ parenthesis.
 ** Magit Mode
    Magit模式是emacs下的一个非常好用的git操作界面。
 *** 安装 (注：只支持emacs 24.4之后的版本)
-    #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp :tangle no
       (when (version<= "24.4" emacs-version)
         (use-package magit))
     #+END_SRC

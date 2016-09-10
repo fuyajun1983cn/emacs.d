@@ -29,3 +29,5 @@ if __name__ == "__main__":
     git_clone("https://github.com/emacsmirror/rainbow-mode.git", "rainbow-mode")
     git_clone("https://github.com/sellout/emacs-color-theme-solarized.git", "emacs-color-theme-solarized")
     git_clone("https://github.com/coldnew/linum-relative.git", "linum-relative")
+    git_clone("https://github.com/magit/magit.git", "magit")
+    git_clone("https://github.com/purcell/dired-launch.git", "dired-launch")
