@@ -19,7 +19,6 @@
      (setq org-time-stamp-rounding-minutes '(5 0))
      (setq org-use-fast-todo-selection t)
      (setq org-use-tag-inheritance nil)
-     (setq org-deadline-warning-days 7)
      (setq org-insert-mode-line-in-empty-file t)
 
      ;;auto fill mode
@@ -31,7 +30,7 @@
       (setq org-list-demote-modify-bullet
             '(("+" . "-") ("-" . "+") ("*" . "+")))
 
-     (setq org-list-allow-alphabetical t)
+     (setq org-list-allow-alphabetical nil)
    #+END_SRC
 ** tags
    #+BEGIN_SRC emacs-lisp
@@ -93,7 +92,7 @@
    display a list of the code blocks commands and their related keys.
    
    #+begin_src emacs-lisp
-  (setq org-use-speed-commands t)
+     (setq org-use-speed-commands t)
    #+end_src
 
 ** Code blocks
@@ -167,9 +166,9 @@
    #+BEGIN_SRC emacs-lisp
      ;; Org-Agenda
      (global-set-key "\C-ca" 'org-agenda)
-     (setq org-agenda-files (quote ("~/org/gtd.org" "~/org/personal.org")))
+     (setq org-agenda-files (quote ("gtd.org")))
      (setq org-agenda-span 'week)
-     (setq org-deadline-warning-days 7)
+     (setq org-deadline-warning-days 5)
      (setq org-agenda-repeating-timestamp-show-all nil)
      (setq org-agenda-restore-windows-after-quit t)
      (setq org-agenda-show-all-dates t)

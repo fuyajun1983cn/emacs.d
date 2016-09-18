@@ -41,11 +41,11 @@
 ;;; syntax table
 (defvar plantuml-mode-syntax-table
   (let ((synTable (make-syntax-table)))
-    (modify-syntax-entry ?' "< b" synTable)
-    (modify-syntax-entry ?\n "> b" synTable)
-    (modify-syntax-entry ?! "w" synTable)
-    (modify-syntax-entry ?@ "w" synTable)
-    (modify-syntax-entry ?# "'" synTable)
+    (modify-syntax-entry ?' "< b" synTable) ;;comment start
+    (modify-syntax-entry ?\n "> b" synTable) ;; comment end
+    (modify-syntax-entry ?! "w" synTable) ;;word constituent
+    (modify-syntax-entry ?@ "w" synTable);; word constituent
+    (modify-syntax-entry ?# "'" synTable) ;; expression prefix
     synTable)
   "Syntax table for `plantuml-mode'.")
 
@@ -53,7 +53,7 @@
 (defvar plantuml-types '("participant" "actor" "usecase" "abstract" "abstract class" "interface" "enum" "package" "partition" "component" "state" "object" "title" "note" "end note" "end title" "end header" "end footer"
                          ;;"note left" "note right" "note top" "note bottom" "note left of" "note right of" "note top of" "note bottom of" "note over" "left header" "center header" "right header" "left footer" "center footer" "right footer"
 ))
-(defvar plantuml-keywords '("\@startuml" "\@enduml" "as" "autonumber" "newpage" "alt" "else" "opt" "loop" "par" "break" "critical" "end" "create" "footbox off" "skin" "skinparam" "if" "then" "else" "endif" "rotate" "activate" "deactivate" "destroy"))
+(defvar plantuml-keywords '("\@startuml" "\@enduml" "as" "autonumber" "newpage" "alt" "else" "opt" "loop" "par" "break" "critical" "end" "create" "footbox off" "skin" "skinparam" "if" "then" "else" "endif" "rotate" "activate" "deactivate" "destroy" "start" "stop" "fork"))
 
 (defvar plantuml-preprocessors '("!include" "!define" "!undef" "!ifdef" "!endif" "!ifndef"))
 
