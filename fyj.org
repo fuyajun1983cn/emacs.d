@@ -247,6 +247,45 @@
                  partial-file)
              file))))
     #+end_src
+** Emacs Dashboard
+   address: https://github.com/purcell/emacs-dashboard
+   - Dependencies
+     You will need the following packages which are all available on
+     Melpa:
+     1. page-break-lines (https://github.com/purcell/page-break-lines)
+        #+BEGIN_SRC emacs-lisp
+          (use-package page-break-lines)
+
+        #+END_SRC
+     2. projectile (https://github.com/bbatsov/projectile)
+        #+BEGIN_SRC emacs-lisp
+          (use-package projectile)
+        #+END_SRC
+   - Usage
+     This package is not yet available on Melpa, so until then:
+     : git clone https://github.com/rakanalh/emacs-dashboard ~/.emacs.d/dashboard
+
+     #+BEGIN_SRC emacs-lisp
+       ;;(add-to-list 'load-path (concat user-emacs-directory "src/emacs-dashboard/"))
+
+       ;; And either one of:
+       (require 'dashboard)
+       (dashboard-setup-startup-hook)
+       ;; - OR -
+       (use-package dashboard
+         :config
+         (dashboard-setup-startup-hook))     
+     #+END_SRC
+   - Shortcuts
+     You can use any of the following shortcuts inside Dashboard
+     | Shortcut                   | Function      |
+     | Tab Or C-i                 | Next Item     |
+     | Shift-Tab                  | Previous Item |
+     | Return / Mouse Click / C-m | Open          |
+     | r                          | Recent files  |
+     | m                          | Bookmarks     |
+     | p                          | Projects      |
+     |----------------------------+---------------|
      
 * 加载各个子模块/扩展
 
