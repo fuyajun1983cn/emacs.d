@@ -148,6 +148,16 @@
         (define-key helm-swoop-map (kbd "M-i") 'helm-multi-swoop-all-from-helm-swoop))
      )
    #+END_SRC
+
+** avy
+   =avy= is a GNU Emacs package for jumping to visible text using a
+   char-based decision tree.
+   #+BEGIN_SRC emacs-lisp
+     (use-package avy-menu
+       :ensure t)
+
+     (global-set-key (kbd "C-:") 'avy-goto-char)
+   #+END_SRC
 * programming
 ** auto complete mode
 #+BEGIN_SRC emacs-lisp
@@ -253,9 +263,8 @@
 
 ** cmake mode
      - 安装CMake Mode包：
-     #+BEGIN_SRC emacs-lisp 
+     #+BEGIN_SRC emacs-lisp :tangle no
        (use-package cmake-mode
-         :ensure t
          :config
          (progn
            (require 'cmake-mode)
@@ -269,7 +278,7 @@
        A minor-mode integrating the CMake build process with the Emacs
        ecosystem.
        1. 基本配置
-          #+BEGIN_SRC emacs-lisp 
+          #+BEGIN_SRC emacs-lisp :tangle no
             (use-package cmake-project
               :ensure t
               :config
@@ -317,7 +326,7 @@
     #+BEGIN_SRC emacs-lisp
       (require 'plantuml-mode)
       (setq org-plantuml-jar-path
-                  (expand-file-name "E:/mysoft/jquery_plantuml/plantuml-8033/plantuml.jar"))
+            "~/MyPlayground/plantuml.jar")
     #+END_SRC
 * editor
 ** Undo tree mode - visualize your undos and branches
@@ -389,9 +398,7 @@ parenthesis.
 ** multiple cursor editing
     from https://github.com/magnars/multiple-cursors.el
     #+BEGIN_SRC emacs-lisp
-      (use-package multiple-cursors
-        :ensure t
-        :defer t)
+      (use-package multiple-cursors)
       (require 'multiple-cursors)
     #+END_SRC
     When you have an active region that spans multiple lines, the
@@ -415,9 +422,7 @@ parenthesis.
 ** diffview-mode
     from https://github.com/mgalgs/diffview-mode.git
     #+BEGIN_SRC emacs-lisp
-      (use-package diffview
-        :ensure t
-        :defer t)
+      (use-package diffview)
     #+END_SRC
     The following functions are provided for launching a side-by-side
     diff:
@@ -425,12 +430,70 @@ parenthesis.
     - =diffview-current=:  View the current diff region side-by-side
     - =diffview-message=: View the current email message (which
       presumably contains a patch) side-by-side
+** flycheck
+   语法检查器
+   #+BEGIN_SRC emacs-lisp
+     (use-package flycheck
+       :config (global-flycheck-mode))   
+   #+END_SRC
+** log 
+    wifi log
+    #+BEGIN_SRC emacs-lisp
+      (require  'wifi-mode)
+    #+END_SRC
+** evil mode
+    #+BEGIN_SRC emacs-lisp
+      (use-package evil
+        :ensure t)
+
+      (require 'evil)
+      (setq evil-default-state 'emacs)
+      (evil-mode)
+
+      ;; esc quits
+      (defun minibuffer-keyboard-quit ()
+        "Abort recursive edit.
+                  In Delete Selection mode, if the mark is active, just deactivate it;
+                  then it takes a second \\[keyboard-quit] to abort the minibuffer."
+        (interactive)
+        (if (and delete-selection-mode transient-mark-mode mark-active)
+            (setq deactivate-mark  t)
+          (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+          (abort-recursive-edit)))
+      (define-key evil-normal-state-map [escape] 'keyboard-quit)
+      (define-key evil-visual-state-map [escape] 'keyboard-quit)
+      (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+      (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+      (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+      (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+      (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+      (global-set-key [escape] 'evil-exit-emacs-state)
+    #+END_SRC
+** hydra
+    Hydra可以将一系列命令使用同一个Prefix Key关联起来
+    Imagine that you have bound C-c j and C-c k in your config. You
+    want to call C-c j and C-c k in some (arbitrary) sequence. Hydra
+    allows you to:
+    - Bind your functions in a way that pressing C-c jjkk3j5k is
+      equivalent to pressing C-c j C-c j C-c k C-c k M-3 C-c j M-5 C-c
+      k. Any key other than j or k exits this state.
+    - Assign a custom hint to this group of functions, so that you
+      know immediately after pressing C-c that you can follow up with
+      j or k.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package hydra)
+      (defhydra hydra-zoom (global-map "<f2>")
+       "zoom"
+       ("g" text-scale-increase "in")
+       ("l" text-scale-decrease "out"))   
+    #+END_SRC
 
 * Version Control
 ** Magit Mode
    Magit模式是emacs下的一个非常好用的git操作界面。
 *** 安装 (注：只支持emacs 24.4之后的版本)
-    #+BEGIN_SRC emacs-lisp
+    #+BEGIN_SRC emacs-lisp :tangle no
       (when (version<= "24.4" emacs-version)
         (use-package magit))
     #+END_SRC

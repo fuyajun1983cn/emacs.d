@@ -89,20 +89,28 @@
      #+END_SRC
 ** 设置语言和编码环境
     #+BEGIN_SRC emacs-lisp
-      (if *is-in-linux*
-      (progn 
-        (set-language-environment "UTF-8")
-        (set-default-coding-systems 'utf-8)
-                                              ;(set-buffer-file-coding-system 'utf-8)
-                                              ;(set-file-name-coding-system 'utf-8)
-        (setq locale-coding-system 'utf-8)
-        (set-terminal-coding-system 'utf-8)
-        (set-keyboard-coding-system 'utf-8)
-        (unless (or (eq system-type 'windows-nt) (eq system-type 'cygwin)) (set-selection-coding-system 'utf-8))
-        (prefer-coding-system 'utf-8)
-        (when (display-graphic-p)
-          (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
-        ))
+            (if *is-in-linux*
+            (progn 
+              (set-language-environment "UTF-8")
+              (set-default-coding-systems 'utf-8)
+                                                    ;(set-buffer-file-coding-system 'utf-8)
+                                                    ;(set-file-name-coding-system 'utf-8)
+              (setq locale-coding-system 'utf-8)
+              (set-terminal-coding-system 'utf-8)
+              (set-keyboard-coding-system 'utf-8)
+              (unless (or (eq system-type 'windows-nt) (eq system-type 'cygwin)) (set-selection-coding-system 'utf-8))
+              (prefer-coding-system 'utf-8)
+              (when (display-graphic-p)
+                (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+              ))
+
+            (if *is-in-cygwin*
+               (progn
+                 (prefer-coding-system 'utf-8)
+                 (set-default-coding-systems 'utf-8)
+                ; (set-file-name-coding-system 'utf-8)
+      ;          (set-buffer-file-coding-system 'utf-8)
+                  ))
     #+END_SRC
 ** Color Themes
 Emacs24 has build in support for saving and loading themes.
@@ -592,6 +600,31 @@ Rgrep is infinitely useful in multi-file projects.
              (insert outputStr)))))
 
    #+END_SRC
+** 删除选中区域的所有空行
+    #+BEGIN_SRC emacs-lisp
+      ;;
+      ;; Written by Yajun @ 12:57:53 2016/5/29
+      ;;
+      (defun delete-all-blanklines-on-region ()
+        "删除选择区域的所有空行"
+        (interactive "*")
+        (if (use-region-p)
+            (save-excursion
+              (save-restriction
+                (let ((n 0)
+                      (lines (count-lines (region-beginning) (region-end))))
+                  (narrow-to-region (region-beginning) (region-end))
+                  (goto-char (point-min))
+                  (while (<= n lines)
+                    (if (looking-at "[ \t]*$") ;;是否为空行
+                        (progn
+                          (goto-char (match-beginning 0))
+                          (kill-line))
+                      (forward-line 1))
+                    (setq n (1+ n))))))))
+
+      (global-set-key (kbd "C-c f d") 'delete-all-blanklines-on-region)
+    #+END_SRC
 ** Unix与DOS换行符相互转换
    #+BEGIN_SRC emacs-lisp
      (defun dos-unix () (interactive) 
@@ -601,7 +634,216 @@ Rgrep is infinitely useful in multi-file projects.
         (goto-char (point-min)) 
         (while (search-forward "\n" nil t) (replace-match "\r\n")))    
    #+END_SRC
+** 插入当前时间
+   #+BEGIN_SRC emacs-lisp
+     ;;a leading asterisk in defvar mean it's a user option
+     (defvar insert-time-format "%X"
+       "*Format for \\[insert-time] (c.f. 'format-time-string').")
+     (defvar insert-date-format "%x"
+       "*Format for \\[insert-date] (c.f. 'format-time-string').")
+
+     ;;The asterisk, when it is the first character in an interactive argument, means "abort this
+     ;;function if the current buffer is read-only."
+     (defun insert-time ()
+       "Insert the current time according to insert-time-format."
+       (interactive "*")
+       (insert (format-time-string insert-time-format (current-time))))
+
+     (defun insert-date ()
+       "Insert the current date according to insert-date-format."
+       (interactive "*")
+       (insert (format-time-string insert-date-format (current-time))))
+
+     (defun insert-date-time ()
+       "Insert the current date and time"
+       (interactive "*")
+       (insert-date)
+       (insert "  ")
+       (insert-time))
+   #+END_SRC
+** select text between brackets
+    #+BEGIN_SRC emacs-lisp
+      (defun xah-select-text-in-bracket ()
+        "Select text between the nearest brackets.
+      ➢ for example:  () [] {} «» ‹› “” 〖〗 【】 「」 『』 （） 〈〉 《》 〔〕 ⦗⦘ 〘〙 ⦅⦆ 〚〛 ⦃⦄ ⟨⟩."
+        (interactive)
+        (let (pos p1 p2 (parse-sexp-lookup-properties nil)
+                  (-temp-syn-table (make-syntax-table)))
+          (modify-syntax-entry ?\« "(»" -temp-syn-table)
+          (modify-syntax-entry ?\» ")«" -temp-syn-table)
+          (modify-syntax-entry ?\‹ "(›" -temp-syn-table)
+          (modify-syntax-entry ?\› ")‹" -temp-syn-table)
+          (modify-syntax-entry ?\“ "(”" -temp-syn-table)
+          (modify-syntax-entry ?\” ")“" -temp-syn-table)
+          (modify-syntax-entry ?\〖 "(〗"  -temp-syn-table)
+          (modify-syntax-entry ?\〗")〖" -temp-syn-table)
+          (modify-syntax-entry ?\【 "(】" -temp-syn-table)
+          (modify-syntax-entry ?\】 ")】" -temp-syn-table)
+          
+          (with-syntax-table -temp-syn-table
+            (setq pos (point))
+            (search-backward-regexp "\\s(" nil t )
+            (setq p1 (point))
+            (forward-sexp 1)
+            (setq p2 (point))
+            (goto-char (1+ p1))
+            (set-mark (1- p2)))))
+
+      (global-set-key (kbd "C-c f s") 'xah-select-text-in-bracket)
+    #+END_SRC
+** use TRAMP to edit current file as root
+    #+BEGIN_SRC emacs-lisp
+      (defun sudo ()
+        "Use TRAMP to `sudo' the current buffer"
+        (interactive)
+        (when buffer-file-name
+          (find-alternate-file
+           (concat "/sudo:root@localhost:"
+                   buffer-file-name))))    
+    #+END_SRC
 * 全局钩子设置
+** update write timestamp
+   #+BEGIN_SRC emacs-lisp
+     ;(add-hook 'local-write-file-hooks 'update-writestamps)
+
+     (defvar writestamp-format "%c"
+       "*Format for writestamps (c.f. 'format-time-string').")
+
+     (defvar writestamp-prefix "WRITESTAMP(("
+       "*String that begin with a writestamp.")
+
+     (defvar writestamp-suffix "))"
+       "*String that terminates a writestamp")
+
+     (defun update-writestamps ()
+       "Find writestamps and replace them with the current time."
+       (save-excursion
+         (save-restriction
+           (save-match-data
+             (widen)
+             (goto-char (point-min))
+             (let ((regexp (concat "^"
+                                   (regexp-quote writestamp-prefix)
+                                   "\\(.*\\) "
+                                   (regexp-quote writestamp-suffix)
+                                   "$")))
+               (while (re-search-forward regexp nil t)
+                 (replace-match (format-time-string writestamp-format
+                                                    (current-time))
+                                t t nil 1))))))
+       nil)
+   #+END_SRC
+** update modified time
+    #+BEGIN_SRC emacs-lisp
+      (defvar last-change-time nil
+        "Time of last buffer modification.")
+      (make-variable-buffer-local 'last-change-time)
+
+      (defvar modifystamp-format "%c"
+        "*Format for modifystamps (c.f. 'format-time-string').")
+
+      (defvar modifystamp-prefix "MODIFYSTAMP (("
+        "*String identifying start of modifystamp.")
+
+      (defvar modifystamp-suffix "))"
+        "*String that terminates a modifystamp.")
+
+      (defun remember-change-time (&rest unused)
+        "Store the current time in 'last-change-time'."
+        (setq last-change-time (current-time)))
+
+      (add-hook 'after-change-functions 'remember-change-time nil t)
+
+      (defun update-modifystamps (time)
+        "Find modifystamps and replace them with the saved time."
+        (save-excursion
+          (save-restriction
+            (save-match-data
+              (widen)
+              (goto-char (point-min))
+              (let ((regexp (concat "^"
+                                    (regexp-quote modifystamp-prefix)
+                                    "\\(.*\\) "
+                                    (regexp-quote modifystamp-suffix)
+                                    "$")))
+                (while (re-search-forward regexp nil t)
+                  (replace-match (format-time-string modifystamp-format
+                                                     time)
+                                 t t nil 1))))))
+        (setq last-change-time nil)
+        nil)
+
+      ;; (add-hook 'local-write-file-hooks
+      ;;           (lambda ()
+      ;;             (if last-change-time
+      ;;                 (update-modifystamps last-change-time))))
+
+
+    #+END_SRC
+* 全局advice设置
+** scroll-up
+   #+BEGIN_SRC emacs-lisp
+     (defvar unscroll-point (make-marker)
+       "Cursor position for next call to 'unscroll'.")
+     (defvar unscroll-window-start (make-marker)
+       "Window start for next call to 'unscroll'.")
+     (defvar unscroll-hscroll nil
+       "Hscroll for next call to 'unscroll' .")
+     (put 'scroll-up 'unscrollable t)
+     (put 'scroll-down 'unscrollable t)
+     (put 'scroll-left 'unscrollable t)
+     (put 'scroll-right 'unscrollable t)
+
+     (defun unscroll-maybe-remember ()
+       (if (not (get last-command 'unscrollable))
+           (setq unscroll-point (point)
+                 unscroll-window-start (window-start)
+                 unscroll-hscroll (window-hscroll))))
+
+     (defadvice scroll-up (before remember-for-unscroll
+                                  activate compile)
+       "Remember where we started from, for 'unscroll'."
+       (if (not (or (eq last-command 'scroll-up)
+                    (eq last-command 'scroll-down)
+                    (eq last-command 'scroll-left) ;new
+                    (eq last-command 'scroll-right))) ; new
+           (unscroll-maybe-remember)))
+
+     (defadvice scroll-down (before remember-for-unscroll
+                                    activate compile)
+       "Remember where we started from, for 'unscroll'."
+       (if (not (or (eq last-command 'scroll-up)
+                    (eq last-command 'scroll-down)
+                    (eq last-command 'scroll-left) ;neu
+                    (eq last-command 'scroll-right))) ;neuw
+           (unscroll-maybe-remember)))
+
+     (defadvice scroll-left (before remember-for-unscroll
+                                    activate compile)
+       "Remember where we started from, for 'unscroll'."
+       (if (not (or (eq last-command 'scroll-up)
+                    (eq last-command 'scroll-down)
+                    (eq last-command 'scroll-left)
+                    (eq last-command scroll-right)))
+           (unscroll-maybe-remember)))
+
+     (defadvice scroll-right (before remember-for-unscroll
+                                     activate compile)
+       "Remember where we started from, for 'unscroll'."
+       (if (not (or (eq last-command 'scroll-up)
+                    (eq last-command scroll-down)
+                    (eq last-command scroll-left)
+                    (eq last-command 'scroll-right)))
+           (unscroll-maybe-remember)))
+
+
+     (defun unscroll ()
+       "Jump to location specified by 'unscroll-to'. "
+       (interactive)
+       (goto-char unscroll-point)
+       (set-window-start nil unscroll-window-start)
+       (set-window-hscroll nil unscroll-hscroll))
+   #+END_SRC
 * 全局Registers设置
 Registers allow you to jump to a file or other location quickly. Use
 =C-x r j= followed by the letter of the register (i for =init.el=, r

@@ -32,3 +32,5 @@ if __name__ == "__main__":
     git_clone("https://github.com/purcell/page-break-lines", "page-break-lines")
     git_clone("https://github.com/bbatsov/projectile", "projectile")
     git_clone("https://github.com/purcell/emacs-dashboard", "emacs-dashboard")
+    git_clone("https://github.com/magit/magit.git", "magit")
+    git_clone("https://github.com/purcell/dired-launch.git", "dired-launch")

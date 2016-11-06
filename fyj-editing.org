@@ -152,6 +152,11 @@ These are the common settings for editing text.
                             (other-window)
                             (null current-prefix-arg)))))    
     #+END_SRC
+** Improve the performance of Emacs's Dispaly Engine
+   #+BEGIN_SRC emacs-lisp
+     (setq redisplay-dont-pause t)   
+   #+END_SRC
+
 * Key Binding  
 #+BEGIN_SRC emacs-lisp
   ;;----------------------------------------------------------------------------
