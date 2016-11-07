@@ -2,6 +2,6 @@
 # name: plantuml
 # key: plantuml_
 # --
-#+BEGIN_SRC plantuml :exports ${1:both} :file ./images/2016/${2}.png :cmdline -charset UTF-8
+#+BEGIN_SRC plantuml :exports ${1:results} :file ./images/2016/${2}.png :cmdline -charset UTF-8
 $0
 #+END_SRC

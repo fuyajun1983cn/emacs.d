@@ -654,7 +654,53 @@ Rgrep is infinitely useful in multi-file projects.
        (interactive "*")
        (insert (format-time-string insert-date-format (current-time))))
 
+     (defun insert-date-time ()
+       "Insert the current date and time"
+       (interactive "*")
+       (insert-date)
+       (insert "  ")
+       (insert-time))
    #+END_SRC
+** select text between brackets
+    #+BEGIN_SRC emacs-lisp
+      (defun xah-select-text-in-bracket ()
+        "Select text between the nearest brackets.
+      ➢ for example:  () [] {} «» ‹› “” 〖〗 【】 「」 『』 （） 〈〉 《》 〔〕 ⦗⦘ 〘〙 ⦅⦆ 〚〛 ⦃⦄ ⟨⟩."
+        (interactive)
+        (let (pos p1 p2 (parse-sexp-lookup-properties nil)
+                  (-temp-syn-table (make-syntax-table)))
+          (modify-syntax-entry ?\« "(»" -temp-syn-table)
+          (modify-syntax-entry ?\» ")«" -temp-syn-table)
+          (modify-syntax-entry ?\‹ "(›" -temp-syn-table)
+          (modify-syntax-entry ?\› ")‹" -temp-syn-table)
+          (modify-syntax-entry ?\“ "(”" -temp-syn-table)
+          (modify-syntax-entry ?\” ")“" -temp-syn-table)
+          (modify-syntax-entry ?\〖 "(〗"  -temp-syn-table)
+          (modify-syntax-entry ?\〗")〖" -temp-syn-table)
+          (modify-syntax-entry ?\【 "(】" -temp-syn-table)
+          (modify-syntax-entry ?\】 ")】" -temp-syn-table)
+          
+          (with-syntax-table -temp-syn-table
+            (setq pos (point))
+            (search-backward-regexp "\\s(" nil t )
+            (setq p1 (point))
+            (forward-sexp 1)
+            (setq p2 (point))
+            (goto-char (1+ p1))
+            (set-mark (1- p2)))))
+
+      (global-set-key (kbd "C-c f s") 'xah-select-text-in-bracket)
+    #+END_SRC
+** use TRAMP to edit current file as root
+    #+BEGIN_SRC emacs-lisp
+      (defun sudo ()
+        "Use TRAMP to `sudo' the current buffer"
+        (interactive)
+        (when buffer-file-name
+          (find-alternate-file
+           (concat "/sudo:root@localhost:"
+                   buffer-file-name))))    
+    #+END_SRC
 * 全局钩子设置
 ** update write timestamp
    #+BEGIN_SRC emacs-lisp
