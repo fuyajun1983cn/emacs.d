@@ -31,7 +31,6 @@
       (setq org-list-demote-modify-bullet
             '(("+" . "-") ("-" . "+") ("*" . "+")))
 
-     (setq org-list-allow-alphabetical t)
    #+END_SRC
 ** tags
    #+BEGIN_SRC emacs-lisp
