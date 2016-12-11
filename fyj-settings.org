@@ -541,36 +541,7 @@ Rgrep is infinitely useful in multi-file projects.
            (unless (file-exists-p dest)
              (shell-command (format "git clone %s %ssrc/%s" source fyj-dir dest)))))
    #+END_SRC
-** 选择一个word或当前行
-     - 选中光标所有的word
-       #+BEGIN_SRC emacs-lisp
-         (transient-mark-mode 1)
 
-         (defun select-current-word ()
-           "Select the word under cursor. "
-           (interactive)
-           (let (pt)
-             (skip-chars-backward "-_A-Za-z0-9")
-             (setq pt (point))
-             (skip-chars-forward "-_A-Za-z0-z")
-             (set-mark pt)))
-       #+END_SRC
-
-     - 选中当前光标所在的行
-       #+BEGIN_SRC emacs-lisp
-         (transient-mark-mode 1)
-         (defun select-current-line ()
-           "Select the current line under cursor."
-           (interactive)
-           (end-of-line)
-           (set-mark (line-beginning-position)))
-       #+END_SRC
-
-     - 快捷键设置
-       #+BEGIN_SRC emacs-lisp
-         (global-set-key (kbd "C-c fw") 'select-current-word)
-         (global-set-key (kbd "C-c fl") 'select-current-line)
-       #+END_SRC
 ** 转换Window路径为URI
    #+BEGIN_SRC emacs-lisp
      (defun winpath2uri (path &optional from to)
@@ -661,46 +632,6 @@ Rgrep is infinitely useful in multi-file projects.
        (insert "  ")
        (insert-time))
    #+END_SRC
-** select text between brackets
-    #+BEGIN_SRC emacs-lisp
-      (defun xah-select-text-in-bracket ()
-        "Select text between the nearest brackets.
-      ➢ for example:  () [] {} «» ‹› “” 〖〗 【】 「」 『』 （） 〈〉 《》 〔〕 ⦗⦘ 〘〙 ⦅⦆ 〚〛 ⦃⦄ ⟨⟩."
-        (interactive)
-        (let (pos p1 p2 (parse-sexp-lookup-properties nil)
-                  (-temp-syn-table (make-syntax-table)))
-          (modify-syntax-entry ?\« "(»" -temp-syn-table)
-          (modify-syntax-entry ?\» ")«" -temp-syn-table)
-          (modify-syntax-entry ?\‹ "(›" -temp-syn-table)
-          (modify-syntax-entry ?\› ")‹" -temp-syn-table)
-          (modify-syntax-entry ?\“ "(”" -temp-syn-table)
-          (modify-syntax-entry ?\” ")“" -temp-syn-table)
-          (modify-syntax-entry ?\〖 "(〗"  -temp-syn-table)
-          (modify-syntax-entry ?\〗")〖" -temp-syn-table)
-          (modify-syntax-entry ?\【 "(】" -temp-syn-table)
-          (modify-syntax-entry ?\】 ")】" -temp-syn-table)
-          
-          (with-syntax-table -temp-syn-table
-            (setq pos (point))
-            (search-backward-regexp "\\s(" nil t )
-            (setq p1 (point))
-            (forward-sexp 1)
-            (setq p2 (point))
-            (goto-char (1+ p1))
-            (set-mark (1- p2)))))
-
-      (global-set-key (kbd "C-c f s") 'xah-select-text-in-bracket)
-    #+END_SRC
-** use TRAMP to edit current file as root
-    #+BEGIN_SRC emacs-lisp
-      (defun sudo ()
-        "Use TRAMP to `sudo' the current buffer"
-        (interactive)
-        (when buffer-file-name
-          (find-alternate-file
-           (concat "/sudo:root@localhost:"
-                   buffer-file-name))))    
-    #+END_SRC
 * 全局钩子设置
 ** update write timestamp
    #+BEGIN_SRC emacs-lisp

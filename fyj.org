@@ -314,3 +314,13 @@
        (fyj/org-load "modes")
        ;(fyj/org-load "java")
      #+END_SRC
+
+* 启动结束
+  #+BEGIN_SRC emacs-lisp
+    (with-current-buffer "*scratch*"
+      (delete-region (point-min) (point-max))
+      (point-min)
+      (insert ";;你好，欢迎使用emacs~~")
+      )
+    (switch-to-buffer "*dashboard*")  
+  #+END_SRC

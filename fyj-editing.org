@@ -156,7 +156,122 @@ These are the common settings for editing text.
    #+BEGIN_SRC emacs-lisp
      (setq redisplay-dont-pause t)   
    #+END_SRC
+** Move Cursor to Brackets
+   #+BEGIN_SRC emacs-lisp
+     (defvar xah-brackets nil "string of left/right brackets pairs.")
+     (setq xah-brackets "()[]{}<>（）［］｛｝⦅⦆〚〛⦃⦄“”‘’‹›«»「」〈〉《》【】〔〕⦗⦘『』〖〗〘〙｢｣⟦⟧⟨⟩⟪⟫⟮⟯⟬⟭⌈⌉⌊⌋⦇⦈⦉⦊❛❜❝❞❨❩❪❫❴❵❬❭❮❯❰❱❲❳〈〉⦑⦒⧼⧽﹙﹚﹛﹜﹝﹞⁽⁾₍₎⦋⦌⦍⦎⦏⦐⁅⁆⸢⸣⸤⸥⟅⟆⦓⦔⦕⦖⸦⸧⸨⸩｟｠⧘⧙⧚⧛⸜⸝⸌⸍⸂⸃⸄⸅⸉⸊᚛᚜༺༻༼༽⏜⏝⎴⎵⏞⏟⏠⏡﹁﹂﹃﹄︹︺︻︼︗︘︿﹀︽︾﹇﹈︷︸")
 
+     (defvar xah-left-brackets '("(" "{" "[" "<" "〔" "【" "〖" "〈" "《" "「" "『" "“" "‘" "‹" "«" )
+       "List of left bracket chars.")
+     (progn
+     ;; make xah-left-brackets based on xah-brackets
+       (setq xah-left-brackets '())
+       (dotimes (-x (- (length xah-brackets) 1))
+         (when (= (% -x 2) 0)
+           (push (char-to-string (elt xah-brackets -x))
+                 xah-left-brackets)))
+       (setq xah-left-brackets (reverse xah-left-brackets)))
+
+     (defvar xah-right-brackets '(")" "]" "}" ">" "〕" "】" "〗" "〉" "》" "」" "』" "”" "’" "›" "»")
+       "list of right bracket chars.")
+     (progn
+       (setq xah-right-brackets '())
+       (dotimes (-x (- (length xah-brackets) 1))
+         (when (= (% -x 2) 1)
+           (push (char-to-string (elt xah-brackets -x))
+                 xah-right-brackets)))
+       (setq xah-right-brackets (reverse xah-right-brackets)))
+
+
+     (defun xah-backward-left-bracket ()
+       "Move cursor to the previous occurrence of left bracket.
+     The list of brackets to jump to is defined by `xah-left-brackets'.
+     URL `http://ergoemacs.org/emacs/emacs_navigating_keys_for_brackets.html'
+     Version 2015-10-01"
+       (interactive)
+       (search-backward-regexp (regexp-opt xah-left-brackets) nil t))
+
+     (defun xah-forward-right-bracket ()
+       "Move cursor to the next occurrence of right bracket.
+     The list of brackets to jump to is defined by `xah-right-brackets'.
+     URL `http://ergoemacs.org/emacs/emacs_navigating_keys_for_brackets.html'
+     Version 2015-10-01"
+       (interactive)
+       (search-forward-regexp (regexp-opt xah-right-brackets) nil t))
+
+     (global-set-key (kbd "C-c <left>") 'xah-backward-left-bracket)
+     (global-set-key (kbd "C-c <right>") 'xah-forward-right-bracket)
+   #+END_SRC
+** select text between brackets
+    #+BEGIN_SRC emacs-lisp
+      (defun xah-select-text-in-bracket ()
+        "Select text between the nearest brackets.
+      ➢ for example:  () [] {} «» ‹› “” 〖〗 【】 「」 『』 （） 〈〉 《》 〔〕 ⦗⦘ 〘〙 ⦅⦆ 〚〛 ⦃⦄ ⟨⟩."
+        (interactive)
+        (let (pos p1 p2 (parse-sexp-lookup-properties nil)
+                  (-temp-syn-table (make-syntax-table)))
+          (modify-syntax-entry ?\« "(»" -temp-syn-table)
+          (modify-syntax-entry ?\» ")«" -temp-syn-table)
+          (modify-syntax-entry ?\‹ "(›" -temp-syn-table)
+          (modify-syntax-entry ?\› ")‹" -temp-syn-table)
+          (modify-syntax-entry ?\“ "(”" -temp-syn-table)
+          (modify-syntax-entry ?\” ")“" -temp-syn-table)
+          (modify-syntax-entry ?\〖 "(〗"  -temp-syn-table)
+          (modify-syntax-entry ?\〗")〖" -temp-syn-table)
+          (modify-syntax-entry ?\【 "(】" -temp-syn-table)
+          (modify-syntax-entry ?\】 ")】" -temp-syn-table)
+          
+          (with-syntax-table -temp-syn-table
+            (setq pos (point))
+            (search-backward-regexp "\\s(" nil t )
+            (setq p1 (point))
+            (forward-sexp 1)
+            (setq p2 (point))
+            (goto-char (1+ p1))
+            (set-mark (1- p2)))))
+
+      (global-set-key (kbd "C-c f s") 'xah-select-text-in-bracket)
+    #+END_SRC
+** use TRAMP to edit current file as root
+    #+BEGIN_SRC emacs-lisp
+      (defun sudo ()
+        "Use TRAMP to `sudo' the current buffer"
+        (interactive)
+        (when buffer-file-name
+          (find-alternate-file
+           (concat "/sudo:root@localhost:"
+                   buffer-file-name))))    
+    #+END_SRC
+** 选择一个word或当前行
+     - 选中光标所有的word
+       #+BEGIN_SRC emacs-lisp
+         (transient-mark-mode 1)
+
+         (defun select-current-word ()
+           "Select the word under cursor. "
+           (interactive)
+           (let (pt)
+             (skip-chars-backward "-_A-Za-z0-9")
+             (setq pt (point))
+             (skip-chars-forward "-_A-Za-z0-z")
+             (set-mark pt)))
+       #+END_SRC
+
+     - 选中当前光标所在的行
+       #+BEGIN_SRC emacs-lisp
+         (transient-mark-mode 1)
+         (defun select-current-line ()
+           "Select the current line under cursor."
+           (interactive)
+           (end-of-line)
+           (set-mark (line-beginning-position)))
+       #+END_SRC
+
+     - 快捷键设置
+       #+BEGIN_SRC emacs-lisp
+         (global-set-key (kbd "C-c fw") 'select-current-word)
+         (global-set-key (kbd "C-c fl") 'select-current-line)
+       #+END_SRC
 * Key Binding  
 #+BEGIN_SRC emacs-lisp
   ;;----------------------------------------------------------------------------
@@ -354,3 +469,4 @@ These are the common settings for editing text.
      ;;rebind quoted-insert
      (global-set-key (kbd "C-x C-q") 'quoted-insert)
    #+END_SRC
+
