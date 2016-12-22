@@ -486,7 +486,14 @@ parenthesis.
       (defhydra hydra-zoom (global-map "<f2>")
        "zoom"
        ("g" text-scale-increase "in")
-       ("l" text-scale-decrease "out"))   
+       ("l" text-scale-decrease "out")
+       ("e" enlarge-window "enlarge window")
+       ("d" shrink-window "shrink  window")
+       ("s" shrink-window-horizontally "descrease width")
+       ("f" enlarge-window-horizontally "increase width")
+       ("q" nil "quit")
+       )   
+
     #+END_SRC
 
 * Version Control
