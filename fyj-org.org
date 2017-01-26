@@ -29,8 +29,6 @@
 
       (setq org-list-demote-modify-bullet
             '(("+" . "-") ("-" . "+") ("*" . "+")))
-
-     (setq org-list-allow-alphabetical nil)
    #+END_SRC
 ** tags
    #+BEGIN_SRC emacs-lisp
@@ -366,7 +364,6 @@
 
    Ditaa is a command-line utility that converts diagrams drawn using
    ASCII art into bitmap graphics.
-   
 
 ** [[https://github.com/howardabrams/demo-it][demoit]]
 
