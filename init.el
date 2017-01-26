@@ -18,7 +18,7 @@
 ;; emacs -batch -f batch-byte-compilefile.el.
 
 (package-initialize)
-
+(setenv "ORG_HOME" "/home/jackson/Desktop/org-8.3.4/lisp")
 (when (getenv "ORG_HOME")
   (let ((org-lisp-dir (expand-file-name "lisp" (getenv "ORG_HOME"))))
     (when (file-directory-p org-lisp-dir)
