@@ -328,6 +328,21 @@
       (setq org-plantuml-jar-path
             "~/MyPlayground/plantuml.jar")
     #+END_SRC
+
+** SLIME
+   SLIME (Superior Lisp Interaction Mode for Emacs) provides a
+   development environment for SBCL (detailed in this article), CMUCL,
+   CLISP and other Lisp implementations.
+
+   #+BEGIN_SRC emacs-lisp
+     (load (expand-file-name "~/quicklisp/slime-helper.el"))
+     ;; Replace "sbcl" with the path to your implementation
+     (setq inferior-lisp-program "/usr/bin/sbcl")
+     (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime/")
+     (require 'slime)
+     (slime-setup '(slime-fancy))
+
+   #+END_SRC
 * editor
 ** Undo tree mode - visualize your undos and branches
      People often struggle with the Emacs undo model, where there’s
