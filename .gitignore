@@ -74,3 +74,4 @@ session.*
 projectile-bookmarks.eld
 semanticdb/
 projectile.cache
+!short_init.el

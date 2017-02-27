@@ -1,0 +1,11 @@
+(progn
+  (setq make-backup-files nil)
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+  (global-linum-mode 1)
+  (delete-selection-mode 1)
+  (menu-bar-mode -1)
+  (global-hl-line-mode 1)
+  (set-face-background 'hl-line "gray13")
+  (set-face-attribute 'region nil :background "#666" :foreground "#ffffff")
+)  
