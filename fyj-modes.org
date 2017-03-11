@@ -326,7 +326,7 @@
     #+BEGIN_SRC emacs-lisp
       (require 'plantuml-mode)
       (setq org-plantuml-jar-path
-            "~/MyPlayground/plantuml.jar")
+            "~/Desktop/plantuml.jar")
     #+END_SRC
 
 ** SLIME
@@ -413,8 +413,9 @@ parenthesis.
 ** multiple cursor editing
     from https://github.com/magnars/multiple-cursors.el
     #+BEGIN_SRC emacs-lisp
-      (use-package multiple-cursors)
-      (require 'multiple-cursors)
+            (use-package multiple-cursors
+              :ensure t
+              :init  (require 'multiple-cursors))
     #+END_SRC
     When you have an active region that spans multiple lines, the
     following will add a cursor to each line:
@@ -510,7 +511,23 @@ parenthesis.
        )   
 
     #+END_SRC
+** Input Method
+    #+BEGIN_SRC emacs-lisp
+      (autoload 'chinese-wbim-use-package "chinese-wbim" "Another emacs input method")
+      ;; Tooltip 暂时还不好用
+      (setq chinese-wbim-use-tooltip nil)
 
+      (register-input-method
+       "chinese-wbim" "euc-cn" 'chinese-wbim-use-package
+       "五笔" "汉字五笔输入法" "wb.txt")
+
+      ;; 用 ; 暂时输入英文
+      (require 'chinese-wbim-extra)
+      (global-set-key ";" 'chinese-wbim-insert-ascii)
+
+      ;设置默认输入法
+      (setq default-input-method 'chinese-wbim)    
+    #+END_SRC
 * Version Control
 ** Magit Mode
    Magit模式是emacs下的一个非常好用的git操作界面。
