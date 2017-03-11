@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: blog-header
+# key: blog-header_
+# --
+---
+layout: post
+date: ${1:2017-01-01}
+author: 山庄来客
+update: ${2:2017-01-01}
+categories: ${3:wifi}
+---
+$0
