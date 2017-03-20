@@ -262,8 +262,9 @@
 
      #+BEGIN_SRC emacs-lisp
        (require 'ox-publish)
-;       (setq post-dir "~/MyPlayground/my-program-wharehouse/blog/")
-;       (setq draft-dir "~/org/draft/")
+       (require 'ox-twbs)
+       ;       (setq post-dir "~/MyPlayground/my-program-wharehouse/blog/")
+       ;       (setq draft-dir "~/org/draft/")
        (setq org-publish-project-alist
              '(
      #+END_SRC
