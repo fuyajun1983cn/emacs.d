@@ -485,32 +485,6 @@ parenthesis.
       (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
       (global-set-key [escape] 'evil-exit-emacs-state)
     #+END_SRC
-** hydra
-    Hydra可以将一系列命令使用同一个Prefix Key关联起来
-    Imagine that you have bound C-c j and C-c k in your config. You
-    want to call C-c j and C-c k in some (arbitrary) sequence. Hydra
-    allows you to:
-    - Bind your functions in a way that pressing C-c jjkk3j5k is
-      equivalent to pressing C-c j C-c j C-c k C-c k M-3 C-c j M-5 C-c
-      k. Any key other than j or k exits this state.
-    - Assign a custom hint to this group of functions, so that you
-      know immediately after pressing C-c that you can follow up with
-      j or k.
-
-    #+BEGIN_SRC emacs-lisp
-      (use-package hydra)
-      (defhydra hydra-zoom (global-map "<f2>")
-       "zoom"
-       ("g" text-scale-increase "in")
-       ("l" text-scale-decrease "out")
-       ("e" enlarge-window "enlarge window")
-       ("d" shrink-window "shrink  window")
-       ("s" shrink-window-horizontally "descrease width")
-       ("f" enlarge-window-horizontally "increase width")
-       ("q" nil "quit")
-       )   
-
-    #+END_SRC
 ** Input Method
     #+BEGIN_SRC emacs-lisp
       (autoload 'chinese-wbim-use-package "chinese-wbim" "Another emacs input method")
@@ -528,6 +502,117 @@ parenthesis.
       ;设置默认输入法
       (setq default-input-method 'chinese-wbim)    
     #+END_SRC
+** elfeed
+   #+BEGIN_SRC emacs-lisp
+     (setq elfeed-db-directory "~/.elfeed/")
+
+     (use-package elfeed
+       ;;:ensure t
+       :bind (:map elfeed-search-mode-map
+                   ("q" . bjm/elfeed-save-db-and-bury)
+                   ("Q" . bjm/elfeed-save-db-and-bury)
+                   ("J" . fyj/hydra-elfeed/body)
+                   ("j" . fyj/hydra-elfeed/body)
+                   ("m" . elfeed-toggle-star)
+                   ("M" . elfeed-toggle-star)))
+
+     (use-package elfeed-goodies
+       ;;:ensure t
+       :config
+       (elfeed-goodies/setup))
+
+     (use-package elfeed-org
+       ;;:ensure t
+       :config
+       (elfeed-org)
+       (setq rmh-elfeed-org-files (list "~/.emacs.d/elfeed.org")))
+
+     (defun elfeed-mark-all-as-read()
+       (interactive)
+       (mark-whole-buffer)
+       (elfeed-search-untag-all-unreadq))
+
+
+     (defun bjm/elfeed-load-db-and-open()
+       "Wrapper to load the elfeed db from disk before opening"
+       (interactive)
+       (elfeed-db-load)
+       (elfeed)
+       (elfeed-search-update--force))
+
+     ;;Write to disk when quitting
+     (defun bjm/elfeed-save-db-and-bury()
+       "Wrapper to save the elfeed db to disk before burying buffer"
+       (interactive)
+       (elfeed-db-save)
+       (quit-window))
+        
+     (defalias 'elfeed-toggle-star
+       (elfeed-expose #'elfeed-search-toggle-all 'star))
+
+     (global-set-key (kbd "C-x w") 'elfeed)
+   #+END_SRC
+** hydra
+    Hydra可以将一系列命令使用同一个Prefix Key关联起来
+    Imagine that you have bound C-c j and C-c k in your config. You
+    want to call C-c j and C-c k in some (arbitrary) sequence. Hydra
+    allows you to:
+    - Bind your functions in a way that pressing C-c jjkk3j5k is
+      equivalent to pressing C-c j C-c j C-c k C-c k M-3 C-c j M-5 C-c
+      k. Any key other than j or k exits this state.
+    - Assign a custom hint to this group of functions, so that you
+      know immediately after pressing C-c that you can follow up with
+      j or k.
+
+    #+BEGIN_SRC emacs-lisp
+      (use-package hydra)
+      (defhydra hydra-zoom (global-map "<f2>")
+        "zoom"
+        ("g" text-scale-increase "in")
+        ("l" text-scale-decrease "out")
+        ("e" enlarge-window "enlarge window")
+        ("d" shrink-window "shrink  window")
+        ("s" shrink-window-horizontally "descrease width")
+        ("f" enlarge-window-horizontally "increase width")
+        ("q" nil "quit"))   
+
+      ;;for toggel
+      (global-set-key
+       (kbd "C-x t")
+       (defhydra toggle (:color blue)
+         "toggle"
+         ("a" abbrev-mode "abbrev")
+         ("s" flyspell-mode "flyspell")
+         ("d" debug-on-error "debug")
+         ("f" auto-fill-mode "autofill")
+         ("w" whitespace-mode "whitespace")
+         ("t" toggle-truncate-lines "truncate")
+         ("q" nil "quit")))
+
+      ;;for elfeed
+      (defhydra fyj/hydra-elfeed()
+        "filter"
+        ("c" (elfeed-search-set-filter "@6-months-ago +cs") "cs")
+        ("e" (elfeed-search-set-filter "@6-months-ago +emacs") "emacs")
+        ("b" (elfeed-search-set-filter "@6-months-ago +daily") "blogs")
+        ("n" (elfeed-search-set-filter "@6-months-ago +news") "news")
+        ("*" (elfeed-search-set-filter "@6-months-ago +star") "Starred")
+        ("a" (elfeed-search-set-filter "@6-months-ago") "All")
+        ("t" (elfeed-search-set-filter "@1-days-ago") "Today")
+        ("q" nil "quit"))
+
+
+      ;;for org-mode toggle
+      (global-set-key
+       (kbd "C-c t")
+       (defhydra hydra-global-org (:color blue)
+         "Org"
+         ("t" org-timer-start "Start Timer")
+         ("s" org-timer-stop "Stop Timer")
+         ("p" org-timer "Print Timer")
+         ("r" org-timer-set-timer "Set Timer")))
+    #+END_SRC
+
 * Version Control
 ** Magit Mode
    Magit模式是emacs下的一个非常好用的git操作界面。

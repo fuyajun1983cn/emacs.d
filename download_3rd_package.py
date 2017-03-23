@@ -36,3 +36,5 @@ if __name__ == "__main__":
     git_clone("https://github.com/purcell/dired-launch.git", "dired-launch")
     git_clone("https://github.com/zilongshanren/chinese-wbim.git", "chinese-wbim")
     git_clone("https://github.com/marsmining/ox-twbs.git", "ox-twbs")
+    git_clone("https://github.com/skeeto/elfeed", "elfeed")
+    git_clone("https://github.com/remyhonig/elfeed-org", "elfeed-org")

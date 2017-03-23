@@ -260,6 +260,9 @@
      Jekyll负责生成最终网页，这里会设置导出html网页时，只导出<body>标
      签之间的内容。
 
+     Open or create an org file and run =org-twbs-export-to-html=. This
+     will create an HTML file in the same dir as your org file.
+
      #+BEGIN_SRC emacs-lisp
        (require 'ox-publish)
        (require 'ox-twbs)

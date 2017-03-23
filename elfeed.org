@@ -1,0 +1,9 @@
+* blogs                                                               :elfeed:
+** wifi blogs                                                          :blogs:
+*** http://blog.ifjy.me/feed.xml
+*** http://www.extremetech.com/catetory/Computing/feed
+** emacs                                                               :emacs:
+*** http://www.reddit.com/r/emacs/.rss
+*** http://cestlaz.github.io/rss.xml
+** news                                                                 :news:
+*** http://www.fortunechina.com/rss/career.xml
