@@ -165,9 +165,14 @@
   ;;**************auto-complete模式相关配置*******;;
   ;;                                             ;;
   ;;*********************************************;;
-  (fyj/package-install-if-needed 'auto-complete)
-  (require 'auto-complete-config)
-  (ac-config-default)
+  (use-package auto-complete
+    :ensure t
+    :init
+    (progn
+      (ac-config-default)
+      (global-auto-complete-mode t)
+      ))
+
   ;;(add-to-list 'ac-dictionary-directories "~/.emacs.d/mode/auto-complete/dict")
   (define-key ac-mode-map (kbd "M-/") 'auto-complete);;auto-complete command
   ;;trigger auto-complete
@@ -343,7 +348,29 @@
      (slime-setup '(slime-fancy))
 
    #+END_SRC
+
+** C++
+   #+BEGIN_SRC emacs-lisp
+     ;; tags for code navigation
+     (use-package ggtags
+       :ensure t
+       :config 
+       (add-hook 'c-mode-common-hook
+             (lambda ()
+               (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+             (ggtags-mode 1))))
+       )
+
+   #+END_SRC
 * editor
+** which-key
+   #+BEGIN_SRC emacs-lisp
+     ;; bring up help for key bindings
+     (use-package which-key
+     ;;  :ensure t 
+       :config
+       (which-key-mode))
+   #+END_SRC
 ** Undo tree mode - visualize your undos and branches
      People often struggle with the Emacs undo model, where there’s
      really no concept of “redo” - you simply undo the undo. # This
@@ -449,8 +476,12 @@ parenthesis.
 ** flycheck
    语法检查器
    #+BEGIN_SRC emacs-lisp
+     ;; on the fly syntax checking
      (use-package flycheck
-       :config (global-flycheck-mode))   
+       :ensure t
+       :init
+       (global-flycheck-mode t))
+
    #+END_SRC
 ** log 
     wifi log
