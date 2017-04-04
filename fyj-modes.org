@@ -478,7 +478,7 @@ parenthesis.
    #+BEGIN_SRC emacs-lisp
      ;; on the fly syntax checking
      (use-package flycheck
-       :ensure t
+     ;;  :ensure t
        :init
        (global-flycheck-mode t))
 
