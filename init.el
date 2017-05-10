@@ -16,7 +16,7 @@
 ;;
 ;; Byte compile
 ;; emacs -batch -f batch-byte-compilefile.el.
-
+(setq debug-on-err t)
 (package-initialize)
 (setenv "ORG_HOME" "/home/jackson/Desktop/org-8.3.4/lisp")
 (when (getenv "ORG_HOME")

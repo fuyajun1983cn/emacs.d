@@ -3,6 +3,10 @@
 #+EMAIL:  fuyajun1983cn@163.com
 
 * 全局行为设置
+#+BEGIN_SRC emacs-lisp
+  (message "这是一个测试")
+  ;(message (concat "初始化" (substring-no-properties (org-get-heading))))
+#+END_SRC
 ** 退出Emacs前提示确认
      #+BEGIN_SRC emacs-lisp
        (fset 'yes-or-no-p 'y-or-n-p)
@@ -359,6 +363,10 @@ evaluated a theme is activated using the =load-theme= function.
      (setq apropos-sort-by-scores t)
    #+END_SRC
 * 全局按键设置
+#+BEGIN_SRC emacs-lisp
+  (message "全局按键设置")
+  ;(message (concat "初始化" (substring-no-properties (org-get-heading))))
+#+END_SRC
 ** Align your code in a pretty way.
 #+begin_src emacs-lisp 
 (global-set-key (kbd "C-x \\") 'align-regexp)
@@ -431,8 +439,13 @@ Rgrep is infinitely useful in multi-file projects.
 #+end_src
 
 * 全局实用函数
-** 定义after-load函数
 #+BEGIN_SRC emacs-lisp
+  (message "全局实用函数")
+  ;(message (concat "初始化" (substring-no-properties (org-get-heading))))
+#+END_SRC
+** 定义after-load函数
+#+BEGIN_SRC emacs-lisp :tangle no
+  (message "after-load")
   (if (fboundp 'with-eval-after-load)
       (defalias 'after-load 'with-eval-after-load)
     (defmacro after-load (feature &rest body)
@@ -447,6 +460,7 @@ Rgrep is infinitely useful in multi-file projects.
   ;;----------------------------------------------------------------------------
   ;; Delete the current file
   ;;----------------------------------------------------------------------------
+  (message "删除当前文件")
   (defun delete-this-file ()
     "Delete the current file, and kill the buffer."
     (interactive)
@@ -463,6 +477,7 @@ Rgrep is infinitely useful in multi-file projects.
   ;;----------------------------------------------------------------------------
   ;; Rename the current file
   ;;----------------------------------------------------------------------------
+  (message "重命名当前文件")
   (defun rename-this-file-and-buffer (new-name)
     "Renames both current buffer and file it's visiting to NEW-NAME."
     (interactive "sNew name: ")
@@ -486,6 +501,7 @@ Rgrep is infinitely useful in multi-file projects.
   ;;----------------------------------------------------------------------------
   ;; Browse current HTML file
   ;;----------------------------------------------------------------------------
+  (message "浏览当前的HTML文件")
   (defun browse-current-file ()
     "Open the current file as a URL using `browse-url'."
     (interactive)
@@ -633,6 +649,10 @@ Rgrep is infinitely useful in multi-file projects.
        (insert-time))
    #+END_SRC
 * 全局钩子设置
+#+BEGIN_SRC emacs-lisp
+  (message "全局钩子设置")
+  ;  (message (concat "初始化" (substring-no-properties (org-get-heading))))
+#+END_SRC
 ** update write timestamp
    #+BEGIN_SRC emacs-lisp
      ;(add-hook 'local-write-file-hooks 'update-writestamps)
@@ -712,6 +732,10 @@ Rgrep is infinitely useful in multi-file projects.
 
     #+END_SRC
 * 全局advice设置
+#+BEGIN_SRC emacs-lisp
+  (message "全局advice设置")
+  ; (message (concat "初始化" (substring-no-properties (org-get-heading))))
+#+END_SRC
 ** scroll-up
    #+BEGIN_SRC emacs-lisp
      (defvar unscroll-point (make-marker)
@@ -755,15 +779,15 @@ Rgrep is infinitely useful in multi-file projects.
        (if (not (or (eq last-command 'scroll-up)
                     (eq last-command 'scroll-down)
                     (eq last-command 'scroll-left)
-                    (eq last-command scroll-right)))
+                    (eq last-command 'scroll-right)))
            (unscroll-maybe-remember)))
 
      (defadvice scroll-right (before remember-for-unscroll
                                      activate compile)
        "Remember where we started from, for 'unscroll'."
        (if (not (or (eq last-command 'scroll-up)
-                    (eq last-command scroll-down)
-                    (eq last-command scroll-left)
+                    (eq last-command 'scroll-down)
+                    (eq last-command 'scroll-left)
                     (eq last-command 'scroll-right)))
            (unscroll-maybe-remember)))
 
@@ -776,6 +800,10 @@ Rgrep is infinitely useful in multi-file projects.
        (set-window-hscroll nil unscroll-hscroll))
    #+END_SRC
 * 全局Registers设置
+#+BEGIN_SRC emacs-lisp
+  (message "全局Registers设置")
+  ;  (message (concat "初始化" (substring-no-properties (org-get-heading))))
+#+END_SRC
 Registers allow you to jump to a file or other location quickly. Use
 =C-x r j= followed by the letter of the register (i for =init.el=, r
 for this file) to jump to it.
@@ -807,4 +835,4 @@ You should add registers here for the files you edit most often.
      =insert-register= 快捷键:  =C+x r i= , 然后输入寄存器的名称。
 
 
-
+   

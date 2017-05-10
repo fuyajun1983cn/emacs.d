@@ -39,3 +39,5 @@ if __name__ == "__main__":
     git_clone("https://github.com/skeeto/elfeed", "elfeed")
     git_clone("https://github.com/remyhonig/elfeed-org", "elfeed-org")
     git_clone("https://github.com/justbur/emacs-which-key", "whick-key")
+    git_clone("https://github.com/mgalgs/diffview-mode.git", "diffview-mode")
+    git_clone("https://github.com/flycheck/flycheck.git", "flycheck")
