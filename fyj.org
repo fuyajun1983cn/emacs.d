@@ -317,5 +317,7 @@
 
 * 启动结束
   #+BEGIN_SRC emacs-lisp
+    (require 'fyj-mode)
+    (global-set-key (kbd "<f5>") 'global-fyj-mode)
     (switch-to-buffer "*dashboard*")  
   #+END_SRC
