@@ -20,9 +20,11 @@ def git_clone(url, dest_dir):
     os.system(cmd)
 
 if __name__ == "__main__":
-
+    #commit id: 89b060abf49791cad2639f234b230dc4882bdc39
     git_clone("https://github.com/greduan/emacs-theme-gruvbox.git", "emacs-theme-gruvbox")
+    #commit id: d3dcfc57a36111d8e0b037d90c6ffce85ce071b2
     git_clone("https://github.com/milkypostman/powerline.git", "powerline")
+    #commit id: 11e69a143ed66e50f0c95fda93ba0a5fa8bdf583
     git_clone("https://github.com/AnthonyDiGirolamo/airline-themes.git", "airline-themes")
     git_clone("https://github.com/takaxp/org-tree-slide", "org-tree-slide")
     git_clone("https://github.com/howardabrams/demo-it", "demo-it")
