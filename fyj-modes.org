@@ -666,6 +666,13 @@ parenthesis.
          ("p" org-timer "Print Timer")
          ("r" org-timer-set-timer "Set Timer")))
     #+END_SRC
+** File Manager
+*** Sr-Speedbar
+    REF: https://www.emacswiki.org/emacs/sr-speedbar.el
+    #+BEGIN_SRC emacs-lisp
+      (require 'sr-speedbar)
+      (global-set-key (kbd "<f6>") 'sr-speedbar-toggle)
+    #+END_SRC
 
 * Version Control
 ** Magit Mode
